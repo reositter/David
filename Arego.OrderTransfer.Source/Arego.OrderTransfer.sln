@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arego.OrderTransfer.Forms", "Arego.OrderTransfer.Forms\Arego.OrderTransfer.Forms.csproj", "{8267BC22-B14F-4B5D-B57E-13F61E92555E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arego.OrderTransfer.Process", "Arego.OrderTransfer.Process\Arego.OrderTransfer.Process.csproj", "{09034C50-2434-4430-A7E9-851D24DD04DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8267BC22-B14F-4B5D-B57E-13F61E92555E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8267BC22-B14F-4B5D-B57E-13F61E92555E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8267BC22-B14F-4B5D-B57E-13F61E92555E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8267BC22-B14F-4B5D-B57E-13F61E92555E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09034C50-2434-4430-A7E9-851D24DD04DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09034C50-2434-4430-A7E9-851D24DD04DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09034C50-2434-4430-A7E9-851D24DD04DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09034C50-2434-4430-A7E9-851D24DD04DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
