@@ -106,7 +106,7 @@ namespace Arego.OrderTransfer.Forms
 				    {
 					    line.ArticleNo,
 						line.ArticleName,
-						line.NetPrice.ToString("n2"),
+						line.Price.ToString("n2"),
 						line.DiscountInPercent.ToString(CultureInfo.InvariantCulture) + " %",
 						line.Quantity.ToString("n2")
 				    };

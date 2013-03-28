@@ -25,7 +25,7 @@ namespace Arego.OrderTransfer.Process
         {
             InitializeComponents();
 
-            var where = string.Format("{0} = {1} AND NOT {2} = {3} AND {4} > 0", _colChainNo, chainNo, _colLoanReturnNo, loanReturnNo, _copInvoiceNo);
+            var where = string.Format("{0} = {1} AND NOT {2} = {3} AND {4} <> 0", _colChainNo, chainNo, _colLoanReturnNo, loanReturnNo, _copInvoiceNo);
 			LogFileWriter.WriteLine(string.Format("Setting filter before fetching invoices: '{0}'", where));
             _invoiceComp.bcSetFilterRequeryStr(where);
 
@@ -50,6 +50,7 @@ namespace Arego.OrderTransfer.Process
 						OrderNo = _invoiceComp.bcGetStr((int)CustomerOrderCopy_Properties.COP_OrderCopyNo),
                         CustomerNo = _invoiceComp.bcGetInt((int)CustomerOrderCopy_Properties.COP_CustomerNo),
                         CustomerName = _invoiceComp.bcGetStr((int)CustomerOrderCopy_Properties.COP_DeliveryCustomerName),
+						CustomerContactNameForInvoice = _invoiceComp.bcGetStr((int)CustomerOrderCopy_Properties.COP_NameContactNoInvoice)
                     };
 
 	            start = DateTime.Now;
@@ -87,9 +88,9 @@ namespace Arego.OrderTransfer.Process
 			        {
 						ArticleNo = _lineComp.bcGetStr((int) CustomerOrderLineCopy_Properties.CLP_ArticleNo),
 						ArticleName = _lineComp.bcGetStr((int) CustomerOrderLineCopy_Properties.CLP_Name),
-						NetPrice = (decimal)_lineComp.bcGetDouble((int) CustomerOrderLineCopy_Properties.CLP_NetPrice),
+						Price = (decimal)_lineComp.bcGetDouble((int) CustomerOrderLineCopy_Properties.CLP_ExchangeSalesPrice),
 						DiscountInPercent = (decimal)_lineComp.bcGetDouble((int) CustomerOrderLineCopy_Properties.CLP_DiscountI),
-						Quantity = (decimal)_lineComp.bcGetDouble((int)CustomerOrderLineCopy_Properties.CLP_Quantity)
+						Quantity = (decimal)_lineComp.bcGetDouble((int)CustomerOrderLineCopy_Properties.CLP_Invoiced)
 			        };
 
 				list.Add(line);

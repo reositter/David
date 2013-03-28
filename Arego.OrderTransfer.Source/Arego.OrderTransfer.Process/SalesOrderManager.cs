@@ -22,6 +22,8 @@ namespace Arego.OrderTransfer.Process
 
 			salesOrderComp.bcUpdateInt((int)CustomerOrder_Properties.COR_CustomerNo, transferItem.CustomerNo);
 		    salesOrderComp.bcUpdateStr((int) CustomerOrder_Properties.COR_CustomerPurchaseNo, transferItem.OrderNo);
+		    if (!string.IsNullOrWhiteSpace(transferItem.CustomerContactNameForInvoice))
+			    salesOrderComp.bcUpdateStr((int) CustomerOrder_Properties.COR_NameContactNoInvoice, transferItem.CustomerContactNameForInvoice);
 
 		    var allLinesCreated = true;
 			int errCode;
@@ -31,7 +33,7 @@ namespace Arego.OrderTransfer.Process
 			    var lineIsValid = true;
 				var artCode = salesOrderComp.bcUpdateStr((int)CustomerOrderLine_Properties.COL_ArticleNo, line.ArticleNo);
 			    salesOrderComp.bcUpdateStr((int) CustomerOrderLine_Properties.COL_Name, line.ArticleName);
-				var priceCode = salesOrderComp.bcUpdateDouble((int)CustomerOrderLine_Properties.COL_NetPrice, (double)line.NetPrice);
+				var priceCode = salesOrderComp.bcUpdateDouble((int)CustomerOrderLine_Properties.COL_NetPrice, (double)line.Price);
 				if (line.DiscountInPercent > 0)
 					salesOrderComp.bcUpdateDouble((int)CustomerOrderLine_Properties.COL_DiscountI, (double)line.DiscountInPercent);
 				var qtyCode = salesOrderComp.bcUpdateDouble((int)CustomerOrderLine_Properties.COL_Quantity, (double)line.Quantity);
@@ -46,7 +48,7 @@ namespace Arego.OrderTransfer.Process
 				else if (priceCode > 0)
 				{
 					lineIsValid = false;
-					LogFileWriter.WriteLine(string.Format("NetPrice '{0}' caused exception({1}): {2}", line.NetPrice, priceCode, salesOrderComp.bcGetMessageText(priceCode)));
+					LogFileWriter.WriteLine(string.Format("NetPrice '{0}' caused exception({1}): {2}", line.Price, priceCode, salesOrderComp.bcGetMessageText(priceCode)));
 				}
 				else if (qtyCode > 0 && qtyCode != 11944)
 				{
