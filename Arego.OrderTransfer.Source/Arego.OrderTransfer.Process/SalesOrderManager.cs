@@ -21,6 +21,7 @@ namespace Arego.OrderTransfer.Process
 			transferItem.OrderNoInDestinationClient = salesOrderComp.bcGetStr((int)CustomerOrder_Properties.COR_OrderNo);
 
 			salesOrderComp.bcUpdateInt((int)CustomerOrder_Properties.COR_CustomerNo, transferItem.CustomerNo);
+		    salesOrderComp.bcUpdateStr((int) CustomerOrder_Properties.COR_CustomerPurchaseNo, transferItem.OrderNo);
 
 		    var allLinesCreated = true;
 			int errCode;
@@ -34,8 +35,6 @@ namespace Arego.OrderTransfer.Process
 				if (line.DiscountInPercent > 0)
 					salesOrderComp.bcUpdateDouble((int)CustomerOrderLine_Properties.COL_DiscountI, (double)line.DiscountInPercent);
 				var qtyCode = salesOrderComp.bcUpdateDouble((int)CustomerOrderLine_Properties.COL_Quantity, (double)line.Quantity);
-
-
 
 				#region Validera raden.
 				if (artCode > 0 && artCode != 258)

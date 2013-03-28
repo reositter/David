@@ -47,8 +47,8 @@ namespace Arego.OrderTransfer.Process
                 var item = new TransferItem
                     {
                         InvoiceNo = _invoiceComp.bcGetInt((int)CustomerOrderCopy_Properties.COP_InvoiceNo),
+						OrderNo = _invoiceComp.bcGetStr((int)CustomerOrderCopy_Properties.COP_OrderCopyNo),
                         CustomerNo = _invoiceComp.bcGetInt((int)CustomerOrderCopy_Properties.COP_CustomerNo),
-                        //CustomerName = _invoiceComp.bcGetStr((int)CustomerOrderCopy_Properties.COP_CustomerName),
                         CustomerName = _invoiceComp.bcGetStr((int)CustomerOrderCopy_Properties.COP_DeliveryCustomerName),
                     };
 

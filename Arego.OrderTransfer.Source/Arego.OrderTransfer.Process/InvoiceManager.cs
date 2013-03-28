@@ -5,8 +5,8 @@ namespace Arego.OrderTransfer.Process
 	public class InvoiceManager
 	{
 		private readonly GlobalServerComponent _vgConnection;
-		private BusinessComponentNavigate _invoiceComp;
-		private string _colInvoiceNo;
+		private readonly BusinessComponentNavigate _invoiceComp;
+		private readonly string _colInvoiceNo;
 
 		public InvoiceManager(GlobalServerComponent vgConnection)
 		{

@@ -144,18 +144,15 @@ namespace Arego.OrderTransfer.Forms
 	    {
 		    foreach (var line in lines)
 		    {
-                if (line.ArticleNo != "") //Edit by René
-                {
-                    if (!articleManager.ArticleExists(line.ArticleNo))
-                    {
-                        _attemptsToCreateArticle++;
+                if (string.IsNullOrWhiteSpace(line.ArticleNo) || articleManager.ArticleExists(line.ArticleNo))
+					continue;
 
-                        if (!articleManager.CreateArticle(line.ArticleNo, line.ArticleName, _priceCalcMethodsNo, _postingTemplate, _stockProfileNo))
-                        {
-                            _failedAttemptsToCreateArticle++;
-                            lstLog.Items.Add(string.Format("Kunne ikke opprette artikkel '{0} - {1}'", line.ArticleNo, line.ArticleName));
-                        }
-                    }
+                _attemptsToCreateArticle++;
+
+                if (!articleManager.CreateArticle(line.ArticleNo, line.ArticleName, _priceCalcMethodsNo, _postingTemplate, _stockProfileNo))
+                {
+                    _failedAttemptsToCreateArticle++;
+                    lstLog.Items.Add(string.Format("Kunne ikke opprette artikkel '{0} - {1}'", line.ArticleNo, line.ArticleName));
                 }
 		    }
 	    }
