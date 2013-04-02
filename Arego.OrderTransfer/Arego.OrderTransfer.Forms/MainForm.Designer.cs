@@ -53,6 +53,7 @@
 			this.btnTransferArticlesToDestination = new System.Windows.Forms.Button();
 			this.lstLog = new System.Windows.Forms.ListBox();
 			this.btnCreateCustomerOrders = new System.Windows.Forms.Button();
+			this.colDiscountII = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -232,6 +233,7 @@
             this.colArticleName,
             this.colNetPrice,
             this.colDiscountI,
+            this.colDiscountII,
             this.colQty});
 			this.lstLines.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstLines.GridLines = true;
@@ -304,6 +306,11 @@
 			this.btnCreateCustomerOrders.UseVisualStyleBackColor = true;
 			this.btnCreateCustomerOrders.Click += new System.EventHandler(this.btnCreateCustomerOrders_Click);
 			// 
+			// colDiscountII
+			// 
+			this.colDiscountII.Text = "Rab. II";
+			this.colDiscountII.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
 			// MainForm
 			// 
 			this.AcceptButton = this.btnGetInvoicesFromSourceClient;
@@ -356,6 +363,7 @@
 		private System.Windows.Forms.ListBox lstLog;
 		private System.Windows.Forms.Button btnCreateCustomerOrders;
 		private System.Windows.Forms.ColumnHeader colOrderNo;
+		private System.Windows.Forms.ColumnHeader colDiscountII;
     }
 }
 

@@ -34,9 +34,15 @@ namespace Arego.OrderTransfer.Process
 				var artCode = salesOrderComp.bcUpdateStr((int)CustomerOrderLine_Properties.COL_ArticleNo, line.ArticleNo);
 			    salesOrderComp.bcUpdateStr((int) CustomerOrderLine_Properties.COL_Name, line.ArticleName);
 				var priceCode = salesOrderComp.bcUpdateDouble((int)CustomerOrderLine_Properties.COL_NetPrice, (double)line.Price);
-				if (line.DiscountInPercent > 0)
-					salesOrderComp.bcUpdateDouble((int)CustomerOrderLine_Properties.COL_DiscountI, (double)line.DiscountInPercent);
+
+				if (line.DiscountInPercent1 > 0)
+					salesOrderComp.bcUpdateDouble((int)CustomerOrderLine_Properties.COL_DiscountI, (double)line.DiscountInPercent1);
+
 				var qtyCode = salesOrderComp.bcUpdateDouble((int)CustomerOrderLine_Properties.COL_Quantity, (double)line.Quantity);
+
+				// Setting DiscountII after Quantity because that's how it's done by default in VG.
+				if (line.DiscountInPercent2 > 0)
+					salesOrderComp.bcUpdateDouble((int)CustomerOrderLine_Properties.COL_DiscountII, (double)line.DiscountInPercent2);
 
 				#region Validera raden.
 				if (artCode > 0 && artCode != 258)

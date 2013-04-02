@@ -10,11 +10,7 @@ namespace Arego.OrderTransfer.Process
         private readonly GlobalServerComponent _vgConnection;
         private BusinessComponentNavigate _invoiceComp;
         private BusinessComponentNavigate _lineComp;
-        private string _colInvoiceNo;
-        private string _colChainNo;
-	    private string _colLoanReturnNo;
-        private string _copInvoiceNo;
-      
+        private string _colClpInvoiceNo;
 
 	    public InvoiceQuery(GlobalServerComponent vgConnection)
         {
@@ -25,7 +21,7 @@ namespace Arego.OrderTransfer.Process
         {
             InitializeComponents();
 
-            var where = string.Format("{0} = {1} AND NOT {2} = {3} AND {4} <> 0", _colChainNo, chainNo, _colLoanReturnNo, loanReturnNo, _copInvoiceNo);
+			var where = CreateFilter(chainNo, loanReturnNo);
 			LogFileWriter.WriteLine(string.Format("Setting filter before fetching invoices: '{0}'", where));
             _invoiceComp.bcSetFilterRequeryStr(where);
 
@@ -64,23 +60,11 @@ namespace Arego.OrderTransfer.Process
             return list;
         }
 
-        private void InitializeComponents()
-        {
-            _invoiceComp = _vgConnection.GetBusinessComponent(GLOBAL_Components.BC_CustomerOrderCopy);
-            _lineComp = _vgConnection.GetBusinessComponent(GLOBAL_Components.BC_CustomerOrderLineCopy);
-
-            // Get column names
-            _colChainNo = _invoiceComp.bcGetTableObjectName((int)CustomerOrderCopy_Properties.COP_ChainNo);
-	        _colLoanReturnNo = _invoiceComp.bcGetTableObjectName((int) CustomerOrderCopy_Properties.COP_LoanReturnNo);
-            _colInvoiceNo = _lineComp.bcGetTableObjectName((int)CustomerOrderLineCopy_Properties.CLP_InvoiceNo);
-            _copInvoiceNo = _invoiceComp.bcGetTableObjectName((int)CustomerOrderCopy_Properties.COP_InvoiceNo);
-        }
-
         private IList<TransferItemLine> GetInvoiceLines(int invoiceNo)
         {
             var list = new List<TransferItemLine>();
 
-	        _lineComp.bcSetFilterRequeryStr(string.Format("{0} = {1}", _colInvoiceNo, invoiceNo));
+	        _lineComp.bcSetFilterRequeryStr(string.Format("{0} = {1}", _colClpInvoiceNo, invoiceNo));
 	        _lineComp.bcFetchFirst(0);
 
 	        do
@@ -90,7 +74,8 @@ namespace Arego.OrderTransfer.Process
 						ArticleNo = _lineComp.bcGetStr((int) CustomerOrderLineCopy_Properties.CLP_ArticleNo),
 						ArticleName = _lineComp.bcGetStr((int) CustomerOrderLineCopy_Properties.CLP_Name),
 						Price = (decimal)_lineComp.bcGetDouble((int) CustomerOrderLineCopy_Properties.CLP_ExchangeSalesPrice),
-						DiscountInPercent = (decimal)_lineComp.bcGetDouble((int) CustomerOrderLineCopy_Properties.CLP_DiscountI),
+						DiscountInPercent1 = (decimal)_lineComp.bcGetDouble((int) CustomerOrderLineCopy_Properties.CLP_DiscountI),
+						DiscountInPercent2 = (decimal)_lineComp.bcGetDouble((int) CustomerOrderLineCopy_Properties.CLP_DiscountII),
 						Quantity = (decimal)_lineComp.bcGetDouble((int)CustomerOrderLineCopy_Properties.CLP_Invoiced)
 			        };
 
@@ -101,7 +86,24 @@ namespace Arego.OrderTransfer.Process
 	        return list;
         }
 
-        private void LogErrorMessage(int errCode)
+		private void InitializeComponents()
+		{
+			_invoiceComp = _vgConnection.GetBusinessComponent(GLOBAL_Components.BC_CustomerOrderCopy);
+			_lineComp = _vgConnection.GetBusinessComponent(GLOBAL_Components.BC_CustomerOrderLineCopy);
+
+			_colClpInvoiceNo = _lineComp.bcGetTableObjectName((int)CustomerOrderLineCopy_Properties.CLP_InvoiceNo);
+		}
+
+	    private string CreateFilter(int chainNo, int loanReturnNo)
+	    {
+			var colChainNo = _invoiceComp.bcGetTableObjectName((int)CustomerOrderCopy_Properties.COP_ChainNo);
+			var colLoanReturnNo = _invoiceComp.bcGetTableObjectName((int)CustomerOrderCopy_Properties.COP_LoanReturnNo);
+			var colInvoiceNo = _invoiceComp.bcGetTableObjectName((int)CustomerOrderCopy_Properties.COP_InvoiceNo);
+
+			return string.Format("{0} = {1} AND NOT {2} = {3} AND {4} <> 0", colChainNo, chainNo, colLoanReturnNo, loanReturnNo, colInvoiceNo);
+	    }
+
+	    private void LogErrorMessage(int errCode)
         {
             if (errCode == 4)
                 LogFileWriter.WriteLine("Did not find any invoices to transfer.");
