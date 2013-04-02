@@ -72,6 +72,7 @@ namespace Arego.OrderTransfer.Process
 				}
 				else
 				{
+					allLinesCreated = false;
 					salesOrderComp.bcDeleteLine(salesOrderComp.bcGetNoOfLines());
 				}
 				#endregion
