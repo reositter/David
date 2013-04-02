@@ -57,7 +57,8 @@ namespace Arego.OrderTransfer.Process
                 item.Lines = GetInvoiceLines(item.InvoiceNo);
 				LogFileWriter.WriteLine(string.Format("Time spent fetching lines for invoice {0}: {1}", item.InvoiceNo, DateTime.Now.Subtract(start)));
 
-                list.Add(item);
+				if (item.Lines.Count > 0)
+					list.Add(item);
             } while (_invoiceComp.bcFetchNext(0) == 0);
 
             return list;
@@ -93,7 +94,8 @@ namespace Arego.OrderTransfer.Process
 						Quantity = (decimal)_lineComp.bcGetDouble((int)CustomerOrderLineCopy_Properties.CLP_Invoiced)
 			        };
 
-				list.Add(line);
+				if (line.Quantity != 0)
+					list.Add(line);
 	        } while (_lineComp.bcFetchNext(0) == 0);
 
 	        return list;
