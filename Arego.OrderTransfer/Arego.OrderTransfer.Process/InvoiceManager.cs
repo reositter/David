@@ -21,6 +21,7 @@ namespace Arego.OrderTransfer.Process
 		public void MarkInvoiceAsTransferred(int invoiceNo)
 		{
 			_invoiceComp.bcSetFilterRequeryStr(string.Format("{0} = {1}", _colInvoiceNo, invoiceNo));
+			_invoiceComp.bcFetchFirst(1);
 			_invoiceComp.bcUpdateInt((int)CustomerOrderCopy_Properties.COP_LoanReturnNo, 1);
 			_invoiceComp.bcSaveRecord();
 		}
