@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8a01da60-1cae-41c7-87e3-5f8c180fce29" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://10.28.8.12:8050/?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="03ead001-7bc0-422a-8fa3-e37dae27b51b" SourceId="1" SourceUrl="http://10.28.8.12:8050/?xsd=xsd2" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="52d84709-9357-4841-81bb-1bc6d8e7f5c4" SourceId="1" SourceUrl="http://10.28.8.12:8050/?xsd=xsd4" />
+    <MetadataFile FileName="PIMServiceWeb.wsdl" MetadataType="Wsdl" ID="a6845e7b-e07e-40b2-9ae6-7259c0f3a7b3" SourceId="1" SourceUrl="http://10.28.8.12:8050/?wsdl" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="a91bc4a6-d57e-47cb-9b8e-c86aff069223" SourceId="1" SourceUrl="http://10.28.8.12:8050/?xsd=xsd1" />
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="d01ef342-866e-490a-b89a-bdef3eaa51dd" SourceId="1" SourceUrl="http://10.28.8.12:8050/?xsd=xsd3" />
+    <MetadataFile FileName="item.wsdl" MetadataType="Wsdl" ID="75ae8c17-e764-45ec-ae68-f78526f737fb" SourceId="1" SourceUrl="http://10.28.8.12:8050/?wsdl=wsdl0" />
+    <MetadataFile FileName="item4.xsd" MetadataType="Schema" ID="c9f76bda-a73c-44de-98dd-a4240f34515e" SourceId="1" SourceUrl="http://10.28.8.12:8050/?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

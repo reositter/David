@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://pim.4sound.dk/wcf/entities/" elementFormDefault="qualified" targetNamespace="http://pim.4sound.dk/wcf/entities/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://10.28.8.12:8050/?xsd=xsd3" namespace="http://pim.4sound.dk/wcf/" />
+  <xs:element name="ProductQueryRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://pim.4sound.dk/wcf/" minOccurs="0" ref="q1:Item" />
+        <xs:element xmlns:q2="http://pim.4sound.dk/wcf/" minOccurs="0" ref="q2:PrimaryAction" />
+        <xs:element xmlns:q3="http://pim.4sound.dk/wcf/" minOccurs="0" ref="q3:SecondaryAction" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QueueResult">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://pim.4sound.dk/wcf/" minOccurs="0" ref="q4:MessageId" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProductQueryResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://pim.4sound.dk/wcf/" minOccurs="0" ref="q5:QueryResponseArray" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProductUpdateRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://pim.4sound.dk/wcf/" minOccurs="0" ref="q6:PrimaryAction" />
+        <xs:element xmlns:q7="http://pim.4sound.dk/wcf/" minOccurs="0" ref="q7:SecondaryAction" />
+        <xs:element xmlns:q8="http://pim.4sound.dk/wcf/" minOccurs="0" ref="q8:UpdateRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProductUpdateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://pim.4sound.dk/wcf/" minOccurs="0" ref="q9:UpdateResponseArray" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProductQueryRequestArray">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://pim.4sound.dk/wcf/" minOccurs="0" ref="q10:PrimaryAction" />
+        <xs:element xmlns:q11="http://pim.4sound.dk/wcf/" minOccurs="0" ref="q11:QueryRequestArray" />
+        <xs:element xmlns:q12="http://pim.4sound.dk/wcf/" minOccurs="0" ref="q12:SecondaryAction" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProductUpdateRequestArray">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://pim.4sound.dk/wcf/" minOccurs="0" ref="q13:PrimaryAction" />
+        <xs:element xmlns:q14="http://pim.4sound.dk/wcf/" minOccurs="0" ref="q14:SecondaryAction" />
+        <xs:element xmlns:q15="http://pim.4sound.dk/wcf/" minOccurs="0" ref="q15:UpdateRequestArray" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

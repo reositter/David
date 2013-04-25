@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://pim.4sound.dk/wcf/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="http://tempuri.org/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PIMServiceWeb" targetNamespace="http://pim.4sound.dk/wcf/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:import namespace="http://tempuri.org/" location="http://10.28.8.12:8050/?wsdl=wsdl0" />
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://pim.4sound.dk/wcf/Imports">
+      <xsd:import schemaLocation="http://10.28.8.12:8050/?xsd=xsd0" namespace="http://pim.4sound.dk/wcf/entities/" />
+      <xsd:import schemaLocation="http://10.28.8.12:8050/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://10.28.8.12:8050/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ServiceWebContract.Products" />
+      <xsd:import schemaLocation="http://10.28.8.12:8050/?xsd=xsd3" namespace="http://pim.4sound.dk/wcf/" />
+      <xsd:import schemaLocation="http://10.28.8.12:8050/?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ProductQueryRequest">
+    <wsdl:part xmlns:q1="http://pim.4sound.dk/wcf/entities/" name="parameters" element="q1:ProductQueryRequest" />
+  </wsdl:message>
+  <wsdl:message name="QueueResult">
+    <wsdl:part xmlns:q2="http://pim.4sound.dk/wcf/entities/" name="parameters" element="q2:QueueResult" />
+  </wsdl:message>
+  <wsdl:message name="ProductQueryResponse">
+    <wsdl:part xmlns:q3="http://pim.4sound.dk/wcf/entities/" name="parameters" element="q3:ProductQueryResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProductUpdateRequest">
+    <wsdl:part xmlns:q4="http://pim.4sound.dk/wcf/entities/" name="parameters" element="q4:ProductUpdateRequest" />
+  </wsdl:message>
+  <wsdl:message name="ProductUpdateResponse">
+    <wsdl:part xmlns:q5="http://pim.4sound.dk/wcf/entities/" name="parameters" element="q5:ProductUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProductQueryRequestArray">
+    <wsdl:part xmlns:q6="http://pim.4sound.dk/wcf/entities/" name="parameters" element="q6:ProductQueryRequestArray" />
+  </wsdl:message>
+  <wsdl:message name="ProductUpdateRequestArray">
+    <wsdl:part xmlns:q7="http://pim.4sound.dk/wcf/entities/" name="parameters" element="q7:ProductUpdateRequestArray" />
+  </wsdl:message>
+  <wsdl:portType name="IQueueOf_ProductQueryRequest_ProductQueryResponse">
+    <wsdl:operation name="EnqueueMessage">
+      <wsdl:input wsaw:Action="http://pim.4sound.dk/wcf/IQueueOf_ProductQueryRequest_ProductQueryResponse/EnqueueMessage" name="ProductQueryRequest" message="tns:ProductQueryRequest" />
+      <wsdl:output wsaw:Action="http://pim.4sound.dk/wcf/IQueueOf_ProductQueryRequest_ProductQueryResponse/EnqueueMessageResponse" name="QueueResult" message="tns:QueueResult" />
+    </wsdl:operation>
+    <wsdl:operation name="DequeueMessage">
+      <wsdl:input wsaw:Action="http://pim.4sound.dk/wcf/IQueueOf_ProductQueryRequest_ProductQueryResponse/DequeueMessage" name="QueueResult" message="tns:QueueResult" />
+      <wsdl:output wsaw:Action="http://pim.4sound.dk/wcf/IQueueOf_ProductQueryRequest_ProductQueryResponse/DequeueMessageResponse" name="ProductQueryResponse" message="tns:ProductQueryResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IQueueOf_ProductUpdateRequest_ProductUpdateResponse">
+    <wsdl:operation name="EnqueueMessage">
+      <wsdl:input wsaw:Action="http://pim.4sound.dk/wcf/IQueueOf_ProductUpdateRequest_ProductUpdateResponse/EnqueueMessage" name="ProductUpdateRequest" message="tns:ProductUpdateRequest" />
+      <wsdl:output wsaw:Action="http://pim.4sound.dk/wcf/IQueueOf_ProductUpdateRequest_ProductUpdateResponse/EnqueueMessageResponse" name="QueueResult" message="tns:QueueResult" />
+    </wsdl:operation>
+    <wsdl:operation name="DequeueMessage">
+      <wsdl:input wsaw:Action="http://pim.4sound.dk/wcf/IQueueOf_ProductUpdateRequest_ProductUpdateResponse/DequeueMessage" name="QueueResult" message="tns:QueueResult" />
+      <wsdl:output wsaw:Action="http://pim.4sound.dk/wcf/IQueueOf_ProductUpdateRequest_ProductUpdateResponse/DequeueMessageResponse" name="ProductUpdateResponse" message="tns:ProductUpdateResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IQueueOf_ProductQueryRequestArray_ProductQueryResponse">
+    <wsdl:operation name="EnqueueMessage">
+      <wsdl:input wsaw:Action="http://pim.4sound.dk/wcf/IQueueOf_ProductQueryRequestArray_ProductQueryResponse/EnqueueMessage" name="ProductQueryRequestArray" message="tns:ProductQueryRequestArray" />
+      <wsdl:output wsaw:Action="http://pim.4sound.dk/wcf/IQueueOf_ProductQueryRequestArray_ProductQueryResponse/EnqueueMessageResponse" name="QueueResult" message="tns:QueueResult" />
+    </wsdl:operation>
+    <wsdl:operation name="DequeueMessage">
+      <wsdl:input wsaw:Action="http://pim.4sound.dk/wcf/IQueueOf_ProductQueryRequestArray_ProductQueryResponse/DequeueMessage" name="QueueResult" message="tns:QueueResult" />
+      <wsdl:output wsaw:Action="http://pim.4sound.dk/wcf/IQueueOf_ProductQueryRequestArray_ProductQueryResponse/DequeueMessageResponse" name="ProductQueryResponse" message="tns:ProductQueryResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse">
+    <wsdl:operation name="EnqueueMessage">
+      <wsdl:input wsaw:Action="http://pim.4sound.dk/wcf/IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse/EnqueueMessage" name="ProductUpdateRequestArray" message="tns:ProductUpdateRequestArray" />
+      <wsdl:output wsaw:Action="http://pim.4sound.dk/wcf/IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse/EnqueueMessageResponse" name="QueueResult" message="tns:QueueResult" />
+    </wsdl:operation>
+    <wsdl:operation name="DequeueMessage">
+      <wsdl:input wsaw:Action="http://pim.4sound.dk/wcf/IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse/DequeueMessage" name="QueueResult" message="tns:QueueResult" />
+      <wsdl:output wsaw:Action="http://pim.4sound.dk/wcf/IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse/DequeueMessageResponse" name="ProductUpdateResponse" message="tns:ProductUpdateResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:service name="PIMServiceWeb">
+    <wsdl:port name="BasicHttpBinding_IQueueOf_ProductQueryRequest_ProductQueryResponse" binding="i0:BasicHttpBinding_IQueueOf_ProductQueryRequest_ProductQueryResponse">
+      <soap:address location="http://10.28.8.12:8050/ProductQueryService" />
+    </wsdl:port>
+    <wsdl:port name="BasicHttpBinding_IQueueOf_ProductUpdateRequest_ProductUpdateResponse" binding="i0:BasicHttpBinding_IQueueOf_ProductUpdateRequest_ProductUpdateResponse">
+      <soap:address location="http://10.28.8.12:8050/ProductUpdateService" />
+    </wsdl:port>
+    <wsdl:port name="BasicHttpBinding_IQueueOf_ProductQueryRequestArray_ProductQueryResponse" binding="i0:BasicHttpBinding_IQueueOf_ProductQueryRequestArray_ProductQueryResponse">
+      <soap:address location="http://10.28.8.12:8050/ProductQueryArrayService" />
+    </wsdl:port>
+    <wsdl:port name="BasicHttpBinding_IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse" binding="i0:BasicHttpBinding_IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse">
+      <soap:address location="http://10.28.8.12:8050/ProductUpdateArrayService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
