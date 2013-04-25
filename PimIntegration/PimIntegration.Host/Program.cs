@@ -1,5 +1,4 @@
-﻿using PimIntegration.Service;
-using Topshelf;
+﻿using Topshelf;
 
 namespace PimIntegration.Host
 {

@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="ProductQueryResponseItem" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>PimIntegration.Service.PIMServiceEndpoint.ProductQueryResponseItem, Service References.PIMServiceEndpoint.Reference.cs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponseItem, Service References.PIMServiceEndpoint.Reference.cs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

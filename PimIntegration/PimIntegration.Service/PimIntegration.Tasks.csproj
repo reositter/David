@@ -7,8 +7,8 @@
     <ProjectGuid>{DDC8E2B6-0955-4E97-BC94-25BDA0D56CEE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PimIntegration.Service</RootNamespace>
-    <AssemblyName>PimIntegration.Service</AssemblyName>
+    <RootNamespace>PimIntegration.Tasks</RootNamespace>
+    <AssemblyName>PimIntegration.Tasks</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -45,14 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetNewProductsTask.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="PimQueries.cs" />
+    <Compile Include="Queries\PimQueries.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\PIMServiceEndpoint\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="TaskSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -75,10 +77,10 @@
     <None Include="Service References\PIMServiceEndpoint\item4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\PIMServiceEndpoint\PimIntegration.Service.PIMServiceEndpoint.ProductQueryResponseItem.datasource">
+    <None Include="Service References\PIMServiceEndpoint\PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponseItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\PIMServiceEndpoint\PimIntegration.Service.PIMServiceEndpoint.ProductUpdateResponseItem.datasource">
+    <None Include="Service References\PIMServiceEndpoint\PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateResponseItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\PIMServiceEndpoint\PIMServiceWeb.wsdl" />
@@ -97,6 +99,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

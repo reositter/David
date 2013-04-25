@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PimIntegration.Service", "PimIntegration.Service\PimIntegration.Service.csproj", "{DDC8E2B6-0955-4E97-BC94-25BDA0D56CEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PimIntegration.Tasks", "PimIntegration.Service\PimIntegration.Tasks.csproj", "{DDC8E2B6-0955-4E97-BC94-25BDA0D56CEE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PimIntegration.Host", "PimIntegration.Host\PimIntegration.Host.csproj", "{471777D3-6FA7-4770-8851-8BE69B630FCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{0ECE3B2D-9D74-48DC-8E59-F70B3C3B365D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +21,10 @@ Global
 		{471777D3-6FA7-4770-8851-8BE69B630FCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{471777D3-6FA7-4770-8851-8BE69B630FCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{471777D3-6FA7-4770-8851-8BE69B630FCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ECE3B2D-9D74-48DC-8E59-F70B3C3B365D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ECE3B2D-9D74-48DC-8E59-F70B3C3B365D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ECE3B2D-9D74-48DC-8E59-F70B3C3B365D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ECE3B2D-9D74-48DC-8E59-F70B3C3B365D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

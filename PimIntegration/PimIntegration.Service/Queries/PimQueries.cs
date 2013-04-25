@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PimIntegration.Service
+namespace PimIntegration.Tasks.Queries
 {
 	public interface IPimQueries
 	{

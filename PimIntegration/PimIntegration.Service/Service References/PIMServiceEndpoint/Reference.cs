@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PimIntegration.Service.PIMServiceEndpoint {
+namespace PimIntegration.Tasks.PIMServiceEndpoint {
     using System.Runtime.Serialization;
     using System;
     
@@ -382,7 +382,7 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
         private string SpecialTypeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private PimIntegration.Service.PIMServiceEndpoint.ProductQueryResponseMarketItem[] MarketsField;
+        private PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponseMarketItem[] MarketsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime CreatedOnField;
@@ -583,7 +583,7 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=14)]
-        public PimIntegration.Service.PIMServiceEndpoint.ProductQueryResponseMarketItem[] Markets {
+        public PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponseMarketItem[] Markets {
             get {
                 return this.MarketsField;
             }
@@ -1510,13 +1510,13 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
         [System.ServiceModel.OperationContractAttribute(Action="http://pim.4sound.dk/wcf/IQueueOf_ProductQueryRequest_ProductQueryResponse/Enqueu" +
             "eMessage", ReplyAction="http://pim.4sound.dk/wcf/IQueueOf_ProductQueryRequest_ProductQueryResponse/Enqueu" +
             "eMessageResponse")]
-        PimIntegration.Service.PIMServiceEndpoint.QueueResult EnqueueMessage(PimIntegration.Service.PIMServiceEndpoint.ProductQueryRequest request);
+        PimIntegration.Tasks.PIMServiceEndpoint.QueueResult EnqueueMessage(PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryRequest request);
         
         // CODEGEN: Generating message contract since the wrapper namespace (http://pim.4sound.dk/wcf/entities/) of message QueueResult does not match the default value (http://pim.4sound.dk/wcf/)
         [System.ServiceModel.OperationContractAttribute(Action="http://pim.4sound.dk/wcf/IQueueOf_ProductQueryRequest_ProductQueryResponse/Dequeu" +
             "eMessage", ReplyAction="http://pim.4sound.dk/wcf/IQueueOf_ProductQueryRequest_ProductQueryResponse/Dequeu" +
             "eMessageResponse")]
-        PimIntegration.Service.PIMServiceEndpoint.ProductQueryResponse DequeueMessage(PimIntegration.Service.PIMServiceEndpoint.QueueResult request);
+        PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponse DequeueMessage(PimIntegration.Tasks.PIMServiceEndpoint.QueueResult request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1526,7 +1526,7 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
     public partial class ProductQueryRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://pim.4sound.dk/wcf/", Order=0)]
-        public PimIntegration.Service.PIMServiceEndpoint.ProductQueryRequestItem Item;
+        public PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryRequestItem Item;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://pim.4sound.dk/wcf/", Order=1)]
         public string PrimaryAction;
@@ -1537,7 +1537,7 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
         public ProductQueryRequest() {
         }
         
-        public ProductQueryRequest(PimIntegration.Service.PIMServiceEndpoint.ProductQueryRequestItem Item, string PrimaryAction, string SecondaryAction) {
+        public ProductQueryRequest(PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryRequestItem Item, string PrimaryAction, string SecondaryAction) {
             this.Item = Item;
             this.PrimaryAction = PrimaryAction;
             this.SecondaryAction = SecondaryAction;
@@ -1568,23 +1568,23 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
     public partial class ProductQueryResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://pim.4sound.dk/wcf/", Order=0)]
-        public PimIntegration.Service.PIMServiceEndpoint.ProductQueryResponseItem[] QueryResponseArray;
+        public PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponseItem[] QueryResponseArray;
         
         public ProductQueryResponse() {
         }
         
-        public ProductQueryResponse(PimIntegration.Service.PIMServiceEndpoint.ProductQueryResponseItem[] QueryResponseArray) {
+        public ProductQueryResponse(PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponseItem[] QueryResponseArray) {
             this.QueryResponseArray = QueryResponseArray;
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IQueueOf_ProductQueryRequest_ProductQueryResponseChannel : PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductQueryRequest_ProductQueryResponse, System.ServiceModel.IClientChannel {
+    public interface IQueueOf_ProductQueryRequest_ProductQueryResponseChannel : PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductQueryRequest_ProductQueryResponse, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class QueueOf_ProductQueryRequest_ProductQueryResponseClient : System.ServiceModel.ClientBase<PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductQueryRequest_ProductQueryResponse>, PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductQueryRequest_ProductQueryResponse {
+    public partial class QueueOf_ProductQueryRequest_ProductQueryResponseClient : System.ServiceModel.ClientBase<PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductQueryRequest_ProductQueryResponse>, PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductQueryRequest_ProductQueryResponse {
         
         public QueueOf_ProductQueryRequest_ProductQueryResponseClient() {
         }
@@ -1606,28 +1606,28 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        PimIntegration.Service.PIMServiceEndpoint.QueueResult PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductQueryRequest_ProductQueryResponse.EnqueueMessage(PimIntegration.Service.PIMServiceEndpoint.ProductQueryRequest request) {
+        PimIntegration.Tasks.PIMServiceEndpoint.QueueResult PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductQueryRequest_ProductQueryResponse.EnqueueMessage(PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryRequest request) {
             return base.Channel.EnqueueMessage(request);
         }
         
-        public int EnqueueMessage(PimIntegration.Service.PIMServiceEndpoint.ProductQueryRequestItem Item, string PrimaryAction, string SecondaryAction) {
-            PimIntegration.Service.PIMServiceEndpoint.ProductQueryRequest inValue = new PimIntegration.Service.PIMServiceEndpoint.ProductQueryRequest();
+        public int EnqueueMessage(PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryRequestItem Item, string PrimaryAction, string SecondaryAction) {
+            PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryRequest inValue = new PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryRequest();
             inValue.Item = Item;
             inValue.PrimaryAction = PrimaryAction;
             inValue.SecondaryAction = SecondaryAction;
-            PimIntegration.Service.PIMServiceEndpoint.QueueResult retVal = ((PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductQueryRequest_ProductQueryResponse)(this)).EnqueueMessage(inValue);
+            PimIntegration.Tasks.PIMServiceEndpoint.QueueResult retVal = ((PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductQueryRequest_ProductQueryResponse)(this)).EnqueueMessage(inValue);
             return retVal.MessageId;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        PimIntegration.Service.PIMServiceEndpoint.ProductQueryResponse PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductQueryRequest_ProductQueryResponse.DequeueMessage(PimIntegration.Service.PIMServiceEndpoint.QueueResult request) {
+        PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponse PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductQueryRequest_ProductQueryResponse.DequeueMessage(PimIntegration.Tasks.PIMServiceEndpoint.QueueResult request) {
             return base.Channel.DequeueMessage(request);
         }
         
-        public PimIntegration.Service.PIMServiceEndpoint.ProductQueryResponseItem[] DequeueMessage(int MessageId) {
-            PimIntegration.Service.PIMServiceEndpoint.QueueResult inValue = new PimIntegration.Service.PIMServiceEndpoint.QueueResult();
+        public PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponseItem[] DequeueMessage(int MessageId) {
+            PimIntegration.Tasks.PIMServiceEndpoint.QueueResult inValue = new PimIntegration.Tasks.PIMServiceEndpoint.QueueResult();
             inValue.MessageId = MessageId;
-            PimIntegration.Service.PIMServiceEndpoint.ProductQueryResponse retVal = ((PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductQueryRequest_ProductQueryResponse)(this)).DequeueMessage(inValue);
+            PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponse retVal = ((PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductQueryRequest_ProductQueryResponse)(this)).DequeueMessage(inValue);
             return retVal.QueryResponseArray;
         }
     }
@@ -1640,13 +1640,13 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
         [System.ServiceModel.OperationContractAttribute(Action="http://pim.4sound.dk/wcf/IQueueOf_ProductUpdateRequest_ProductUpdateResponse/Enqu" +
             "eueMessage", ReplyAction="http://pim.4sound.dk/wcf/IQueueOf_ProductUpdateRequest_ProductUpdateResponse/Enqu" +
             "eueMessageResponse")]
-        PimIntegration.Service.PIMServiceEndpoint.QueueResult EnqueueMessage(PimIntegration.Service.PIMServiceEndpoint.ProductUpdateRequest request);
+        PimIntegration.Tasks.PIMServiceEndpoint.QueueResult EnqueueMessage(PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateRequest request);
         
         // CODEGEN: Generating message contract since the wrapper namespace (http://pim.4sound.dk/wcf/entities/) of message QueueResult does not match the default value (http://pim.4sound.dk/wcf/)
         [System.ServiceModel.OperationContractAttribute(Action="http://pim.4sound.dk/wcf/IQueueOf_ProductUpdateRequest_ProductUpdateResponse/Dequ" +
             "eueMessage", ReplyAction="http://pim.4sound.dk/wcf/IQueueOf_ProductUpdateRequest_ProductUpdateResponse/Dequ" +
             "eueMessageResponse")]
-        PimIntegration.Service.PIMServiceEndpoint.ProductUpdateResponse DequeueMessage(PimIntegration.Service.PIMServiceEndpoint.QueueResult request);
+        PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateResponse DequeueMessage(PimIntegration.Tasks.PIMServiceEndpoint.QueueResult request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1662,12 +1662,12 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
         public string SecondaryAction;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://pim.4sound.dk/wcf/", Order=2)]
-        public PimIntegration.Service.PIMServiceEndpoint.ProductUpdateRequestItem UpdateRequest;
+        public PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateRequestItem UpdateRequest;
         
         public ProductUpdateRequest() {
         }
         
-        public ProductUpdateRequest(string PrimaryAction, string SecondaryAction, PimIntegration.Service.PIMServiceEndpoint.ProductUpdateRequestItem UpdateRequest) {
+        public ProductUpdateRequest(string PrimaryAction, string SecondaryAction, PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateRequestItem UpdateRequest) {
             this.PrimaryAction = PrimaryAction;
             this.SecondaryAction = SecondaryAction;
             this.UpdateRequest = UpdateRequest;
@@ -1681,23 +1681,23 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
     public partial class ProductUpdateResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://pim.4sound.dk/wcf/", Order=0)]
-        public PimIntegration.Service.PIMServiceEndpoint.ProductUpdateResponseItem[] UpdateResponseArray;
+        public PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateResponseItem[] UpdateResponseArray;
         
         public ProductUpdateResponse() {
         }
         
-        public ProductUpdateResponse(PimIntegration.Service.PIMServiceEndpoint.ProductUpdateResponseItem[] UpdateResponseArray) {
+        public ProductUpdateResponse(PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateResponseItem[] UpdateResponseArray) {
             this.UpdateResponseArray = UpdateResponseArray;
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IQueueOf_ProductUpdateRequest_ProductUpdateResponseChannel : PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductUpdateRequest_ProductUpdateResponse, System.ServiceModel.IClientChannel {
+    public interface IQueueOf_ProductUpdateRequest_ProductUpdateResponseChannel : PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductUpdateRequest_ProductUpdateResponse, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class QueueOf_ProductUpdateRequest_ProductUpdateResponseClient : System.ServiceModel.ClientBase<PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductUpdateRequest_ProductUpdateResponse>, PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductUpdateRequest_ProductUpdateResponse {
+    public partial class QueueOf_ProductUpdateRequest_ProductUpdateResponseClient : System.ServiceModel.ClientBase<PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductUpdateRequest_ProductUpdateResponse>, PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductUpdateRequest_ProductUpdateResponse {
         
         public QueueOf_ProductUpdateRequest_ProductUpdateResponseClient() {
         }
@@ -1719,28 +1719,28 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        PimIntegration.Service.PIMServiceEndpoint.QueueResult PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductUpdateRequest_ProductUpdateResponse.EnqueueMessage(PimIntegration.Service.PIMServiceEndpoint.ProductUpdateRequest request) {
+        PimIntegration.Tasks.PIMServiceEndpoint.QueueResult PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductUpdateRequest_ProductUpdateResponse.EnqueueMessage(PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateRequest request) {
             return base.Channel.EnqueueMessage(request);
         }
         
-        public int EnqueueMessage(string PrimaryAction, string SecondaryAction, PimIntegration.Service.PIMServiceEndpoint.ProductUpdateRequestItem UpdateRequest) {
-            PimIntegration.Service.PIMServiceEndpoint.ProductUpdateRequest inValue = new PimIntegration.Service.PIMServiceEndpoint.ProductUpdateRequest();
+        public int EnqueueMessage(string PrimaryAction, string SecondaryAction, PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateRequestItem UpdateRequest) {
+            PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateRequest inValue = new PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateRequest();
             inValue.PrimaryAction = PrimaryAction;
             inValue.SecondaryAction = SecondaryAction;
             inValue.UpdateRequest = UpdateRequest;
-            PimIntegration.Service.PIMServiceEndpoint.QueueResult retVal = ((PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductUpdateRequest_ProductUpdateResponse)(this)).EnqueueMessage(inValue);
+            PimIntegration.Tasks.PIMServiceEndpoint.QueueResult retVal = ((PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductUpdateRequest_ProductUpdateResponse)(this)).EnqueueMessage(inValue);
             return retVal.MessageId;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        PimIntegration.Service.PIMServiceEndpoint.ProductUpdateResponse PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductUpdateRequest_ProductUpdateResponse.DequeueMessage(PimIntegration.Service.PIMServiceEndpoint.QueueResult request) {
+        PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateResponse PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductUpdateRequest_ProductUpdateResponse.DequeueMessage(PimIntegration.Tasks.PIMServiceEndpoint.QueueResult request) {
             return base.Channel.DequeueMessage(request);
         }
         
-        public PimIntegration.Service.PIMServiceEndpoint.ProductUpdateResponseItem[] DequeueMessage(int MessageId) {
-            PimIntegration.Service.PIMServiceEndpoint.QueueResult inValue = new PimIntegration.Service.PIMServiceEndpoint.QueueResult();
+        public PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateResponseItem[] DequeueMessage(int MessageId) {
+            PimIntegration.Tasks.PIMServiceEndpoint.QueueResult inValue = new PimIntegration.Tasks.PIMServiceEndpoint.QueueResult();
             inValue.MessageId = MessageId;
-            PimIntegration.Service.PIMServiceEndpoint.ProductUpdateResponse retVal = ((PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductUpdateRequest_ProductUpdateResponse)(this)).DequeueMessage(inValue);
+            PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateResponse retVal = ((PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductUpdateRequest_ProductUpdateResponse)(this)).DequeueMessage(inValue);
             return retVal.UpdateResponseArray;
         }
     }
@@ -1753,13 +1753,13 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
         [System.ServiceModel.OperationContractAttribute(Action="http://pim.4sound.dk/wcf/IQueueOf_ProductQueryRequestArray_ProductQueryResponse/E" +
             "nqueueMessage", ReplyAction="http://pim.4sound.dk/wcf/IQueueOf_ProductQueryRequestArray_ProductQueryResponse/E" +
             "nqueueMessageResponse")]
-        PimIntegration.Service.PIMServiceEndpoint.QueueResult EnqueueMessage(PimIntegration.Service.PIMServiceEndpoint.ProductQueryRequestArray request);
+        PimIntegration.Tasks.PIMServiceEndpoint.QueueResult EnqueueMessage(PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryRequestArray request);
         
         // CODEGEN: Generating message contract since the wrapper namespace (http://pim.4sound.dk/wcf/entities/) of message QueueResult does not match the default value (http://pim.4sound.dk/wcf/)
         [System.ServiceModel.OperationContractAttribute(Action="http://pim.4sound.dk/wcf/IQueueOf_ProductQueryRequestArray_ProductQueryResponse/D" +
             "equeueMessage", ReplyAction="http://pim.4sound.dk/wcf/IQueueOf_ProductQueryRequestArray_ProductQueryResponse/D" +
             "equeueMessageResponse")]
-        PimIntegration.Service.PIMServiceEndpoint.ProductQueryResponse DequeueMessage(PimIntegration.Service.PIMServiceEndpoint.QueueResult request);
+        PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponse DequeueMessage(PimIntegration.Tasks.PIMServiceEndpoint.QueueResult request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1772,7 +1772,7 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
         public string PrimaryAction;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://pim.4sound.dk/wcf/", Order=1)]
-        public PimIntegration.Service.PIMServiceEndpoint.ProductQueryRequestItem[] QueryRequestArray;
+        public PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryRequestItem[] QueryRequestArray;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://pim.4sound.dk/wcf/", Order=2)]
         public string SecondaryAction;
@@ -1780,7 +1780,7 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
         public ProductQueryRequestArray() {
         }
         
-        public ProductQueryRequestArray(string PrimaryAction, PimIntegration.Service.PIMServiceEndpoint.ProductQueryRequestItem[] QueryRequestArray, string SecondaryAction) {
+        public ProductQueryRequestArray(string PrimaryAction, PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryRequestItem[] QueryRequestArray, string SecondaryAction) {
             this.PrimaryAction = PrimaryAction;
             this.QueryRequestArray = QueryRequestArray;
             this.SecondaryAction = SecondaryAction;
@@ -1788,12 +1788,12 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IQueueOf_ProductQueryRequestArray_ProductQueryResponseChannel : PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductQueryRequestArray_ProductQueryResponse, System.ServiceModel.IClientChannel {
+    public interface IQueueOf_ProductQueryRequestArray_ProductQueryResponseChannel : PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductQueryRequestArray_ProductQueryResponse, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class QueueOf_ProductQueryRequestArray_ProductQueryResponseClient : System.ServiceModel.ClientBase<PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductQueryRequestArray_ProductQueryResponse>, PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductQueryRequestArray_ProductQueryResponse {
+    public partial class QueueOf_ProductQueryRequestArray_ProductQueryResponseClient : System.ServiceModel.ClientBase<PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductQueryRequestArray_ProductQueryResponse>, PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductQueryRequestArray_ProductQueryResponse {
         
         public QueueOf_ProductQueryRequestArray_ProductQueryResponseClient() {
         }
@@ -1815,28 +1815,28 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        PimIntegration.Service.PIMServiceEndpoint.QueueResult PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductQueryRequestArray_ProductQueryResponse.EnqueueMessage(PimIntegration.Service.PIMServiceEndpoint.ProductQueryRequestArray request) {
+        PimIntegration.Tasks.PIMServiceEndpoint.QueueResult PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductQueryRequestArray_ProductQueryResponse.EnqueueMessage(PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryRequestArray request) {
             return base.Channel.EnqueueMessage(request);
         }
         
-        public int EnqueueMessage(string PrimaryAction, PimIntegration.Service.PIMServiceEndpoint.ProductQueryRequestItem[] QueryRequestArray, string SecondaryAction) {
-            PimIntegration.Service.PIMServiceEndpoint.ProductQueryRequestArray inValue = new PimIntegration.Service.PIMServiceEndpoint.ProductQueryRequestArray();
+        public int EnqueueMessage(string PrimaryAction, PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryRequestItem[] QueryRequestArray, string SecondaryAction) {
+            PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryRequestArray inValue = new PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryRequestArray();
             inValue.PrimaryAction = PrimaryAction;
             inValue.QueryRequestArray = QueryRequestArray;
             inValue.SecondaryAction = SecondaryAction;
-            PimIntegration.Service.PIMServiceEndpoint.QueueResult retVal = ((PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductQueryRequestArray_ProductQueryResponse)(this)).EnqueueMessage(inValue);
+            PimIntegration.Tasks.PIMServiceEndpoint.QueueResult retVal = ((PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductQueryRequestArray_ProductQueryResponse)(this)).EnqueueMessage(inValue);
             return retVal.MessageId;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        PimIntegration.Service.PIMServiceEndpoint.ProductQueryResponse PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductQueryRequestArray_ProductQueryResponse.DequeueMessage(PimIntegration.Service.PIMServiceEndpoint.QueueResult request) {
+        PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponse PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductQueryRequestArray_ProductQueryResponse.DequeueMessage(PimIntegration.Tasks.PIMServiceEndpoint.QueueResult request) {
             return base.Channel.DequeueMessage(request);
         }
         
-        public PimIntegration.Service.PIMServiceEndpoint.ProductQueryResponseItem[] DequeueMessage(int MessageId) {
-            PimIntegration.Service.PIMServiceEndpoint.QueueResult inValue = new PimIntegration.Service.PIMServiceEndpoint.QueueResult();
+        public PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponseItem[] DequeueMessage(int MessageId) {
+            PimIntegration.Tasks.PIMServiceEndpoint.QueueResult inValue = new PimIntegration.Tasks.PIMServiceEndpoint.QueueResult();
             inValue.MessageId = MessageId;
-            PimIntegration.Service.PIMServiceEndpoint.ProductQueryResponse retVal = ((PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductQueryRequestArray_ProductQueryResponse)(this)).DequeueMessage(inValue);
+            PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponse retVal = ((PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductQueryRequestArray_ProductQueryResponse)(this)).DequeueMessage(inValue);
             return retVal.QueryResponseArray;
         }
     }
@@ -1849,13 +1849,13 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
         [System.ServiceModel.OperationContractAttribute(Action="http://pim.4sound.dk/wcf/IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse" +
             "/EnqueueMessage", ReplyAction="http://pim.4sound.dk/wcf/IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse" +
             "/EnqueueMessageResponse")]
-        PimIntegration.Service.PIMServiceEndpoint.QueueResult EnqueueMessage(PimIntegration.Service.PIMServiceEndpoint.ProductUpdateRequestArray request);
+        PimIntegration.Tasks.PIMServiceEndpoint.QueueResult EnqueueMessage(PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateRequestArray request);
         
         // CODEGEN: Generating message contract since the wrapper namespace (http://pim.4sound.dk/wcf/entities/) of message QueueResult does not match the default value (http://pim.4sound.dk/wcf/)
         [System.ServiceModel.OperationContractAttribute(Action="http://pim.4sound.dk/wcf/IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse" +
             "/DequeueMessage", ReplyAction="http://pim.4sound.dk/wcf/IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse" +
             "/DequeueMessageResponse")]
-        PimIntegration.Service.PIMServiceEndpoint.ProductUpdateResponse DequeueMessage(PimIntegration.Service.PIMServiceEndpoint.QueueResult request);
+        PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateResponse DequeueMessage(PimIntegration.Tasks.PIMServiceEndpoint.QueueResult request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1871,12 +1871,12 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
         public string SecondaryAction;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://pim.4sound.dk/wcf/", Order=2)]
-        public PimIntegration.Service.PIMServiceEndpoint.ProductUpdateRequestItem[] UpdateRequestArray;
+        public PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateRequestItem[] UpdateRequestArray;
         
         public ProductUpdateRequestArray() {
         }
         
-        public ProductUpdateRequestArray(string PrimaryAction, string SecondaryAction, PimIntegration.Service.PIMServiceEndpoint.ProductUpdateRequestItem[] UpdateRequestArray) {
+        public ProductUpdateRequestArray(string PrimaryAction, string SecondaryAction, PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateRequestItem[] UpdateRequestArray) {
             this.PrimaryAction = PrimaryAction;
             this.SecondaryAction = SecondaryAction;
             this.UpdateRequestArray = UpdateRequestArray;
@@ -1884,12 +1884,12 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IQueueOf_ProductUpdateRequestArray_ProductUpdateResponseChannel : PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse, System.ServiceModel.IClientChannel {
+    public interface IQueueOf_ProductUpdateRequestArray_ProductUpdateResponseChannel : PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient : System.ServiceModel.ClientBase<PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse>, PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse {
+    public partial class QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient : System.ServiceModel.ClientBase<PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse>, PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse {
         
         public QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient() {
         }
@@ -1911,28 +1911,28 @@ namespace PimIntegration.Service.PIMServiceEndpoint {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        PimIntegration.Service.PIMServiceEndpoint.QueueResult PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse.EnqueueMessage(PimIntegration.Service.PIMServiceEndpoint.ProductUpdateRequestArray request) {
+        PimIntegration.Tasks.PIMServiceEndpoint.QueueResult PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse.EnqueueMessage(PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateRequestArray request) {
             return base.Channel.EnqueueMessage(request);
         }
         
-        public int EnqueueMessage(string PrimaryAction, string SecondaryAction, PimIntegration.Service.PIMServiceEndpoint.ProductUpdateRequestItem[] UpdateRequestArray) {
-            PimIntegration.Service.PIMServiceEndpoint.ProductUpdateRequestArray inValue = new PimIntegration.Service.PIMServiceEndpoint.ProductUpdateRequestArray();
+        public int EnqueueMessage(string PrimaryAction, string SecondaryAction, PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateRequestItem[] UpdateRequestArray) {
+            PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateRequestArray inValue = new PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateRequestArray();
             inValue.PrimaryAction = PrimaryAction;
             inValue.SecondaryAction = SecondaryAction;
             inValue.UpdateRequestArray = UpdateRequestArray;
-            PimIntegration.Service.PIMServiceEndpoint.QueueResult retVal = ((PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse)(this)).EnqueueMessage(inValue);
+            PimIntegration.Tasks.PIMServiceEndpoint.QueueResult retVal = ((PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse)(this)).EnqueueMessage(inValue);
             return retVal.MessageId;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        PimIntegration.Service.PIMServiceEndpoint.ProductUpdateResponse PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse.DequeueMessage(PimIntegration.Service.PIMServiceEndpoint.QueueResult request) {
+        PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateResponse PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse.DequeueMessage(PimIntegration.Tasks.PIMServiceEndpoint.QueueResult request) {
             return base.Channel.DequeueMessage(request);
         }
         
-        public PimIntegration.Service.PIMServiceEndpoint.ProductUpdateResponseItem[] DequeueMessage(int MessageId) {
-            PimIntegration.Service.PIMServiceEndpoint.QueueResult inValue = new PimIntegration.Service.PIMServiceEndpoint.QueueResult();
+        public PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateResponseItem[] DequeueMessage(int MessageId) {
+            PimIntegration.Tasks.PIMServiceEndpoint.QueueResult inValue = new PimIntegration.Tasks.PIMServiceEndpoint.QueueResult();
             inValue.MessageId = MessageId;
-            PimIntegration.Service.PIMServiceEndpoint.ProductUpdateResponse retVal = ((PimIntegration.Service.PIMServiceEndpoint.IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse)(this)).DequeueMessage(inValue);
+            PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateResponse retVal = ((PimIntegration.Tasks.PIMServiceEndpoint.IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse)(this)).DequeueMessage(inValue);
             return retVal.UpdateResponseArray;
         }
     }

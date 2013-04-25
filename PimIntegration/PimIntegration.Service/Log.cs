@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using log4net;
 
-namespace PimIntegration.Service
+namespace PimIntegration.Tasks
 {
 	public class Log
 	{

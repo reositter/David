@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using PimIntegration.Service;
+using PimIntegration.Tasks;
 using log4net.Config;
 using Timer = System.Threading.Timer;
 
@@ -38,14 +38,14 @@ namespace PimIntegration.Host
 		{
 			Log.ForCurrent.Info(string.Format("Getting new products. {0}", DateTime.Now));
 
-			_getNewProductsTimer.Change(AppSettings.IntervalInSecondsForGetNewProducts, Timeout.Infinite);
+			_getNewProductsTimer.Change(PimIntegrationSettings.IntervalInSecondsForGetNewProducts, Timeout.Infinite);
 		}
 
 		private void PublishProductUpdates(Object state)
 		{
 			Log.ForCurrent.Info(string.Format("Publishing product updates. {0}", DateTime.Now));
 
-			_publishProductUpdatesTimer.Change(AppSettings.IntervalInSecondsForPublishProductUpdates, Timeout.Infinite);
+			_publishProductUpdatesTimer.Change(PimIntegrationSettings.IntervalInSecondsForPublishProductUpdates, Timeout.Infinite);
 		}
 	}
 }
