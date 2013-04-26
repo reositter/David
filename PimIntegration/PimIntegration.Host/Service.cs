@@ -36,14 +36,14 @@ namespace PimIntegration.Host
 
 		private void GetNewProducts(Object state)
 		{
-			Log.ForCurrent.Info(string.Format("Getting new products. {0}", DateTime.Now));
+			Log.ForCurrent.Info(string.Format("Getting new products. {0}", DateTime.Now.ToShortDateString()));
 
 			_getNewProductsTimer.Change(PimIntegrationSettings.IntervalInSecondsForGetNewProducts, Timeout.Infinite);
 		}
 
 		private void PublishProductUpdates(Object state)
 		{
-			Log.ForCurrent.Info(string.Format("Publishing product updates. {0}", DateTime.Now));
+			Log.ForCurrent.Info(string.Format("Publishing product updates. {0}", DateTime.Now.ToShortDateString()));
 
 			_publishProductUpdatesTimer.Change(PimIntegrationSettings.IntervalInSecondsForPublishProductUpdates, Timeout.Infinite);
 		}

@@ -1,6 +1,7 @@
 ﻿using Moq;
 using NUnit.Framework;
 using PimIntegration.Tasks;
+using PimIntegration.Tasks.Setup;
 
 namespace UnitTest
 {
@@ -28,7 +29,6 @@ namespace UnitTest
 		public void Should_get_timestamp_for_last_request_when_executing_task()
 		{
 			// Arrange
-
 			// Act
 			_task.Execute(); 
 

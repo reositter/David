@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using PimIntegration.Tasks;
+using PimIntegration.Tasks.Setup;
 
 namespace PimIntegration.Host
 {
@@ -19,7 +20,8 @@ namespace PimIntegration.Host
 			TaskSettings = new TaskSettings
 			{
 				MaximumNumberOfRetries = Convert.ToInt32(ConfigurationManager.AppSettings["MaximumNumberOfRetries"]),
-				MillisecondsBetweenRetries = Convert.ToInt32(ConfigurationManager.AppSettings["MillisecondsBetweenRetries"])
+				MillisecondsBetweenRetries = Convert.ToInt32(ConfigurationManager.AppSettings["MillisecondsBetweenRetries"]),
+				DbConnectionString = ConfigurationManager.ConnectionStrings["SQLite"].ConnectionString
 			};
 		}
 	}

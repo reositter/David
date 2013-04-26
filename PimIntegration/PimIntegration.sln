@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PimIntegration.Tasks", "PimIntegration.Service\PimIntegration.Tasks.csproj", "{DDC8E2B6-0955-4E97-BC94-25BDA0D56CEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PimIntegration.Tasks", "PimIntegration.Tasks\PimIntegration.Tasks.csproj", "{DDC8E2B6-0955-4E97-BC94-25BDA0D56CEE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PimIntegration.Host", "PimIntegration.Host\PimIntegration.Host.csproj", "{471777D3-6FA7-4770-8851-8BE69B630FCA}"
 EndProject

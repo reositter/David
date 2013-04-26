@@ -59,11 +59,15 @@
     <Compile Include="Service.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PimIntegration.Service\PimIntegration.Tasks.csproj">
+    <ProjectReference Include="..\PimIntegration.Tasks\PimIntegration.Tasks.csproj">
       <Project>{ddc8e2b6-0955-4e97-bc94-25bda0d56cee}</Project>
       <Name>PimIntegration.Tasks</Name>
     </ProjectReference>
