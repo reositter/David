@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using System;
+using Moq;
 using NUnit.Framework;
 using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database;
@@ -35,6 +36,19 @@ namespace UnitTest.UnitTests
 
 			// Assert
 			_stateRepository.Verify(repo => repo.GetTimeStampOfLastRequestForNewProducts());
+		}
+
+		[Test]
+		public void Should_call_blah()
+		{
+			// Arrange
+			_stateRepository.Setup(repo => repo.GetTimeStampOfLastRequestForNewProducts()).Returns(DateTime.Now.AddDays(-1));
+
+			// Act
+			_task.Execute();
+
+			// Assert
+
 		}
     }
 }
