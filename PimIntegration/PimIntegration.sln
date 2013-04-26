@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PimIntegration.Tasks", "Pim
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PimIntegration.Host", "PimIntegration.Host\PimIntegration.Host.csproj", "{471777D3-6FA7-4770-8851-8BE69B630FCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{0ECE3B2D-9D74-48DC-8E59-F70B3C3B365D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "UnitTest\Test.csproj", "{0ECE3B2D-9D74-48DC-8E59-F70B3C3B365D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

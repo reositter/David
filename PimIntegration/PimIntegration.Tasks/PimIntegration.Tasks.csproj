@@ -34,6 +34,9 @@
     <Reference Include="log4net">
       <HintPath>..\ExternalComponents\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\ExternalComponents\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite">
@@ -51,8 +54,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\ConnectionStringWrapper.cs" />
     <Compile Include="GetNewProductsTask.cs" />
     <Compile Include="Log.cs" />
+    <Compile Include="Database\PimConversationStateRepository.cs" />
     <Compile Include="Queries\PimQueries.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\PIMServiceEndpoint\Reference.cs">

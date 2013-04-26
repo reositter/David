@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using PimIntegration.Tasks.Setup;
+using StructureMap;
 
-namespace UnitTest
+namespace UnitTest.IntegrationTests
 {
 	[TestFixture]
 	public class PimIntegrationSetupTests
 	{
 		[Test]
+		[Ignore]
 		public void Should_ensure_that_tables_exists()
 		{
 			// Arrange

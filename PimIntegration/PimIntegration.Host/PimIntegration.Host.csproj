@@ -37,6 +37,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalComponents\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\ExternalComponents\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />

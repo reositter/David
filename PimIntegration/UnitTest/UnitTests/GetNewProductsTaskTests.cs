@@ -1,15 +1,16 @@
 ﻿using Moq;
 using NUnit.Framework;
 using PimIntegration.Tasks;
+using PimIntegration.Tasks.Database;
 using PimIntegration.Tasks.Setup;
 
-namespace UnitTest
+namespace UnitTest.UnitTests
 {
 	[TestFixture]
     public class GetNewProductsTaskTests
     {
 		private GetNewProductsTask _task;
-		private Mock<IStateRepository> _stateRepository;
+		private Mock<IPimConversationStateRepository> _stateRepository;
 
 		[SetUp]
 		public void SetUp()
@@ -20,7 +21,7 @@ namespace UnitTest
 				MillisecondsBetweenRetries = 1000
 			};
 
-			_stateRepository = new Mock<IStateRepository>();
+			_stateRepository = new Mock<IPimConversationStateRepository>();
 
 			_task = new GetNewProductsTask(settings, _stateRepository.Object);
 		}
