@@ -1,50 +1,33 @@
 ﻿using System;
-using System.Threading;
 using PimIntegration.Tasks.Database;
-using PimIntegration.Tasks.PIMServiceEndpoint;
-using PimIntegration.Tasks.Setup;
+using PimIntegration.Tasks.Queries;
 
 namespace PimIntegration.Tasks
 {
 	public class GetNewProductsTask
 	{
-		private readonly ITaskSettings _settings;
 		private readonly IPimConversationStateRepository _pimConversationStateRepository;
+		private readonly IPimQueryService _pimQueryService;
 
-		public GetNewProductsTask(ITaskSettings settings, IPimConversationStateRepository pimConversationStateRepository)
+		public GetNewProductsTask(IPimConversationStateRepository pimConversationStateRepository, IPimQueryService pimQueryService)
 		{
 			_pimConversationStateRepository = pimConversationStateRepository;
+			_pimQueryService = pimQueryService;
 		}
 
 		public void Execute()
 		{
-			var timeStampOfLastRequest = _pimConversationStateRepository.GetTimeStampOfLastRequestForNewProducts() ?? DateTime.Now;
+			var timeOfLastRequest = _pimConversationStateRepository.GetTimeStampOfLastRequestForNewProducts();
+			var	timeOfThisRequest = DateTime.Now;
 
-			// Create client for requesting new products
-			var client = new QueueOf_ProductQueryRequest_ProductQueryResponseClient();
-
-			// Create filter for request
-			var queryItem = new ProductQueryRequestItem
-			{
-				// Get all products created since last request
-				CreatedOn = timeStampOfLastRequest
-			};
-			
-			// Send the request
-			var messageId = client.EnqueueMessage(queryItem, "GetProductByGroupAndBrand", "MarketAll");
-			ProductQueryResponseItem[] response;
-
-			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
-			{
-				response = client.DequeueMessage(messageId);
-
-				if (response != null) 
-					break;
-
-				Thread.Sleep(_settings.MillisecondsBetweenRetries);
-			}
+			var newProducts = _pimQueryService.GetNewProductsSince(timeOfLastRequest);
 
 			// Create products in Visma Global
+
+			// Report local id back to PIM
+
+			// Update time stamp for last call to
+			_pimConversationStateRepository.UpdateTimeStampOfLastRequestForNewProducts(timeOfThisRequest);
 		}
 	}
 }

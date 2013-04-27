@@ -55,10 +55,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\ConnectionStringWrapper.cs" />
+    <Compile Include="Exceptions\PimIntegrationDbException.cs" />
     <Compile Include="GetNewProductsTask.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Database\PimConversationStateRepository.cs" />
-    <Compile Include="Queries\PimQueries.cs" />
+    <Compile Include="Queries\IPimQueryService.cs" />
+    <Compile Include="Queries\PimQueryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\PIMServiceEndpoint\Reference.cs">
       <AutoGen>True</AutoGen>

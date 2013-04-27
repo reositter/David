@@ -1,47 +1,69 @@
 ﻿using System;
 using System.Data.SQLite;
+using PimIntegration.Exceptions;
+using PimIntegration.Tasks.Setup;
 
 namespace PimIntegration.Tasks.Database
 {
 	public class PimConversationStateRepository : IPimConversationStateRepository
 	{
-		private SQLiteConnection _conn;
+		private readonly string _connectionString;
+		private ITaskSettings _settings;
+		private const string TableName = "PimApiConversationState";
 
-		public PimConversationStateRepository(ConnectionStringWrapper connectionStringWrapper)
+		public PimConversationStateRepository(ConnectionStringWrapper connectionStringWrapper, ITaskSettings settings)
 		{
-			_conn = new SQLiteConnection(connectionStringWrapper.ConnectionString);
+			_connectionString = connectionStringWrapper.ConnectionString;
 		}
 
-		public DateTime? GetTimeStampOfLastRequestForNewProducts()
+		public DateTime GetTimeStampOfLastRequestForNewProducts()
 		{
-			DateTime? timeStamp = null;
+			DateTime timeStamp;
 
-			const string query = @"SELECT TimeStampForLastRequest FROM PimConversationState WHERE MethodName = 'GetProductByGroupAndBrand'";
-			_conn.Open();
-
-			using (var cmd = new SQLiteCommand(query, _conn))
+			using (var conn = new SQLiteConnection(_connectionString))
 			{
-				using (var reader = cmd.ExecuteReader())
+				conn.Open();
+				const string query = @"SELECT TimeStampForLastRequest FROM PimConversationState WHERE MethodName = 'GetProductByGroupAndBrand'";
+
+				using (var cmd = new SQLiteCommand(query, conn))
 				{
-					if (reader.Read())
-						timeStamp = Convert.ToDateTime(reader["TimeStampForLastRequest"]);
+					using (var reader = cmd.ExecuteReader())
+					{
+						if (reader.Read())
+							timeStamp = Convert.ToDateTime(reader["TimeStampForLastRequest"]);
+						else
+							throw new PimIntegrationDbException("Failed to get 'TimeStampForLastRequest' from table 'PimConversationState'");
+					}
 				}
 			}
-
-			_conn.Close();
 
 			return timeStamp;
 		}
 
-		public void SetTimeStampOfLastRequestForNewProducts(DateTime timeStamp)
+		public void UpdateTimeStampOfLastRequestForNewProducts(DateTime timeOfRequest)
 		{
-			throw new NotImplementedException();
+			UpdateTimeStampOfLastRequest("GetProductByGroupAndBrand", timeOfRequest);
+		}
+
+		private void UpdateTimeStampOfLastRequest(string methodName, DateTime timeOfRequest)
+		{
+			var timeStamp = timeOfRequest.ToString(_settings.TimeStampFormat);
+			using (var conn = new SQLiteConnection(_connectionString))
+			{
+				conn.Open();
+				var query = string.Format("UPDATE {0} SET TimeStampForLastRequest = '{1}' WHERE MethodName = '{2}'", TableName, timeStamp, methodName);
+
+				using (var cmd = new SQLiteCommand(query, conn))
+				{
+					cmd.ExecuteNonQuery();
+				}
+			}
 		}
 	}
 
 	public interface IPimConversationStateRepository
 	{
-		DateTime? GetTimeStampOfLastRequestForNewProducts();
-		void SetTimeStampOfLastRequestForNewProducts(DateTime timeStamp);
+		DateTime GetTimeStampOfLastRequestForNewProducts();
+		void UpdateTimeStampOfLastRequestForNewProducts(DateTime timeOfRequest);
 	}
 }
