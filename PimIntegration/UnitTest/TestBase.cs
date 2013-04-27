@@ -9,7 +9,8 @@ namespace PimIntegration.Test
 			return new TaskSettings
 			{
 				MaximumNumberOfRetries = maximumNumberOfRetries,
-				MillisecondsBetweenRetries = millisecondsBetweenRetries
+				MillisecondsBetweenRetries = millisecondsBetweenRetries,
+				TimeStampFormat = "yyyy-MM-dd HH:mm:ss.sss"
 			};
 		} 
 	}

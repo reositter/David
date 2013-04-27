@@ -30,19 +30,19 @@ namespace PimIntegration.Tasks.Queries
 
 			// Send the request
 			var messageId = client.EnqueueMessage(queryItem, "GetProductByGroupAndBrand", "MarketAll");
-			ProductQueryResponseItem[] response;
+			ProductQueryResponseItem[] products = null;
 
 			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
 			{
-				response = client.DequeueMessage(messageId);
+				products = client.DequeueMessage(messageId);
 
-				if (response != null)
+				if (products != null)
 					break;
 
 				Thread.Sleep(_settings.MillisecondsBetweenRetries);
 			}
 
-			return null;
+			return products;
 		}
 	}
 }

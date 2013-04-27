@@ -14,43 +14,70 @@ namespace PimIntegration.Test.UnitTests
 		private GetNewProductsTask _task;
 		private Mock<IPimApiConversationStateRepository> _stateRepository;
 		private Mock<IPimQueryService> _pimQueryService;
+		private DateTime _timeOfLastRequest;
 
 		[SetUp]
 		public void SetUp()
 		{
 			_stateRepository = new Mock<IPimApiConversationStateRepository>();
 			_pimQueryService = new Mock<IPimQueryService>();
+			_timeOfLastRequest = DateTime.Now.AddHours(-2);
 
+			_stateRepository.Setup(repo => repo.GetTimeStampOfLastRequestForNewProducts()).Returns(_timeOfLastRequest);
 			_task = new GetNewProductsTask(_stateRepository.Object, _pimQueryService.Object);
 		}
 
 		[Test]
-		public void Should_get_timestamp_for_last_request_when_executing_task()
+		public void Should_get_time_of_last_request_from_db_when_ctor_is_called()
 		{
 			// Arrange
-			_pimQueryService.Setup(service => service.GetNewProductsSince(It.IsAny<DateTime>())).Returns(new ProductQueryResponseItem[0]);
+			var repo = new Mock<IPimApiConversationStateRepository>();
 
 			// Act
-			_task.Execute(); 
+			_task = new GetNewProductsTask(repo.Object, _pimQueryService.Object);
 
 			// Assert
-			_stateRepository.Verify(repo => repo.GetTimeStampOfLastRequestForNewProducts());
+			repo.Verify(x => x.GetTimeStampOfLastRequestForNewProducts());
 		}
 
 		[Test]
 		public void Should_query_for_new_products()
 		{
 			// Arrange
-			var lastRequest = DateTime.Now;
-
-			_stateRepository.Setup(repo => repo.GetTimeStampOfLastRequestForNewProducts()).Returns(lastRequest);
-			_pimQueryService.Setup(service => service.GetNewProductsSince(lastRequest)).Returns(new ProductQueryResponseItem[0]);
+			_pimQueryService.Setup(service => service.GetNewProductsSince(_timeOfLastRequest)).Returns(new ProductQueryResponseItem[0]);
 
 			// Act
 			_task.Execute();
 
 			// Assert
-			_pimQueryService.Verify(service => service.GetNewProductsSince(lastRequest));
+			_pimQueryService.Verify(service => service.GetNewProductsSince(_timeOfLastRequest));
+		}
+
+		[Test]
+		public void Should_update_time_of_last_request_when_request_is_successful()
+		{
+			// Arrange
+			_pimQueryService.Setup(service => service.GetNewProductsSince(_timeOfLastRequest)).Returns(new ProductQueryResponseItem[0]);
+
+			// Act
+			_task.Execute();
+
+			// Assert
+			_stateRepository.Verify(repo => repo.UpdateTimeStampOfLastRequestForNewProducts(It.IsAny<DateTime>()));
+		}
+
+		[Test]
+		public void Should_not_update_time_of_last_request_when_there_is_no_response()
+		{
+			// Arrange
+			ProductQueryResponseItem[] nullResponse = null;
+			_pimQueryService.Setup(service => service.GetNewProductsSince(_timeOfLastRequest)).Returns(nullResponse);
+
+			// Act
+			_task.Execute();
+
+			// Assert
+			_stateRepository.Verify(repo => repo.UpdateTimeStampOfLastRequestForNewProducts(It.IsAny<DateTime>()), Times.Never());
 		}
     }
 }

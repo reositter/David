@@ -51,10 +51,10 @@ namespace PimIntegration.Tasks.Database
 			using (var conn = new SQLiteConnection(_connectionString))
 			{
 				conn.Open();
-				var query = @"CREATE TABLE IF NOT EXISTS PimApiConversationState (ID INTEGER PRIMARY KEY AUTOINCREMENT, MethodName TEXT, TimeOfLastRequest TEXT)";
+				var query = string.Format("CREATE TABLE IF NOT EXISTS {0} (ID INTEGER PRIMARY KEY AUTOINCREMENT, MethodName TEXT, TimeOfLastRequest TEXT);", TableName);
 				using (var cmd = new SQLiteCommand(query, conn))
 				{
-					var result = cmd.ExecuteNonQuery();
+					cmd.ExecuteNonQuery();
 				}
 
 				try
@@ -63,7 +63,7 @@ namespace PimIntegration.Tasks.Database
 				}
 				catch (PimIntegrationDbException pide)
 				{
-					// This should only happen the first time
+					// This should only happen the very first time the app is run.
 					Log.ForCurrent.Error(pide.Message);
 
 					Log.ForCurrent.InfoFormat("Initializing the {0} table.", TableName);
