@@ -6,18 +6,18 @@ namespace PimIntegration.Tasks
 {
 	public class GetNewProductsTask
 	{
-		private readonly IPimConversationStateRepository _pimConversationStateRepository;
+		private readonly IPimApiConversationStateRepository _pimApiConversationStateRepository;
 		private readonly IPimQueryService _pimQueryService;
 
-		public GetNewProductsTask(IPimConversationStateRepository pimConversationStateRepository, IPimQueryService pimQueryService)
+		public GetNewProductsTask(IPimApiConversationStateRepository pimApiConversationStateRepository, IPimQueryService pimQueryService)
 		{
-			_pimConversationStateRepository = pimConversationStateRepository;
+			_pimApiConversationStateRepository = pimApiConversationStateRepository;
 			_pimQueryService = pimQueryService;
 		}
 
 		public void Execute()
 		{
-			var timeOfLastRequest = _pimConversationStateRepository.GetTimeStampOfLastRequestForNewProducts();
+			var timeOfLastRequest = _pimApiConversationStateRepository.GetTimeStampOfLastRequestForNewProducts();
 			var	timeOfThisRequest = DateTime.Now;
 
 			var newProducts = _pimQueryService.GetNewProductsSince(timeOfLastRequest);
@@ -27,7 +27,7 @@ namespace PimIntegration.Tasks
 			// Report local id back to PIM
 
 			// Update time stamp for last call to
-			_pimConversationStateRepository.UpdateTimeStampOfLastRequestForNewProducts(timeOfThisRequest);
+			_pimApiConversationStateRepository.UpdateTimeStampOfLastRequestForNewProducts(timeOfThisRequest);
 		}
 	}
 }

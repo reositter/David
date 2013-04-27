@@ -14,9 +14,9 @@ namespace PimIntegration.Host
 		public Service()
 		{
 			XmlConfigurator.Configure();
-	    }
+		}
 
-	    public void Start()
+		public void Start()
 	    {
 			Log.ForCurrent.Info("Starting PIM Integration Service");
 			_getNewProductsTimer = new Timer(GetNewProducts, null, Timeout.Infinite, Timeout.Infinite);

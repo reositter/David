@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace UnitTest.UnitTests
+namespace PimIntegration.Test.UnitTests
 {
 	[TestFixture]
 	public class PimQueryServiceTests

@@ -1,8 +1,7 @@
 ﻿using NUnit.Framework;
 using PimIntegration.Tasks.Setup;
-using StructureMap;
 
-namespace UnitTest.IntegrationTests
+namespace PimIntegration.Test.IntegrationTests
 {
 	[TestFixture]
 	public class PimIntegrationSetupTests
@@ -18,7 +17,7 @@ namespace UnitTest.IntegrationTests
 			};
 
 			// Act
-			PimIntegrationSetup.InitializeEverything(settings);
+			PimIntegrationSetup.BootstrapEverything(settings);
 
 			// Assert
 

@@ -7,8 +7,8 @@
     <ProjectGuid>{0ECE3B2D-9D74-48DC-8E59-F70B3C3B365D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnitTest</RootNamespace>
-    <AssemblyName>UnitTest</AssemblyName>
+    <RootNamespace>PimIntegration.Test</RootNamespace>
+    <AssemblyName>PimIntegration.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -51,7 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IntegrationTests\PimApiConversationStateRepositoryTests.cs" />
     <Compile Include="IntegrationTests\PimQueryServiceTests.cs" />
+    <Compile Include="TestBase.cs" />
     <Compile Include="UnitTests\GetNewProductsTaskTests.cs" />
     <Compile Include="IntegrationTests\PimIntegrationSetupTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

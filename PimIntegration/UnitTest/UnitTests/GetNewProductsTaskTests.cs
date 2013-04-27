@@ -5,27 +5,20 @@ using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database;
 using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.Queries;
-using PimIntegration.Tasks.Setup;
 
-namespace UnitTest.UnitTests
+namespace PimIntegration.Test.UnitTests
 {
 	[TestFixture]
-    public class GetNewProductsTaskTests
+    public class GetNewProductsTaskTests : TestBase
     {
 		private GetNewProductsTask _task;
-		private Mock<IPimConversationStateRepository> _stateRepository;
+		private Mock<IPimApiConversationStateRepository> _stateRepository;
 		private Mock<IPimQueryService> _pimQueryService;
 
 		[SetUp]
 		public void SetUp()
 		{
-			var settings = new TaskSettings
-			{
-				MaximumNumberOfRetries = 5,
-				MillisecondsBetweenRetries = 1000
-			};
-
-			_stateRepository = new Mock<IPimConversationStateRepository>();
+			_stateRepository = new Mock<IPimApiConversationStateRepository>();
 			_pimQueryService = new Mock<IPimQueryService>();
 
 			_task = new GetNewProductsTask(_stateRepository.Object, _pimQueryService.Object);

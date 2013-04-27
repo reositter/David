@@ -1,7 +1,4 @@
-﻿using System;
-using System.Data.SQLite;
-using PimIntegration.Exceptions;
-using PimIntegration.Tasks.Database;
+﻿using PimIntegration.Tasks.Database;
 using StructureMap;
 
 namespace PimIntegration.Tasks.Setup
@@ -13,7 +10,7 @@ namespace PimIntegration.Tasks.Setup
 			var container = ObjectFactory.Container;
 
 			PrepareIocContainer(container, settings);
-			EnsureStateOfDatabase(settings.DbConnectionString, container, settings);
+			EnsureStateOfDatabase(container);
 
 			return container;
 		}
@@ -32,30 +29,9 @@ namespace PimIntegration.Tasks.Setup
 			}); 
 		}
 
-		private static void EnsureStateOfDatabase(string dbConnectionString, IContainer container, ITaskSettings settings)
+		private static void EnsureStateOfDatabase(IContainer container)
 		{
-			using (var conn = new SQLiteConnection(dbConnectionString))
-			{
-				conn.Open();
-				var query = @"CREATE TABLE IF NOT EXISTS PimApiConversationState (ID INTEGER PRIMARY KEY AUTOINCREMENT, MethodName TEXT, TimeStampForLastRequest TEXT)";
-				using (var cmd = new SQLiteCommand(query, conn))
-				{
-					cmd.ExecuteNonQuery();
-				}
-
-				var repo = container.GetInstance<IPimConversationStateRepository>();
-
-				try
-				{
-					repo.GetTimeStampOfLastRequestForNewProducts();
-				}
-				catch (PimIntegrationDbException pide)
-				{
-					// This should only happen the first time
-					Log.ForCurrent.Error(pide.Message);
-					repo.UpdateTimeStampOfLastRequestForNewProducts(DateTime.Now);
-				}
-			}
+			container.GetInstance<IPimApiConversationStateRepository>().EnsureExistensAndInitializeTable();
 		}
 	}
 }
