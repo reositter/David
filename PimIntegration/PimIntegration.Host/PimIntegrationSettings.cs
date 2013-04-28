@@ -9,7 +9,7 @@ namespace PimIntegration.Host
 	{
 		public static readonly int IntervalInSecondsForGetNewProducts;
 		public static readonly int IntervalInSecondsForPublishProductUpdates;
-		public static AppSettings AppSettings;
+		public static readonly AppSettings AppSettings;
 
 		static PimIntegrationSettings()
 		{
@@ -26,7 +26,10 @@ namespace PimIntegration.Host
 				VismaClientName = ConfigurationManager.AppSettings["VismaClientName"],
 				VismaBapiKey = ConfigurationManager.AppSettings["VismaBapiKey"],
 				VismaUserName = ConfigurationManager.AppSettings["VismaUserName"],
-				VismaPassword = ConfigurationManager.AppSettings["VismaPassword"]
+				VismaPassword = ConfigurationManager.AppSettings["VismaPassword"],
+				VismaPostingTemplateNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaPostingTemplateNo"].Trim()),
+				VismaPriceCalcMethodsNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaPriceCalcMethodsNo"].Trim()),
+				VismaStockProfileNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaStockProfileNo"].Trim()),
 			};
 
 			Log.ForCurrent.InfoFormat("IntervalInSecondsForGetNewProducts converted to ms: {0}", IntervalInSecondsForGetNewProducts);

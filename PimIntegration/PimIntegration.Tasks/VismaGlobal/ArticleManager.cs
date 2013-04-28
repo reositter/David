@@ -1,4 +1,5 @@
 ﻿using PimIntegration.Tasks.PIMServiceEndpoint;
+using PimIntegration.Tasks.Setup;
 using RG_SRVLib.Interop;
 
 namespace PimIntegration.Tasks.VismaGlobal
@@ -7,11 +8,13 @@ namespace PimIntegration.Tasks.VismaGlobal
 	{
 		private readonly GlobalServerComponent _vgConnection;
 		private readonly BusinessComponentNavigate _articleComponent;
+		private readonly IVismaSettings _settings;
 
-		public ArticleManager(GlobalServerComponent vgConnection)
+		public ArticleManager(GlobalServerComponent vgConnection, IVismaSettings settings)
 		{
 			_vgConnection = vgConnection;
 			_articleComponent = _vgConnection.GetBusinessComponent(GLOBAL_Components.BC_Article);
+			_settings = settings;
 		}
 
 		~ArticleManager()
@@ -32,20 +35,16 @@ namespace PimIntegration.Tasks.VismaGlobal
 			_articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextSwe, string.Empty);
 			_articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextNor, string.Empty);
 			_articleComponent.bcUpdateStr((int)Article_Properties.ART_SupplArtNo, string.Empty);
-
-			// Konteringsmall
-			//_articleComponent.bcUpdateInt((int)Article_Properties.ART_PostingTemplateNo, postingTemplate);
-			// Prisprofil
-			//_articleComponent.bcUpdateInt((int)Article_Properties.ART_PriceCalcMethodsNo, priceCalcMethodsNo);
-			// Lagerprofil
-			//_articleComponent.bcUpdateInt((int)Article_Properties.ART_StockProfileNo, stockProfileNo);
+			_articleComponent.bcUpdateInt((int)Article_Properties.ART_PostingTemplateNo, _settings.VismaPostingTemplateNo); // Konteringsmall
+			_articleComponent.bcUpdateInt((int)Article_Properties.ART_PriceCalcMethodsNo, _settings.VismaPriceCalcMethodsNo); // Prisprofil
+			_articleComponent.bcUpdateInt((int)Article_Properties.ART_StockProfileNo, _settings.VismaStockProfileNo); // Lagerprofil
 
 			var errCode = _articleComponent.bcAddNew();
 
 			if (errCode != 0)
 			{
 				_articleComponent.bcCancelRecord();
-				//Log.ForCurrent.ErrorFormat(("Attempt to create article '{0} - {1}' failed. Code {2} - {3}", articleNo, name, errCode, _articleComponent.bcGetMessageText(errCode)));
+				Log.ForCurrent.ErrorFormat("Attempt to create article failed. SKU: {0} Code {1} - {2}", article.SKU, errCode, _articleComponent.bcGetMessageText(errCode));
 			}
 
 			return string.Empty;

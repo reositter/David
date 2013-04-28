@@ -1,4 +1,5 @@
 ﻿using PimIntegration.Tasks.PIMServiceEndpoint;
+using PimIntegration.Tasks.Setup;
 
 namespace PimIntegration.Tasks.VismaGlobal
 {
