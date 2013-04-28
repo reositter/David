@@ -1,6 +1,6 @@
 ﻿namespace PimIntegration.Tasks.Database
 {
-	public class ConnectionStringWrapper
+	public class SqliteConnectionStringWrapper
 	{
 		private readonly string _connectionString;
 
@@ -9,7 +9,7 @@
 			get { return _connectionString; }
 		}
 
-		public ConnectionStringWrapper(string connectionString)
+		public SqliteConnectionStringWrapper(string connectionString)
 		{
 			_connectionString = connectionString;
 		}

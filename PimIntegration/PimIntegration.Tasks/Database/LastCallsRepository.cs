@@ -11,9 +11,9 @@ namespace PimIntegration.Tasks.Database
 		private readonly ITaskSettings _settings;
 		private const string TableName = "LastCalls";
 
-		public LastCallsRepository(ConnectionStringWrapper connectionStringWrapper, ITaskSettings settings)
+		public LastCallsRepository(SqliteConnectionStringWrapper sqliteConnectionStringWrapper, ITaskSettings settings)
 		{
-			_connectionString = connectionStringWrapper.ConnectionString;
+			_connectionString = sqliteConnectionStringWrapper.ConnectionString;
 			_settings = settings;
 			EnsureTableAndExpectedRowsExists();
 		}
@@ -28,14 +28,14 @@ namespace PimIntegration.Tasks.Database
 			UpdateTimeStampOfLastRequest("GetProductByGroupAndBrand", timeOfRequest);
 		}
 
-		public DateTime GetTimeOfLastPublishedStockBalanceUpdates()
+		public DateTime GetTimeOfLastQueryForStockBalanceUpdates()
 		{
-			return GetTimeOfLastRequest("PublishStockBalanceUpdates");
+			return GetTimeOfLastRequest("GetStockBalanceUpdates");
 		}
 
-		public void UpdateTimeOfLastPublishedStockBalanceUpdates(DateTime publishedTime)
+		public void UpdateTimeOfLastQueryForStockBalanceUpdates(DateTime publishedTime)
 		{
-			UpdateTimeStampOfLastRequest("PublishStockBalanceUpdates", publishedTime);
+			UpdateTimeStampOfLastRequest("GetStockBalanceUpdates", publishedTime);
 		}
 
 		private DateTime GetTimeOfLastRequest(string action)
@@ -101,13 +101,13 @@ namespace PimIntegration.Tasks.Database
 
 				try
 				{
-					GetTimeOfLastPublishedStockBalanceUpdates();
+					GetTimeOfLastQueryForStockBalanceUpdates();
 				}
 				catch (PimIntegrationDbException pide)
 				{
 					// This should only happen the very first time the app is run.
 					Log.ForCurrent.Error(pide.Message);
-					InsertInitialTimeOfLastRequestValue("PublishStockBalanceUpdates", DateTime.Now, conn);
+					InsertInitialTimeOfLastRequestValue("GetStockBalanceUpdates", DateTime.Now, conn);
 				}
 			}
 		}

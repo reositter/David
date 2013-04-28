@@ -1,7 +1,9 @@
-﻿using Moq;
+﻿using System;
+using Moq;
 using NUnit.Framework;
 using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database;
+using PimIntegration.Tasks.VismaGlobal;
 
 namespace PimIntegration.Test.UnitTests
 {
@@ -9,13 +11,18 @@ namespace PimIntegration.Test.UnitTests
 	{
 		private  IPublishProductUpdatesTask _task;
 		private Mock<ILastCallsRepository> _stateRepository;
+		private Mock<IStockBalanceQuery> _stockBalanceQuery;
+		private DateTime _timeOfLastQuery;
 
 		[SetUp]
 		public void SetUp()
 		{
 			_stateRepository = new Mock<ILastCallsRepository>();
+			_stockBalanceQuery = new Mock<IStockBalanceQuery>();
+			_timeOfLastQuery = DateTime.Now.AddHours(-2);
 
-			_task = new PublishStockBalanceUpdatesTask(_stateRepository.Object);
+			_stateRepository.Setup(repo => repo.GetTimeOfLastQueryForStockBalanceUpdates()).Returns(_timeOfLastQuery);
+			_task = new PublishStockBalanceUpdatesTask(_stateRepository.Object, _stockBalanceQuery.Object);
 		}
 
 		[Test]
@@ -27,7 +34,30 @@ namespace PimIntegration.Test.UnitTests
 			_task.Execute();
 
 			// Assert
-			_stateRepository.Verify(x => x.GetTimeOfLastPublishedStockBalanceUpdates(), Times.Once());
+			_stateRepository.Verify(x => x.GetTimeOfLastQueryForStockBalanceUpdates(), Times.Once());
+		}
+
+		[Test]
+		public void Should_query_for_updated_stock_balances()
+		{
+			// Arrange
+
+			// Act
+			_task.Execute();
+
+			// Assert
+			_stockBalanceQuery.Verify(x => x.GetStockBalanceUpdatesSince(_timeOfLastQuery), Times.Once());
+		}
+
+		[Test]
+		public void Should_()
+		{
+			// Arrange
+
+			// Act
+
+			// Assert
+
 		}
 	}
 }

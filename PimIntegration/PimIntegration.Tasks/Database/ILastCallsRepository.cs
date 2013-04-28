@@ -6,7 +6,7 @@ namespace PimIntegration.Tasks.Database
 	{
 		DateTime GetTimeOfLastRequestForNewProducts();
 		void UpdateTimesOfLastRequestForNewProducts(DateTime timeOfRequest);
-		DateTime GetTimeOfLastPublishedStockBalanceUpdates();
-		void UpdateTimeOfLastPublishedStockBalanceUpdates(DateTime publishedTime);
+		DateTime GetTimeOfLastQueryForStockBalanceUpdates();
+		void UpdateTimeOfLastQueryForStockBalanceUpdates(DateTime publishedTime);
 	}
 }

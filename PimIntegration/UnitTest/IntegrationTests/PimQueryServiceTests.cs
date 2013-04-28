@@ -19,7 +19,9 @@ namespace PimIntegration.Test.IntegrationTests
 			// Arrange
 
 			// Act
-			new PimQueryService(CreateTaskSettings(1000)).GetNewProductsSince(DateTime.Now.AddDays(-1));
+			var task = new PimQueryService(CreateTaskSettings(1000));
+			
+			var products = task.GetNewProductsSince(DateTime.Now.AddDays(-1));
 
 			// Assert
 

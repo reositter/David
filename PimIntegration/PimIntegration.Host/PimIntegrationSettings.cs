@@ -22,14 +22,16 @@ namespace PimIntegration.Host
 				MaximumNumberOfRetries = Convert.ToInt32(ConfigurationManager.AppSettings["MaximumNumberOfRetries"]),
 				MillisecondsBetweenRetries = Convert.ToInt32(ConfigurationManager.AppSettings["MillisecondsBetweenRetries"]),
 				TimeStampFormat = ConfigurationManager.AppSettings["TimeStampFormat"],
-				DbConnectionString = ConfigurationManager.ConnectionStrings["SQLite"].ConnectionString,
+				SqliteConnectionString = ConfigurationManager.ConnectionStrings["SQLite"].ConnectionString,
 				VismaClientName = ConfigurationManager.AppSettings["VismaClientName"],
 				VismaBapiKey = ConfigurationManager.AppSettings["VismaBapiKey"],
 				VismaUserName = ConfigurationManager.AppSettings["VismaUserName"],
 				VismaPassword = ConfigurationManager.AppSettings["VismaPassword"],
 				VismaPostingTemplateNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaPostingTemplateNo"].Trim()),
 				VismaPriceCalcMethodsNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaPriceCalcMethodsNo"].Trim()),
-				VismaStockProfileNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaStockProfileNo"].Trim())
+				VismaStockProfileNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaStockProfileNo"].Trim()),
+				VismaDbSchema = ConfigurationManager.AppSettings["VismaDbSchema"],
+				VismaDbConnectionString = ConfigurationManager.ConnectionStrings["VismaDb"].ConnectionString
 			};
 
 			Log.ForCurrent.InfoFormat("IntervalInSecondsForGetNewProducts converted to ms: {0}", IntervalInSecondsForGetNewProducts);

@@ -15,7 +15,7 @@ namespace PimIntegration.Test.IntegrationTests
 		[SetUp]
 		public void SetUp()
 		{
-			var connectionStringWrapper = new ConnectionStringWrapper("Data Source=Database/PimIntegrationDb.s3db");
+			var connectionStringWrapper = new SqliteConnectionStringWrapper("Data Source=Database/PimIntegrationDb.s3db");
 
 			_settings = CreateTaskSettings(10);
 			_repository = new LastCallsRepository(connectionStringWrapper, _settings);

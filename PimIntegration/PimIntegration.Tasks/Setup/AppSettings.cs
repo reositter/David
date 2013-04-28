@@ -6,7 +6,8 @@
 		public int MillisecondsBetweenRetries { get; set; }
 		public string TimeStampFormat { get; set; }
 
-		public string DbConnectionString { get; set; }
+		public string SqliteConnectionString { get; set; }
+
 		public string VismaClientName { get; set; }
 		public string VismaBapiKey { get; set; }
 		public string VismaUserName { get; set; }
@@ -14,6 +15,8 @@
 		public int VismaPostingTemplateNo { get; set; }
 		public int VismaPriceCalcMethodsNo { get; set; }
 		public int VismaStockProfileNo { get; set; }
+		public string VismaDbSchema { get; set; }
+		public string VismaDbConnectionString { get; set; }
 	}
 
 	public interface IVismaSettings
@@ -25,6 +28,8 @@
 		int VismaPostingTemplateNo { get; }
 		int VismaPriceCalcMethodsNo { get; }
 		int VismaStockProfileNo { get; }
+		string VismaDbSchema { get; }
+		string VismaDbConnectionString { get; }
 	}
 
 	public interface ITaskSettings
