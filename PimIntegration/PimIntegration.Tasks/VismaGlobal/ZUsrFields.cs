@@ -1,4 +1,5 @@
-﻿using RG_SRVLib.Interop;
+﻿using PimIntegration.Exceptions;
+using RG_SRVLib.Interop;
 
 namespace PimIntegration.Tasks.VismaGlobal
 {
@@ -22,6 +23,18 @@ namespace PimIntegration.Tasks.VismaGlobal
 			ArticleZUsrLuthmanKortTextDan = dictComp.bcGetObjectIDFromName("ZUsrLuthmanKortTextDAN", (int)GLOBAL_Components.BC_Article);
 			ArticleZUsrLuthmanKortTextSwe = dictComp.bcGetObjectIDFromName("ZUsrLuthmanKortTextSWE", (int)GLOBAL_Components.BC_Article);
 			ArticleZUsrLuthmanKortTextNor = dictComp.bcGetObjectIDFromName("ZUsrLuthmanKortTextNOR", (int)GLOBAL_Components.BC_Article);
+
+			if (ArticleZUsrPimSku == 0
+				|| ArticleZUsrLuthmanKortTextDan == 0
+				|| ArticleZUsrLuthmanKortTextSwe == 0
+				|| ArticleZUsrLuthmanKortTextNor == 0)
+			{
+				Log.ForCurrent.InfoFormat("ZUsrPimSku = {0}", ArticleZUsrPimSku);
+				Log.ForCurrent.InfoFormat("ZUsrLuthmanKortTextDan = {0}", ArticleZUsrLuthmanKortTextDan);
+				Log.ForCurrent.InfoFormat("ZUsrLuthmanKortTextSwe = {0}", ArticleZUsrLuthmanKortTextSwe);
+				Log.ForCurrent.InfoFormat("ZUsrLuthmanKortTextNor = {0}", ArticleZUsrLuthmanKortTextNor);
+				throw new PimIntegrationConfigurationException("Failed to initalize ZUsrFields. Check log file for clues.");
+			}
 
 			System.Runtime.InteropServices.Marshal.ReleaseComObject(dictComp);
 			System.Runtime.InteropServices.Marshal.ReleaseComObject(dictionaryObj);

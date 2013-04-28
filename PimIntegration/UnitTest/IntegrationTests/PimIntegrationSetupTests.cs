@@ -40,7 +40,7 @@ namespace PimIntegration.Test.IntegrationTests
 		}
 
 		[Test]
-		public void Should_resolve_task()
+		public void Should_be_able_to_resolve_get_new_products_task()
 		{
 			// Arrange
 			var container = PimIntegrationSetup.BootstrapEverything(_settings);
