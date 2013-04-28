@@ -1,7 +1,6 @@
 ﻿using System;
 using PimIntegration.Tasks.Database;
 using PimIntegration.Tasks.VismaGlobal;
-using RG_SRVLib.Interop;
 using StructureMap;
 
 namespace PimIntegration.Tasks.Setup
@@ -14,7 +13,6 @@ namespace PimIntegration.Tasks.Setup
 
 			ConnectToVismaGlobal(settings);
 			PrepareIocContainer(container, settings);
-			EnsureStateOfDatabase(container);
 
 			return container;
 		}
@@ -48,11 +46,6 @@ namespace PimIntegration.Tasks.Setup
 					scan.WithDefaultConventions();
 				});
 			}); 
-		}
-
-		private static void EnsureStateOfDatabase(IContainer container)
-		{
-			container.GetInstance<IPimApiConversationStateRepository>().EnsureExistensAndInitializeTable();
 		}
 	}
 }

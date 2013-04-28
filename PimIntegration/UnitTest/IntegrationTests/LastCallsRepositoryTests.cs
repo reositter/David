@@ -5,11 +5,11 @@ using PimIntegration.Tasks.Setup;
 
 namespace PimIntegration.Test.IntegrationTests
 {
-	[Ignore("Only used during development")]
+	//[Ignore("Only used during development")]
 	[TestFixture]
-	public class PimApiConversationStateRepositoryTests : TestBase
+	public class LastCallsRepositoryTests : TestBase
 	{
-		private IPimApiConversationStateRepository _repository;
+		private ILastCallsRepository _repository;
 		private ITaskSettings _settings;
 
 		[SetUp]
@@ -18,9 +18,7 @@ namespace PimIntegration.Test.IntegrationTests
 			var connectionStringWrapper = new ConnectionStringWrapper("Data Source=Database/PimIntegrationDb.s3db");
 
 			_settings = CreateTaskSettings(10);
-			_repository = new PimApiConversationStateRepository(connectionStringWrapper, _settings);
-
-			_repository.EnsureExistensAndInitializeTable();
+			_repository = new LastCallsRepository(connectionStringWrapper, _settings);
 		}
 
 		[Test]
@@ -29,7 +27,7 @@ namespace PimIntegration.Test.IntegrationTests
 			// Arrange
 
 			// Act
-			var lastRequest = _repository.GetTimeStampOfLastRequestForNewProducts();
+			var lastRequest = _repository.GetTimeOfLastRequestForNewProducts();
 
 			// Assert
 			Assert.That(lastRequest, Is.Not.Null);
@@ -43,8 +41,8 @@ namespace PimIntegration.Test.IntegrationTests
 			var expected = now.ToString(_settings.TimeStampFormat);
 
 			// Act
-			_repository.UpdateTimeStampOfLastRequestForNewProducts(now);
-			var timestamp = _repository.GetTimeStampOfLastRequestForNewProducts();
+			_repository.UpdateTimesOfLastRequestForNewProducts(now);
+			var timestamp = _repository.GetTimeOfLastRequestForNewProducts();
 
 			// Assert
 			Assert.That(timestamp, Is.EqualTo(expected));

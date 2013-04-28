@@ -9,23 +9,23 @@ namespace PimIntegration.Tasks
 {
 	public class GetNewProductsTask : IGetNewProductsTask
 	{
-		private readonly IPimApiConversationStateRepository _pimApiConversationStateRepository;
+		private readonly ILastCallsRepository _lastCallsRepository;
 		private readonly IPimQueryService _pimQueryService;
 		private readonly IPimCommandService _pimCommandService;
 		private readonly IArticleManager _articleManager;
 		private DateTime _timeOfLastRequest;
 
 		public GetNewProductsTask(
-			IPimApiConversationStateRepository pimApiConversationStateRepository, 
+			ILastCallsRepository lastCallsRepository, 
 			IPimQueryService pimQueryService,
 			IPimCommandService pimCommandService,
 			IArticleManager articleManager)
 		{
-			_pimApiConversationStateRepository = pimApiConversationStateRepository;
+			_lastCallsRepository = lastCallsRepository;
 			_pimQueryService = pimQueryService;
 			_pimCommandService = pimCommandService;
 			_articleManager = articleManager;
-			_timeOfLastRequest = _pimApiConversationStateRepository.GetTimeStampOfLastRequestForNewProducts();
+			_timeOfLastRequest = _lastCallsRepository.GetTimeOfLastRequestForNewProducts();
 		}
 
 		public void Execute()
@@ -45,7 +45,7 @@ namespace PimIntegration.Tasks
 			if (createdArticles.Count > 0)
 				_pimCommandService.ReportVismaProductNumbers(createdArticles);
 
-			_pimApiConversationStateRepository.UpdateTimeStampOfLastRequestForNewProducts(timeOfThisRequest);
+			_lastCallsRepository.UpdateTimesOfLastRequestForNewProducts(timeOfThisRequest);
 			_timeOfLastRequest = timeOfThisRequest;
 		}
 	}

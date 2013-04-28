@@ -6,7 +6,7 @@ using PimIntegration.Tasks.Setup;
 
 namespace PimIntegration.Test.IntegrationTests
 {
-	[TestFixture]
+	//[TestFixture]
 	public class PimIntegrationSetupTests
 	{
 		private AppSettings _settings;

@@ -52,7 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IntegrationTests\PimApiConversationStateRepositoryTests.cs" />
+    <Compile Include="IntegrationTests\LastCallsRepositoryTests.cs" />
     <Compile Include="IntegrationTests\PimQueryServiceTests.cs" />
     <Compile Include="IntegrationTests\VismaGlobalTests.cs" />
     <Compile Include="TestBase.cs" />
@@ -60,6 +60,7 @@
     <Compile Include="IntegrationTests\PimIntegrationSetupTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\PimQueryServiceTests.cs" />
+    <Compile Include="UnitTests\PublishProductUpdatesTaskTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

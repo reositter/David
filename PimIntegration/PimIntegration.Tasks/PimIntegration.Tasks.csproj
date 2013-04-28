@@ -63,15 +63,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\ConnectionStringWrapper.cs" />
-    <Compile Include="Database\IPimApiConversationStateRepository.cs" />
+    <Compile Include="Database\ILastCallsRepository.cs" />
+    <Compile Include="Exceptions\PimIntegrationConfigurationException.cs" />
     <Compile Include="Exceptions\PimIntegrationDbException.cs" />
     <Compile Include="GetNewProductsTask.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="Database\PimApiConversationStateRepository.cs" />
+    <Compile Include="Database\LastCallsRepository.cs" />
     <Compile Include="PimApi\IPimCommandService.cs" />
     <Compile Include="PimApi\IPimQueryService.cs" />
+    <Compile Include="PimApi\PimCommandService.cs" />
     <Compile Include="PimApi\PimQueryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublishStockBalanceUpdatesTask.cs" />
     <Compile Include="Service References\PIMServiceEndpoint\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
