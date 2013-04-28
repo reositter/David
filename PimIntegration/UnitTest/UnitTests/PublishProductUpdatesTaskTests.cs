@@ -11,7 +11,7 @@ namespace PimIntegration.Test.UnitTests
 {
 	public class PublishProductUpdatesTaskTests
 	{
-		private  IPublishProductUpdatesTask _task;
+		private IPublishStockBalanceUpdatesTask _task;
 		private Mock<ILastCallsRepository> _stateRepository;
 		private Mock<IStockBalanceQuery> _stockBalanceQuery;
 		private Mock<IPimCommandService> _pimCommandService;

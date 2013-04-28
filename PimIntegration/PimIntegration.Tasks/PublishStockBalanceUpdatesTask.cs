@@ -4,7 +4,7 @@ using PimIntegration.Tasks.PimApi;
 
 namespace PimIntegration.Tasks
 {
-	public class PublishStockBalanceUpdatesTask : IPublishProductUpdatesTask
+	public class PublishStockBalanceUpdatesTask : IPublishStockBalanceUpdatesTask
 	{
 		private readonly ILastCallsRepository _lastCallsRepository;
 		private readonly IStockBalanceQuery _stockBalanceQuery;
@@ -35,7 +35,7 @@ namespace PimIntegration.Tasks
 		}
 	}
 
-	public interface IPublishProductUpdatesTask
+	public interface IPublishStockBalanceUpdatesTask
 	{
 		void Execute();
 	}

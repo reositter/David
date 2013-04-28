@@ -3,7 +3,6 @@ using PimIntegration.Tasks.VismaGlobal;
 
 namespace PimIntegration.Test.IntegrationTests
 {
-	[Ignore("Only used during development")]
 	[TestFixture]
 	public class VismaGlobalTests
 	{
