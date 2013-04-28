@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-using PimIntegration.Tasks.Queries;
+using PimIntegration.Tasks.PimApi;
 
 namespace PimIntegration.Test.IntegrationTests
 {

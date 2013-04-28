@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="IntegrationTests\PimApiConversationStateRepositoryTests.cs" />
     <Compile Include="IntegrationTests\PimQueryServiceTests.cs" />
+    <Compile Include="IntegrationTests\VismaGlobalTests.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="UnitTests\GetNewProductsTaskTests.cs" />
     <Compile Include="IntegrationTests\PimIntegrationSetupTests.cs" />

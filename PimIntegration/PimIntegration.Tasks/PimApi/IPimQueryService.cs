@@ -1,7 +1,7 @@
 ﻿using System;
 using PimIntegration.Tasks.PIMServiceEndpoint;
 
-namespace PimIntegration.Tasks.Queries
+namespace PimIntegration.Tasks.PimApi
 {
 	public interface IPimQueryService
 	{

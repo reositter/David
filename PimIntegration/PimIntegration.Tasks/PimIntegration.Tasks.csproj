@@ -57,6 +57,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Visma.Core.Security.CryptoServices-201004">
+      <HintPath>..\ExternalComponents\Visma.Core.Security.CryptoServices-201004.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\ConnectionStringWrapper.cs" />
@@ -65,6 +68,7 @@
     <Compile Include="GetNewProductsTask.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Database\PimApiConversationStateRepository.cs" />
+    <Compile Include="PimApi\IPimCommandService.cs" />
     <Compile Include="PimApi\IPimQueryService.cs" />
     <Compile Include="PimApi\PimQueryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,11 +79,11 @@
     </Compile>
     <Compile Include="Setup\PimIntegrationSetup.cs" />
     <Compile Include="Setup\AppSettings.cs" />
-    <Compile Include="VismaGlobal\Article.cs" />
+    <Compile Include="VismaGlobal\ArticleForGetNewProductsScenario.cs" />
     <Compile Include="VismaGlobal\ArticleManager.cs" />
     <Compile Include="VismaGlobal\ExtensionMethods.cs" />
     <Compile Include="VismaGlobal\IArticleManager.cs" />
-    <Compile Include="VismaGlobal\VgConnection.cs" />
+    <Compile Include="VismaGlobal\VismaConnection.cs" />
     <Compile Include="VismaGlobal\ZUsrFields.cs" />
   </ItemGroup>
   <ItemGroup>

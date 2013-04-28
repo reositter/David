@@ -21,11 +21,11 @@ namespace PimIntegration.Tasks.Setup
 
 		private static void ConnectToVismaGlobal(IVismaSettings vismaSettings)
 		{
-			var loginCode = VgConnection.Open(vismaSettings.VismaClientName, vismaSettings.VismaBapiKey);
+			var loginCode = VismaConnection.Open(vismaSettings.VismaClientName, vismaSettings.VismaUserName, vismaSettings.VismaPassword, vismaSettings.VismaBapiKey);
 			if (loginCode == 0)
 			{
 				Log.ForCurrent.InfoFormat("Established connection to {0}", vismaSettings.VismaClientName);
-				ZUsrFields.Initialize(VgConnection.Connection);				
+				ZUsrFields.Initialize(VismaConnection.Connection);				
 			}
 			else
 			{
@@ -39,7 +39,7 @@ namespace PimIntegration.Tasks.Setup
 			container.Configure(cnfg =>
 			{	
 				cnfg.ForConcreteType<ConnectionStringWrapper>().Configure.Ctor<string>().Is(settings.DbConnectionString);
-				cnfg.For<GlobalServerComponent>().Use(VgConnection.Connection);
+				cnfg.For<GlobalServerComponent>().Use(VismaConnection.Connection);
 
 				cnfg.Scan(scan =>
 				{

@@ -3,7 +3,7 @@ using System.Threading;
 using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.Setup;
 
-namespace PimIntegration.Tasks.Queries
+namespace PimIntegration.Tasks.PimApi
 {
 	public class PimQueryService : IPimQueryService
 	{
