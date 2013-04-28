@@ -1,7 +1,9 @@
-﻿namespace PimIntegration.Tasks.VismaGlobal
+﻿using PimIntegration.Tasks.PIMServiceEndpoint;
+
+namespace PimIntegration.Tasks.VismaGlobal
 {
 	public interface IArticleManager
 	{
-		string CreateArticle();
+		string CreateArticle(ProductQueryResponseItem article);
 	}
 }

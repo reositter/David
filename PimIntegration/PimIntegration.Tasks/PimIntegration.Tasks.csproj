@@ -34,6 +34,11 @@
     <Reference Include="log4net">
       <HintPath>..\ExternalComponents\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="RG_SRVLib.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=93fd3ccf6df11053">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\ExternalComponents\RG_SRVLib.Interop.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\ExternalComponents\StructureMap.dll</HintPath>
     </Reference>
@@ -69,8 +74,13 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Setup\PimIntegrationSetup.cs" />
-    <Compile Include="Setup\TaskSettings.cs" />
+    <Compile Include="Setup\AppSettings.cs" />
+    <Compile Include="VismaGlobal\Article.cs" />
+    <Compile Include="VismaGlobal\ArticleManager.cs" />
+    <Compile Include="VismaGlobal\ExtensionMethods.cs" />
     <Compile Include="VismaGlobal\IArticleManager.cs" />
+    <Compile Include="VismaGlobal\VgConnection.cs" />
+    <Compile Include="VismaGlobal\ZUsrFields.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

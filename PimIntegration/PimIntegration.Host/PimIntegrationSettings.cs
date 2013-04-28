@@ -9,7 +9,7 @@ namespace PimIntegration.Host
 	{
 		public static readonly int IntervalInSecondsForGetNewProducts;
 		public static readonly int IntervalInSecondsForPublishProductUpdates;
-		public static TaskSettings TaskSettings;
+		public static AppSettings AppSettings;
 
 		static PimIntegrationSettings()
 		{
@@ -17,19 +17,24 @@ namespace PimIntegration.Host
 			IntervalInSecondsForGetNewProducts = Convert.ToInt32(ConfigurationManager.AppSettings["IntervalInSecondsForGetNewProducts"]) * 1000;
 			IntervalInSecondsForPublishProductUpdates = Convert.ToInt32(ConfigurationManager.AppSettings["IntervalInSecondsForPublishProductUpdates"]) * 1000;
 
-			TaskSettings = new TaskSettings
+			AppSettings = new AppSettings
 			{
 				MaximumNumberOfRetries = Convert.ToInt32(ConfigurationManager.AppSettings["MaximumNumberOfRetries"]),
 				MillisecondsBetweenRetries = Convert.ToInt32(ConfigurationManager.AppSettings["MillisecondsBetweenRetries"]),
 				TimeStampFormat = ConfigurationManager.AppSettings["TimeStampFormat"],
-				DbConnectionString = ConfigurationManager.ConnectionStrings["SQLite"].ConnectionString
+				DbConnectionString = ConfigurationManager.ConnectionStrings["SQLite"].ConnectionString,
+				VismaClientName = ConfigurationManager.AppSettings["VismaClientName"],
+				VismaBapiKey = ConfigurationManager.AppSettings["VismaBapiKey"],
+				VismaUserName = ConfigurationManager.AppSettings["VismaUserName"],
+				VismaPassword = ConfigurationManager.AppSettings["VismaPassword"]
 			};
 
 			Log.ForCurrent.InfoFormat("IntervalInSecondsForGetNewProducts converted to ms: {0}", IntervalInSecondsForGetNewProducts);
 			Log.ForCurrent.InfoFormat("IntervalInSecondsForPublishProductUpdates converted to ms: {0}", IntervalInSecondsForPublishProductUpdates);
-			Log.ForCurrent.InfoFormat("MaximumNumberOfRetries: {0}", TaskSettings.MaximumNumberOfRetries);
-			Log.ForCurrent.InfoFormat("MillisecondsBetweenRetries: {0}", TaskSettings.MillisecondsBetweenRetries);
-			Log.ForCurrent.InfoFormat("TimeStampFormat: {0}", TaskSettings.TimeStampFormat);
+			Log.ForCurrent.InfoFormat("MaximumNumberOfRetries: {0}", AppSettings.MaximumNumberOfRetries);
+			Log.ForCurrent.InfoFormat("MillisecondsBetweenRetries: {0}", AppSettings.MillisecondsBetweenRetries);
+			Log.ForCurrent.InfoFormat("TimeStampFormat: {0}", AppSettings.TimeStampFormat);
+			Log.ForCurrent.InfoFormat("VismaClientName: {0}", AppSettings.VismaClientName);
 		}
 	}
 }

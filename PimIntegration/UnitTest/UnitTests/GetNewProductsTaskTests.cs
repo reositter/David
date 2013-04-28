@@ -5,6 +5,7 @@ using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database;
 using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.Queries;
+using PimIntegration.Tasks.VismaGlobal;
 
 namespace PimIntegration.Test.UnitTests
 {
@@ -14,6 +15,7 @@ namespace PimIntegration.Test.UnitTests
 		private GetNewProductsTask _task;
 		private Mock<IPimApiConversationStateRepository> _stateRepository;
 		private Mock<IPimQueryService> _pimQueryService;
+		private Mock<IArticleManager> _articleManager;
 		private DateTime _timeOfLastRequest;
 
 		[SetUp]
@@ -21,10 +23,11 @@ namespace PimIntegration.Test.UnitTests
 		{
 			_stateRepository = new Mock<IPimApiConversationStateRepository>();
 			_pimQueryService = new Mock<IPimQueryService>();
+			_articleManager = new Mock<IArticleManager>();
 			_timeOfLastRequest = DateTime.Now.AddHours(-2);
 
 			_stateRepository.Setup(repo => repo.GetTimeStampOfLastRequestForNewProducts()).Returns(_timeOfLastRequest);
-			_task = new GetNewProductsTask(_stateRepository.Object, _pimQueryService.Object);
+			_task = new GetNewProductsTask(_stateRepository.Object, _pimQueryService.Object, _articleManager.Object);
 		}
 
 		[Test]
@@ -34,7 +37,7 @@ namespace PimIntegration.Test.UnitTests
 			var repo = new Mock<IPimApiConversationStateRepository>();
 
 			// Act
-			_task = new GetNewProductsTask(repo.Object, _pimQueryService.Object);
+			_task = new GetNewProductsTask(repo.Object, _pimQueryService.Object, _articleManager.Object);
 
 			// Assert
 			repo.Verify(x => x.GetTimeStampOfLastRequestForNewProducts());

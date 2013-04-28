@@ -6,7 +6,7 @@ namespace PimIntegration.Test
 	{
 		protected ITaskSettings CreateTaskSettings(int millisecondsBetweenRetries, int maximumNumberOfRetries = 5)
 		{
-			return new TaskSettings
+			return new AppSettings
 			{
 				MaximumNumberOfRetries = maximumNumberOfRetries,
 				MillisecondsBetweenRetries = millisecondsBetweenRetries,
