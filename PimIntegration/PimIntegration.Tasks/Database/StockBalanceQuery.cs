@@ -16,9 +16,9 @@ namespace PimIntegration.Tasks.Database
 			_settings = settings;
 		}
 
-		public IList<StockBalance> GetStockBalanceUpdatesSince(DateTime lastQuery)
+		public IList<ArticleForPriceAndStockUpdate> GetStockBalanceUpdatesSince(DateTime lastQuery)
 		{
-			var list = new List<StockBalance>();
+			var list = new List<ArticleForPriceAndStockUpdate>();
 
 			using (var conn = new SqlConnection(_settings.VismaDbConnectionString))
 			{
@@ -33,10 +33,10 @@ namespace PimIntegration.Tasks.Database
 					{
 						while (reader.Read())
 						{
-							list.Add(new StockBalance
+							list.Add(new ArticleForPriceAndStockUpdate
 							{
-								ArticleNo = (string)reader["ArticleNo"],
-								Quantity = Convert.ToDecimal(reader["StockBalance"])
+								PimSku = (string)reader["PimSku"],
+								StockBalance = Convert.ToDecimal(reader["ArticleForPriceAndStockUpdate"])
 							});
 						}
 					}

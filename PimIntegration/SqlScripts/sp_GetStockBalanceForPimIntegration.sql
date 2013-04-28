@@ -8,15 +8,19 @@ ALTER PROCEDURE [LuthmanAB].[sp_GetStockBalanceForPimIntegration] (
 	@TimeOfLastQuery DATETIME
 )
 AS
+	-- TODO: Write a query that actually works.
 	SELECT
-		ArticleNo,
-		SUM(UnitInStock-UnitOnOrder) AS StockBalance
+		ART.ZUsrPimSku AS PimSku,
+		SUM(SST.UnitInStock-SST.UnitOnOrder) AS StockBalance
 	FROM
-		LuthmanAB.StockSurveyTotalsView
+		LuthmanAB.StockSurveyTotalsView SST INNER JOIN LuthmanAB.Article ART ON ART.ArticleNo = SST.ArticleNo
 	WHERE
-			WareHouseNo = 1 OR WareHouseNo = 26
+			SST.WareHouseNo = 1 OR SST.WareHouseNo = 26
 		AND
-			LastUpdate > @TimeOfLastQuery
+			SST.LastUpdate > @TimeOfLastQuery
+		AND
+			ART.ZUsrPimSku IS NOT NULL
 	GROUP BY 
-		ArticleNo;
+		SST.ArticleNo, 
+		ART.ZUsrPimSku;
 GO

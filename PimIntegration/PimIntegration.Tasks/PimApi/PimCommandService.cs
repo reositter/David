@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using PimIntegration.Tasks.PIMServiceEndpoint;
@@ -16,7 +17,7 @@ namespace PimIntegration.Tasks.PimApi
 			_settings = settings;
 		}
 
-		public void ReportVismaProductNumbers(IEnumerable<ArticleForGetNewProductsScenario> newProducts)
+		public bool ReportVismaProductNumbers(IEnumerable<ArticleForGetNewProductsScenario> newProducts)
 		{
 			var client = new QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient();
 
@@ -32,9 +33,40 @@ namespace PimIntegration.Tasks.PimApi
 			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
 			{
 				var result = client.DequeueMessage(messageId);
-				if (result != null) break;
+				if (result != null) return true;
 				Thread.Sleep(_settings.MillisecondsBetweenRetries);
 			}
+
+			Log.ForCurrent.ErrorFormat("ReportVismaProductNumbers: No response found for message ID '{0}'", messageId);
+
+			return false;
+		}
+
+		public bool PublishStockBalanceUpdates(IEnumerable<ArticleForPriceAndStockUpdate> articlesWithUpdates)
+		{
+			if (articlesWithUpdates.Count() == 0) 
+				return true;
+
+			var client = new QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient();
+
+			var messageId = client.EnqueueMessage("UpdateProductBySKU", "PriceAndStock", articlesWithUpdates.Select(article => new ProductUpdateRequestItem
+			{
+				SKU = article.PimSku,
+				MarketName = string.Empty, // TODO: Fix it
+				Stock = Convert.ToInt32(article.StockBalance)
+
+			}).ToArray());
+
+			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
+			{
+				var result = client.DequeueMessage(messageId);
+				if (result != null) return true;
+				Thread.Sleep(_settings.MillisecondsBetweenRetries);
+			}
+
+			Log.ForCurrent.ErrorFormat("PublishStockBalanceUpdates: No response found for message ID '{0}'", messageId);
+
+			return false;
 		}
 	}
 }

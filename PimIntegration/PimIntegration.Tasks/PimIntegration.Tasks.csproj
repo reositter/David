@@ -88,7 +88,7 @@
     <Compile Include="VismaGlobal\ExtensionMethods.cs" />
     <Compile Include="VismaGlobal\IArticleManager.cs" />
     <Compile Include="Database\IStockBalanceQuery.cs" />
-    <Compile Include="VismaGlobal\Dto\StockBalance.cs" />
+    <Compile Include="VismaGlobal\Dto\ArticleForPriceAndStockUpdate.cs" />
     <Compile Include="VismaGlobal\VismaConnection.cs" />
     <Compile Include="VismaGlobal\ZUsrFields.cs" />
   </ItemGroup>

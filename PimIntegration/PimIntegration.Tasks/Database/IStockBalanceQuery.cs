@@ -6,6 +6,6 @@ namespace PimIntegration.Tasks.Database
 {
 	public interface IStockBalanceQuery
 	{
-		IList<StockBalance> GetStockBalanceUpdatesSince(DateTime lastQuery);
+		IList<ArticleForPriceAndStockUpdate> GetStockBalanceUpdatesSince(DateTime lastQuery);
 	}
 }

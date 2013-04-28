@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database;
-using PimIntegration.Tasks.VismaGlobal;
+using PimIntegration.Tasks.PimApi;
+using PimIntegration.Tasks.VismaGlobal.Dto;
 
 namespace PimIntegration.Test.UnitTests
 {
@@ -12,6 +14,7 @@ namespace PimIntegration.Test.UnitTests
 		private  IPublishProductUpdatesTask _task;
 		private Mock<ILastCallsRepository> _stateRepository;
 		private Mock<IStockBalanceQuery> _stockBalanceQuery;
+		private Mock<IPimCommandService> _pimCommandService;
 		private DateTime _timeOfLastQuery;
 
 		[SetUp]
@@ -19,10 +22,11 @@ namespace PimIntegration.Test.UnitTests
 		{
 			_stateRepository = new Mock<ILastCallsRepository>();
 			_stockBalanceQuery = new Mock<IStockBalanceQuery>();
+			_pimCommandService = new Mock<IPimCommandService>();
 			_timeOfLastQuery = DateTime.Now.AddHours(-2);
 
 			_stateRepository.Setup(repo => repo.GetTimeOfLastQueryForStockBalanceUpdates()).Returns(_timeOfLastQuery);
-			_task = new PublishStockBalanceUpdatesTask(_stateRepository.Object, _stockBalanceQuery.Object);
+			_task = new PublishStockBalanceUpdatesTask(_stateRepository.Object, _stockBalanceQuery.Object, _pimCommandService.Object);
 		}
 
 		[Test]
@@ -50,14 +54,15 @@ namespace PimIntegration.Test.UnitTests
 		}
 
 		[Test]
-		public void Should_()
+		public void Should_publish_stock_balance_updates_when_updates_exists()
 		{
 			// Arrange
 
 			// Act
+			_task.Execute();
 
 			// Assert
-
+			_pimCommandService.Verify(x => x.PublishStockBalanceUpdates(It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>()), Times.Once());
 		}
 	}
 }
