@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Database\SQLiteConnectionStringWrapper.cs" />
     <Compile Include="Database\ILastCallsRepository.cs" />
+    <Compile Include="Database\StockBalanceQuery.cs" />
     <Compile Include="Exceptions\PimIntegrationConfigurationException.cs" />
     <Compile Include="Exceptions\PimIntegrationDbException.cs" />
     <Compile Include="GetNewProductsTask.cs" />

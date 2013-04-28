@@ -36,7 +36,7 @@ namespace PimIntegration.Tasks.Database
 							list.Add(new StockBalance
 							{
 								ArticleNo = (string)reader["ArticleNo"],
-								Quantity = (int)reader["Quantity"]
+								Quantity = Convert.ToDecimal(reader["StockBalance"])
 							});
 						}
 					}
