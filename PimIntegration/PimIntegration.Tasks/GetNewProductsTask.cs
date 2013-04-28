@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using PimIntegration.Tasks.Database;
 using PimIntegration.Tasks.PimApi;
 using PimIntegration.Tasks.VismaGlobal;
+using PimIntegration.Tasks.VismaGlobal.Dto;
 
 namespace PimIntegration.Tasks
 {
-	public class GetNewProductsTask
+	public class GetNewProductsTask : IGetNewProductsTask
 	{
 		private readonly IPimApiConversationStateRepository _pimApiConversationStateRepository;
 		private readonly IPimQueryService _pimQueryService;
@@ -34,7 +35,6 @@ namespace PimIntegration.Tasks
 
 			if (newProducts == null) return;
 
-			// Create products in Visma Global
 			var createdArticles = new List<ArticleForGetNewProductsScenario>();
 			foreach (var product in newProducts)
 			{
@@ -42,12 +42,16 @@ namespace PimIntegration.Tasks
 				createdArticles.Add(new ArticleForGetNewProductsScenario(product, articleNo));
 			}
 
-			// Report local id back to PIM
-			_pimCommandService.ReportVismaProductNumbers(createdArticles);
+			if (createdArticles.Count > 0)
+				_pimCommandService.ReportVismaProductNumbers(createdArticles);
 
-			// Update time stamp for last call
 			_pimApiConversationStateRepository.UpdateTimeStampOfLastRequestForNewProducts(timeOfThisRequest);
 			_timeOfLastRequest = timeOfThisRequest;
 		}
+	}
+
+	public interface IGetNewProductsTask
+	{
+		void Execute();
 	}
 }

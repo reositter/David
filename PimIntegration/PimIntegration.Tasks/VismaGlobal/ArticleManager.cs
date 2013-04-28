@@ -4,16 +4,14 @@ using RG_SRVLib.Interop;
 
 namespace PimIntegration.Tasks.VismaGlobal
 {
-	public class ArticleManager : IArticleManager 
+	public class ArticleManager : VismaConnection, IArticleManager 
 	{
-		private readonly GlobalServerComponent _vgConnection;
 		private readonly BusinessComponentNavigate _articleComponent;
 		private readonly IVismaSettings _settings;
 
-		public ArticleManager(GlobalServerComponent vgConnection, IVismaSettings settings)
+		public ArticleManager(IVismaSettings settings)
 		{
-			_vgConnection = vgConnection;
-			_articleComponent = _vgConnection.GetBusinessComponent(GLOBAL_Components.BC_Article);
+			_articleComponent = Connection.GetBusinessComponent(GLOBAL_Components.BC_Article);
 			_settings = settings;
 		}
 

@@ -1,6 +1,6 @@
 ﻿using PimIntegration.Tasks.PIMServiceEndpoint;
 
-namespace PimIntegration.Tasks.VismaGlobal
+namespace PimIntegration.Tasks.VismaGlobal.Dto
 {
 	public class ArticleForGetNewProductsScenario
 	{

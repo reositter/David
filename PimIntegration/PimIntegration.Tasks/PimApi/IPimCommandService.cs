@@ -4,6 +4,7 @@ using System.Threading;
 using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.Setup;
 using PimIntegration.Tasks.VismaGlobal;
+using PimIntegration.Tasks.VismaGlobal.Dto;
 
 namespace PimIntegration.Tasks.PimApi
 {

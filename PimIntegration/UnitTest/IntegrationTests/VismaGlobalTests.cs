@@ -3,15 +3,10 @@ using PimIntegration.Tasks.VismaGlobal;
 
 namespace PimIntegration.Test.IntegrationTests
 {
+	[Ignore("Only used during development")]
 	[TestFixture]
 	public class VismaGlobalTests
 	{
-		[SetUp]
-		public void SetUp()
-		{
-
-		}
-
 		[Test]
 		public void Should_connect_to_visma()
 		{

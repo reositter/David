@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using PimIntegration.Tasks;
@@ -6,6 +7,7 @@ using PimIntegration.Tasks.Database;
 using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.PimApi;
 using PimIntegration.Tasks.VismaGlobal;
+using PimIntegration.Tasks.VismaGlobal.Dto;
 
 namespace PimIntegration.Test.UnitTests
 {
@@ -56,6 +58,59 @@ namespace PimIntegration.Test.UnitTests
 
 			// Assert
 			_pimQueryService.Verify(service => service.GetNewProductsSince(_timeOfLastRequest));
+		}
+
+		[Test]
+		public void Should_create_articles_in_visma_when_pim_response_contains_new_products()
+		{
+			// Arrange
+			var newProducts = new[]
+			{
+				new ProductQueryResponseItem {SKU = "PIM00001"},
+				new ProductQueryResponseItem {SKU = "PIM00002"},
+				new ProductQueryResponseItem {SKU = "PIM00003"}
+			};
+
+			_pimQueryService.Setup(service => service.GetNewProductsSince(_timeOfLastRequest)).Returns(newProducts);
+
+			// Act
+			_task.Execute();
+
+			// Assert
+			_articleManager.Verify(am => am.CreateArticle(It.IsAny<ProductQueryResponseItem>()), Times.Exactly(newProducts.Length));
+		}
+
+		[Test]
+		public void Should_not_create_articles_in_visma_when_pim_response_is_empty()
+		{
+			// Arrange
+			_pimQueryService.Setup(service => service.GetNewProductsSince(_timeOfLastRequest)).Returns(new ProductQueryResponseItem[0]);
+
+			// Act
+			_task.Execute();
+
+			// Assert
+			_articleManager.Verify(am => am.CreateArticle(It.IsAny<ProductQueryResponseItem>()), Times.Never());
+		}
+
+		[Test]
+		public void Should_report_visma_article_numbers_to_pim_when_articles_are_created()
+		{
+			// Arrange
+			var newProducts = new[]
+			{
+				new ProductQueryResponseItem {SKU = "PIM00001"},
+				new ProductQueryResponseItem {SKU = "PIM00002"},
+				new ProductQueryResponseItem {SKU = "PIM00003"}
+			};
+
+			_pimQueryService.Setup(service => service.GetNewProductsSince(_timeOfLastRequest)).Returns(newProducts);
+
+			// Act
+			_task.Execute();
+
+			// Assert
+			_pimCommandService.Verify(service => service.ReportVismaProductNumbers(It.IsAny<List<ArticleForGetNewProductsScenario>>()), Times.Once());
 		}
 
 		[Test]
