@@ -123,7 +123,7 @@ namespace PimIntegration.Test.UnitTests
 			_task.Execute();
 
 			// Assert
-			_stateRepository.Verify(repo => repo.UpdateTimesOfLastRequestForNewProducts(It.IsAny<DateTime>()));
+			_stateRepository.Verify(repo => repo.UpdateTimeOfLastRequestForNewProducts(It.IsAny<DateTime>()));
 		}
 
 		[Test]
@@ -136,7 +136,7 @@ namespace PimIntegration.Test.UnitTests
 			_task.Execute();
 
 			// Assert
-			_stateRepository.Verify(repo => repo.UpdateTimesOfLastRequestForNewProducts(It.IsAny<DateTime>()), Times.Never());
+			_stateRepository.Verify(repo => repo.UpdateTimeOfLastRequestForNewProducts(It.IsAny<DateTime>()), Times.Never());
 		}
     }
 }

@@ -5,5 +5,6 @@
 		public string PimSku { get; set; }
 		public string Market { get; set; }
 		public decimal StockBalance { get; set; }
+		public decimal Price { get; set; }
 	}
 }

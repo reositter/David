@@ -4,12 +4,13 @@ using Moq;
 using NUnit.Framework;
 using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database;
+using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.PimApi;
 using PimIntegration.Tasks.VismaGlobal.Dto;
 
 namespace PimIntegration.Test.UnitTests
 {
-	public class PublishProductUpdatesTaskTests
+	public class PublishStockBalanceUpdatesTaskTests
 	{
 		private IPublishStockBalanceUpdatesTask _task;
 		private Mock<ILastCallsRepository> _stateRepository;
@@ -63,6 +64,19 @@ namespace PimIntegration.Test.UnitTests
 
 			// Assert
 			_pimCommandService.Verify(x => x.PublishStockBalanceUpdates(It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>()), Times.Once());
+		}
+
+		[Test]
+		public void Should_update_time_of_last_request_when_request_is_successful()
+		{
+			// Arrange
+			_pimCommandService.Setup(service => service.PublishStockBalanceUpdates(It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>())).Returns(true);
+
+			// Act
+			_task.Execute();
+
+			// Assert
+			_stateRepository.Verify(repo => repo.UpdateTimeOfLastQueryForStockBalanceUpdates(It.IsAny<DateTime>()));
 		}
 	}
 }

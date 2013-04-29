@@ -41,7 +41,7 @@ namespace PimIntegration.Test.IntegrationTests
 			var expected = now.ToString(_settings.TimeStampFormat);
 
 			// Act
-			_repository.UpdateTimesOfLastRequestForNewProducts(now);
+			_repository.UpdateTimeOfLastRequestForNewProducts(now);
 			var timestamp = _repository.GetTimeOfLastRequestForNewProducts();
 
 			// Assert

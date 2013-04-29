@@ -24,13 +24,13 @@ namespace PimIntegration.Tasks
 
 		public void Execute()
 		{
-			var timeOfThisPublishing = DateTime.Now;
+			var timeOfThisQuery = DateTime.Now;
 			var stockBalanceUpdates = _stockBalanceQuery.GetStockBalanceUpdatesSince(_timeOfLastQueryForStockBalanceUpdates);
 
 			if (_pimCommandService.PublishStockBalanceUpdates(stockBalanceUpdates))
 			{
-				_lastCallsRepository.UpdateTimeOfLastQueryForStockBalanceUpdates(timeOfThisPublishing);
-				_timeOfLastQueryForStockBalanceUpdates = timeOfThisPublishing;
+				_lastCallsRepository.UpdateTimeOfLastQueryForStockBalanceUpdates(timeOfThisQuery);
+				_timeOfLastQueryForStockBalanceUpdates = timeOfThisQuery;
 			}
 		}
 	}

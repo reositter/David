@@ -17,6 +17,8 @@
 		public int VismaStockProfileNo { get; set; }
 		public string VismaDbSchema { get; set; }
 		public string VismaDbConnectionString { get; set; }
+		public int CustomerNoDenmark { get; set; }
+		public int CustomerNoNorway { get; set; }
 	}
 
 	public interface IVismaSettings
@@ -30,6 +32,8 @@
 		int VismaStockProfileNo { get; }
 		string VismaDbSchema { get; }
 		string VismaDbConnectionString { get; }
+		int CustomerNoDenmark { get; }
+		int CustomerNoNorway { get; }
 	}
 
 	public interface ITaskSettings

@@ -60,7 +60,8 @@
     <Compile Include="IntegrationTests\PimIntegrationSetupTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\PimQueryServiceTests.cs" />
-    <Compile Include="UnitTests\PublishProductUpdatesTaskTests.cs" />
+    <Compile Include="UnitTests\PublishPriceUpdatesTaskTests.cs" />
+    <Compile Include="UnitTests\PublishStockBalanceUpdatesTaskTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

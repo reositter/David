@@ -45,7 +45,7 @@ namespace PimIntegration.Tasks
 			if (createdArticles.Count > 0)
 				_pimCommandService.ReportVismaProductNumbers(createdArticles);
 
-			_lastCallsRepository.UpdateTimesOfLastRequestForNewProducts(timeOfThisRequest);
+			_lastCallsRepository.UpdateTimeOfLastRequestForNewProducts(timeOfThisRequest);
 			_timeOfLastRequest = timeOfThisRequest;
 		}
 	}

@@ -23,7 +23,7 @@ namespace PimIntegration.Tasks.Database
 			return GetTimeOfLastRequest("GetProductByGroupAndBrand");
 		}
 
-		public void UpdateTimesOfLastRequestForNewProducts(DateTime timeOfRequest)
+		public void UpdateTimeOfLastRequestForNewProducts(DateTime timeOfRequest)
 		{
 			UpdateTimeStampOfLastRequest("GetProductByGroupAndBrand", timeOfRequest);
 		}
@@ -36,6 +36,16 @@ namespace PimIntegration.Tasks.Database
 		public void UpdateTimeOfLastQueryForStockBalanceUpdates(DateTime publishedTime)
 		{
 			UpdateTimeStampOfLastRequest("GetStockBalanceUpdates", publishedTime);
+		}
+
+		public DateTime GetTimeOfLastQueryForPriceUpdates()
+		{
+			return GetTimeOfLastRequest("GetPriceUpdates");
+		}
+
+		public void UpdateTimeOfLastQueryForPriceUpdates(DateTime publishedTime)
+		{
+			UpdateTimeStampOfLastRequest("GetPriceUpdates", publishedTime);
 		}
 
 		private DateTime GetTimeOfLastRequest(string action)
@@ -108,6 +118,17 @@ namespace PimIntegration.Tasks.Database
 					// This should only happen the very first time the app is run.
 					Log.ForCurrent.Error(pide.Message);
 					InsertInitialTimeOfLastRequestValue("GetStockBalanceUpdates", DateTime.Now, conn);
+				}
+
+				try
+				{
+					GetTimeOfLastQueryForPriceUpdates();
+				}
+				catch (PimIntegrationDbException pide)
+				{
+					// This should only happen the very first time the app is run.
+					Log.ForCurrent.Error(pide.Message);
+					InsertInitialTimeOfLastRequestValue("GetPriceUpdates", DateTime.Now, conn);
 				}
 			}
 		}

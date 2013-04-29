@@ -27,11 +27,13 @@ namespace PimIntegration.Host
 				VismaBapiKey = ConfigurationManager.AppSettings["VismaBapiKey"],
 				VismaUserName = ConfigurationManager.AppSettings["VismaUserName"],
 				VismaPassword = ConfigurationManager.AppSettings["VismaPassword"],
-				VismaPostingTemplateNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaPostingTemplateNo"].Trim()),
-				VismaPriceCalcMethodsNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaPriceCalcMethodsNo"].Trim()),
-				VismaStockProfileNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaStockProfileNo"].Trim()),
+				VismaPostingTemplateNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaPostingTemplateNo"]),
+				VismaPriceCalcMethodsNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaPriceCalcMethodsNo"]),
+				VismaStockProfileNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaStockProfileNo"]),
 				VismaDbSchema = ConfigurationManager.AppSettings["VismaDbSchema"],
-				VismaDbConnectionString = ConfigurationManager.ConnectionStrings["VismaDb"].ConnectionString
+				VismaDbConnectionString = ConfigurationManager.ConnectionStrings["VismaDb"].ConnectionString,
+				CustomerNoDenmark = Convert.ToInt32(ConfigurationManager.AppSettings["CustomerNoDenmark"]),
+				CustomerNoNorway = Convert.ToInt32(ConfigurationManager.AppSettings["CustomerNoNorway"])
 			};
 
 			Log.ForCurrent.InfoFormat("IntervalInSecondsForGetNewProducts converted to ms: {0}", IntervalInSecondsForGetNewProducts);
