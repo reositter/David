@@ -1,11 +1,11 @@
-IF NOT EXISTS(SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'[LuthmanAB].[sp_GetStockBalanceForPimIntegration]') AND type IN (N'P', N'PC'))
+IF NOT EXISTS(SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'[LuthmanAB].[sp_GetStockBalanceUpdatesForPimIntegration]') AND type IN (N'P', N'PC'))
 	BEGIN
-		EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [LuthmanAB].[sp_GetStockBalanceForPimIntegration] AS SELECT ''dummy'''
+		EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [LuthmanAB].[sp_GetStockBalanceUpdatesForPimIntegration] AS SELECT ''dummy'''
 	END
 GO
 
-ALTER PROCEDURE [LuthmanAB].[sp_GetStockBalanceForPimIntegration] (
-	@TimeOfLastQuery DATETIME
+ALTER PROCEDURE [LuthmanAB].[sp_GetStockBalanceUpdatesForPimIntegration] (
+	@Since DATETIME
 )
 AS
 	-- TODO: Write a query that actually works.
@@ -17,7 +17,7 @@ AS
 	WHERE
 			SST.WareHouseNo = 1 OR SST.WareHouseNo = 26
 		AND
-			SST.LastUpdate > @TimeOfLastQuery
+			SST.LastUpdate > @Since
 		AND
 			ART.ZUsrPimSku IS NOT NULL
 	GROUP BY 
