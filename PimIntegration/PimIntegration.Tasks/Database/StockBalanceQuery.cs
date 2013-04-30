@@ -24,10 +24,10 @@ namespace PimIntegration.Tasks.Database
 			{
 				conn.Open();
 
-				using (var cmd = new SqlCommand(string.Format("[{0}].[SP_GetStockBalanceForPimIntegration]", _settings.VismaDbSchema), conn))
+				using (var cmd = new SqlCommand(string.Format("[{0}].[SP_GetStockBalanceUpdatesForPimIntegration]", _settings.VismaDbSchema), conn))
 				{
 					cmd.CommandType = CommandType.StoredProcedure;
-					cmd.Parameters.AddWithValue("@TimeOfLastQuery", lastQuery);
+					cmd.Parameters.AddWithValue("@Since", lastQuery);
 
 					using (var reader = cmd.ExecuteReader())
 					{
@@ -35,6 +35,7 @@ namespace PimIntegration.Tasks.Database
 						{
 							list.Add(new ArticleForPriceAndStockUpdate
 							{
+								ArticleNo = (string)reader["ArticleNo"],
 								PimSku = (string)reader["PimSku"],
 								StockBalance = Convert.ToDecimal(reader["ArticleForPriceAndStockUpdate"])
 							});
