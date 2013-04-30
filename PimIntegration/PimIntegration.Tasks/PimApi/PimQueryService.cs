@@ -25,7 +25,7 @@ namespace PimIntegration.Tasks.PimApi
 				BrandId = 10
 			};
 
-			var messageId = client.EnqueueMessage(queryItem, "GetProductByGroupAndBrand", "MarketAll");
+			var messageId = client.EnqueueMessage(queryItem, "GetProductByDate", "MarketAll");
 			ProductQueryResponseItem[] products = null;
 
 			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
