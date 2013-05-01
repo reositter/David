@@ -7,14 +7,8 @@ namespace PimIntegration.Test.IntegrationTests
 	[TestFixture]
 	public class PimQueryServiceTests : TestBase
 	{
-		[SetUp]
-		public void SetUp()
-		{
-
-		}
-
 		[Test]
-		public void Should_()
+		public void Should_be_able_to_make_remote_call_for_new_products()
 		{
 			// Arrange
 
