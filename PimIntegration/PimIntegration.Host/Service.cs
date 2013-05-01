@@ -11,7 +11,8 @@ namespace PimIntegration.Host
 	public class Service
 	{
 		private Timer _getNewProductsTimer;
-		private Timer _publishProductUpdatesTimer;
+		private Timer _publishStockBalanceUpdatesTimer;
+		private Timer _publishPriceUpdatesTimer;
 		private IContainer _container;
 
 		public Service()
@@ -28,8 +29,11 @@ namespace PimIntegration.Host
 			_getNewProductsTimer = new Timer(GetNewProducts, null, Timeout.Infinite, Timeout.Infinite);
 		    _getNewProductsTimer.Change(0, Timeout.Infinite);
 
-			_publishProductUpdatesTimer = new Timer(PublishProductUpdates, null, Timeout.Infinite, Timeout.Infinite);
-			_publishProductUpdatesTimer.Change(0, Timeout.Infinite);
+			_publishStockBalanceUpdatesTimer = new Timer(PublishStockBalanceUpdates, null, Timeout.Infinite, Timeout.Infinite);
+			_publishStockBalanceUpdatesTimer.Change(0, Timeout.Infinite);
+
+			_publishPriceUpdatesTimer = new Timer(PublishPriceUpdates, null, Timeout.Infinite, Timeout.Infinite);
+			_publishPriceUpdatesTimer.Change(0, Timeout.Infinite);
 	    }
 
 	    public void Stop()
@@ -37,7 +41,7 @@ namespace PimIntegration.Host
 			Log.ForCurrent.Info("Stopping PIM Integration Service");
 
 			_getNewProductsTimer.Dispose();
-		    _publishProductUpdatesTimer.Dispose();
+		    _publishStockBalanceUpdatesTimer.Dispose();
 	    }
 
 		private void GetNewProducts(Object state)
@@ -58,13 +62,14 @@ namespace PimIntegration.Host
 			_getNewProductsTimer.Change(PimIntegrationSettings.IntervalInSecondsForGetNewProducts, Timeout.Infinite);
 		}
 
-		private void PublishProductUpdates(Object state)
+		private void PublishStockBalanceUpdates(Object state)
 		{
-			Log.ForCurrent.Debug("Publishing product updates.");
-
 			try
 			{
+				Log.ForCurrent.Debug("Starting Publishing Stock Balance Updates Task.");
 				_container.GetInstance<IPublishStockBalanceUpdatesTask>().Execute();
+				Log.ForCurrent.Debug("Finished Publishing Stock Balance Updates Task.");
+
 			}
 			catch (Exception ex)
 			{
@@ -73,7 +78,26 @@ namespace PimIntegration.Host
 				throw;
 			}
 
-			_publishProductUpdatesTimer.Change(PimIntegrationSettings.IntervalInSecondsForPublishProductUpdates, Timeout.Infinite);
+			_publishStockBalanceUpdatesTimer.Change(PimIntegrationSettings.IntervalInSecondsForPublishStockBalanceUpdates, Timeout.Infinite);
+		}
+
+		private void PublishPriceUpdates(Object state)
+		{
+			try
+			{
+				Log.ForCurrent.Debug("Starting Publishing Price Updates Task.");
+				_container.GetInstance<IPublishPriceUpdatesTask>().Execute();
+				Log.ForCurrent.Debug("Finished Publishing Price Updates Task.");
+
+			}
+			catch (Exception ex)
+			{
+				Log.ForCurrent.Error(ex.Message);
+				Log.ForCurrent.Error(ex.StackTrace);
+				throw;
+			}
+
+			_publishStockBalanceUpdatesTimer.Change(PimIntegrationSettings.IntervalInSecondsForPublishPriceUpdates, Timeout.Infinite);
 		}
 	}
 }

@@ -8,14 +8,16 @@ namespace PimIntegration.Host
 	internal static class PimIntegrationSettings
 	{
 		public static readonly int IntervalInSecondsForGetNewProducts;
-		public static readonly int IntervalInSecondsForPublishProductUpdates;
+		public static readonly int IntervalInSecondsForPublishStockBalanceUpdates;
+		public static readonly int IntervalInSecondsForPublishPriceUpdates;
 		public static readonly AppSettings AppSettings;
 
 		static PimIntegrationSettings()
 		{
 			Log.ForCurrent.Info("Reading config settings");
 			IntervalInSecondsForGetNewProducts = Convert.ToInt32(ConfigurationManager.AppSettings["IntervalInSecondsForGetNewProducts"]) * 1000;
-			IntervalInSecondsForPublishProductUpdates = Convert.ToInt32(ConfigurationManager.AppSettings["IntervalInSecondsForPublishProductUpdates"]) * 1000;
+			IntervalInSecondsForPublishStockBalanceUpdates = Convert.ToInt32(ConfigurationManager.AppSettings["IntervalInSecondsForPublishStockBalanceUpdates"]) * 1000;
+			IntervalInSecondsForPublishPriceUpdates = Convert.ToInt32(ConfigurationManager.AppSettings["IntervalInSecondsForPublishPriceUpdates"]) * 1000;
 
 			AppSettings = new AppSettings
 			{
@@ -54,7 +56,8 @@ namespace PimIntegration.Host
 			AppSettings.Markets.Add(marketSettingsSweden);
 
 			Log.ForCurrent.InfoFormat("IntervalInSecondsForGetNewProducts converted to ms: {0}", IntervalInSecondsForGetNewProducts);
-			Log.ForCurrent.InfoFormat("IntervalInSecondsForPublishProductUpdates converted to ms: {0}", IntervalInSecondsForPublishProductUpdates);
+			Log.ForCurrent.InfoFormat("IntervalInSecondsForPublishStockBalanceUpdates converted to ms: {0}", IntervalInSecondsForPublishStockBalanceUpdates);
+			Log.ForCurrent.InfoFormat("IntervalInSecondsForPublishPriceUpdates converted to ms: {0}", IntervalInSecondsForPublishPriceUpdates);
 			Log.ForCurrent.InfoFormat("MaximumNumberOfRetries: {0}", AppSettings.MaximumNumberOfRetries);
 			Log.ForCurrent.InfoFormat("MillisecondsBetweenRetries: {0}", AppSettings.MillisecondsBetweenRetries);
 			Log.ForCurrent.InfoFormat("TimeStampFormat: {0}", AppSettings.TimeStampFormat);

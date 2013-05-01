@@ -59,6 +59,7 @@ namespace PimIntegration.Tasks.VismaGlobal
 					throw new PimIntegrationVismaObjectNotFoundException(string.Format("ArticleNo = {0} Code = {1}", article.ArticleNo, fetchCode));
 				}
 
+				// TODO: Get valutapris
 				article.NewPrice = (decimal)_articleServerComponent.bcGetDouble((int)Static_Properties.IDST_AgreedPrice);
 			}
 			Dispose();
