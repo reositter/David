@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using PimIntegration.Tasks.Database;
+using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PimApi;
 using PimIntegration.Tasks.VismaGlobal;
 using PimIntegration.Tasks.VismaGlobal.Dto;

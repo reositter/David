@@ -2,7 +2,7 @@
 using System.Configuration;
 using NUnit.Framework;
 using PimIntegration.Tasks;
-using PimIntegration.Tasks.Database;
+using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.Setup;
 
 namespace PimIntegration.Test.IntegrationTests
@@ -31,10 +31,9 @@ namespace PimIntegration.Test.IntegrationTests
 		}
 
 		[Test]
-		public void Should_ensure_that_tables_exists()
+		public void Should_have_valid_ioc_configuration()
 		{
 			// Arrange
-
 			// Act
 			var container = PimIntegrationSetup.BootstrapEverything(_settings);
 
@@ -60,13 +59,26 @@ namespace PimIntegration.Test.IntegrationTests
 		{
 			// Arrange
 			var container = PimIntegrationSetup.BootstrapEverything(_settings);
-			var query = container.GetInstance<IStockBalanceQuery>();
 
 			// Act
-			query.GetStockBalanceUpdatesSince(DateTime.Now.AddHours(-1));
+			var query = container.GetInstance<IStockBalanceQuery>();
 
 			// Assert
 			Assert.That(query, Is.Not.Null);
+		}
+
+		[Test]
+		public void Should_be_able_to_query_for_stock_balance_updates()
+		{
+			// Arrange
+			var container = PimIntegrationSetup.BootstrapEverything(_settings);
+			var query = container.GetInstance<IStockBalanceQuery>();
+
+			// Act
+			var result = query.GetStockBalanceUpdatesSince(DateTime.Now.AddHours(-1));
+
+			// Assert
+			Assert.That(result, Is.Not.Null);
 		}
 	}
 }

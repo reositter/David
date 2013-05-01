@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SQLite;
 using PimIntegration.Exceptions;
+using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.Setup;
 
 namespace PimIntegration.Tasks.Database
@@ -11,9 +12,9 @@ namespace PimIntegration.Tasks.Database
 		private readonly ITaskSettings _settings;
 		private const string TableName = "LastCalls";
 
-		public LastCallsRepository(SqliteConnectionStringWrapper sqliteConnectionStringWrapper, ITaskSettings settings)
+		public LastCallsRepository(ITaskSettings settings)
 		{
-			_connectionString = sqliteConnectionStringWrapper.ConnectionString;
+			_connectionString = settings.SqliteConnectionString;
 			_settings = settings;
 			EnsureTableAndExpectedRowsExists();
 		}

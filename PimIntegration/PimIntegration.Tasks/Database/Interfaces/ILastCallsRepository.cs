@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PimIntegration.Tasks.Database
+namespace PimIntegration.Tasks.Database.Interfaces
 {
 	public interface ILastCallsRepository
 	{

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using PimIntegration.Tasks.Database.Dto;
+using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.Setup;
-using PimIntegration.Tasks.VismaGlobal.Dto;
 
 namespace PimIntegration.Tasks.Database
 {
@@ -16,15 +17,15 @@ namespace PimIntegration.Tasks.Database
 			_settings = settings;			
 		}
 
-		public IList<ArticleForPriceAndStockUpdate> GetPriceUpdatesSince(DateTime lastQuery)
+		public IList<ArticleForPriceUpdate> GetArticlesForPriceUpdate(DateTime lastQuery)
 		{
-			var list = new List<ArticleForPriceAndStockUpdate>();
+			var list = new List<ArticleForPriceUpdate>();
 
 			using (var conn = new SqlConnection(_settings.VismaDbConnectionString))
 			{
 				conn.Open();
 
-				using (var cmd = new SqlCommand(string.Format("[{0}].[SP_GetPriceUpdatesForPimIntegration]", _settings.VismaDbSchema), conn))
+				using (var cmd = new SqlCommand(string.Format("[{0}].[SP_PimIntegration_GetArticlesForPriceUpdate]", _settings.VismaDbSchema), conn))
 				{
 					cmd.CommandType = CommandType.StoredProcedure;
 					cmd.Parameters.AddWithValue("@Since", lastQuery);
@@ -33,11 +34,10 @@ namespace PimIntegration.Tasks.Database
 					{
 						while (reader.Read())
 						{
-							list.Add(new ArticleForPriceAndStockUpdate
+							list.Add(new ArticleForPriceUpdate
 							{
 								ArticleNo = (string)reader["ArticleNo"],
-								PimSku = (string)reader["PimSku"],
-								StockBalance = Convert.ToDecimal(reader["ArticleForPriceAndStockUpdate"])
+								PimSku = (string)reader["PimSku"]
 							});
 						}
 					}

@@ -38,6 +38,7 @@
 
 	public interface ITaskSettings
 	{
+		string SqliteConnectionString { get; set; }
 		int MaximumNumberOfRetries { get; }
 		int MillisecondsBetweenRetries { get; }
 		string TimeStampFormat { get; }

@@ -4,6 +4,7 @@ using Moq;
 using NUnit.Framework;
 using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database;
+using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.PimApi;
 using PimIntegration.Tasks.VismaGlobal.Dto;

@@ -36,8 +36,6 @@ namespace PimIntegration.Tasks.Setup
 		{
 			container.Configure(cnfg =>
 			{	
-				cnfg.ForConcreteType<SqliteConnectionStringWrapper>().Configure.Ctor<string>().Is(settings.SqliteConnectionString);
-
 				cnfg.For<ITaskSettings>().Use(settings);
 				cnfg.For<IVismaSettings>().Use(settings);
 

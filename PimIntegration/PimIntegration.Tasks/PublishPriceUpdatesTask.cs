@@ -1,5 +1,6 @@
 ﻿using System;
 using PimIntegration.Tasks.Database;
+using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PimApi;
 
 namespace PimIntegration.Tasks
@@ -26,15 +27,17 @@ namespace PimIntegration.Tasks
 		public void Execute()
 		{
 			var timeOfThisQuery = DateTime.Now;
-			var priceUpdates = _priceUpdateQuery.GetPriceUpdatesSince(_timeOfLastQueryForPriceUpdates);
+			var articlesForPriceUpdate = _priceUpdateQuery.GetArticlesForPriceUpdate(_timeOfLastQueryForPriceUpdates);
 
-			// Populate DKK and NOK
+			// Get prices for each market
 
-			if (_pimCommandService.PublishPriceUpdates(priceUpdates))
-			{
-				_lastCallsRepository.UpdateTimeOfLastQueryForPriceUpdates(timeOfThisQuery);
-				_timeOfLastQueryForPriceUpdates = timeOfThisQuery;
-			}
+			// Update each market
+
+			//if (_pimCommandService.PublishPriceUpdates(articlesForPriceUpdate))
+			//{
+			//	_lastCallsRepository.UpdateTimeOfLastQueryForPriceUpdates(timeOfThisQuery);
+			//	_timeOfLastQueryForPriceUpdates = timeOfThisQuery;
+			//}
 		}
 	}
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using PimIntegration.Tasks.VismaGlobal.Dto;
 
-namespace PimIntegration.Tasks.Database
+namespace PimIntegration.Tasks.Database.Interfaces
 {
 	public interface IStockBalanceQuery
 	{

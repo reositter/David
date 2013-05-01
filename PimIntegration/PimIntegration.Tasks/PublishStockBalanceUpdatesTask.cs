@@ -1,5 +1,6 @@
 ﻿using System;
 using PimIntegration.Tasks.Database;
+using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PimApi;
 
 namespace PimIntegration.Tasks

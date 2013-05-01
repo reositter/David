@@ -4,6 +4,7 @@ using Moq;
 using NUnit.Framework;
 using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database;
+using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PimApi;
 using PimIntegration.Tasks.VismaGlobal.Dto;
 
@@ -42,7 +43,7 @@ namespace PimIntegration.Test.UnitTests
 		}
 
 		[Test]
-		public void Should_query_for_updated_prices()
+		public void Should_get_articles_for_price_update()
 		{
 			// Arrange
 
@@ -50,7 +51,7 @@ namespace PimIntegration.Test.UnitTests
 			_task.Execute();
 
 			// Assert
-			_priceUpdateQuery.Verify(x => x.GetPriceUpdatesSince(_timeOfLastQuery), Times.Once());
+			_priceUpdateQuery.Verify(x => x.GetArticlesForPriceUpdate(_timeOfLastQuery), Times.Once());
 		}
 
 		[Test]
