@@ -32,6 +32,8 @@ namespace PimIntegration.Tasks.VismaGlobal
 				throw new PimIntegrationVismaObjectNotFoundException(string.Format("ArticleNo = {0} Code = {1}", articleNo, fetchCode));
 			}
 
+			// TODO: Verify exchange price and handle it
+			var exchangeSalesPrice = (decimal)_articleServerComponent.bcGetDouble(21419); //Avtalat valutapris.
 			var agreedPrice = (decimal)_articleServerComponent.bcGetDouble((int)Static_Properties.IDST_AgreedPrice);
 			Dispose();
 
@@ -59,7 +61,8 @@ namespace PimIntegration.Tasks.VismaGlobal
 					throw new PimIntegrationVismaObjectNotFoundException(string.Format("ArticleNo = {0} Code = {1}", article.ArticleNo, fetchCode));
 				}
 
-				// TODO: Get valutapris
+				// TODO: Verify exchange price and handle it
+				var exchangeSalesPrice = (decimal)_articleServerComponent.bcGetDouble(21419); //Avtalat valutapris.
 				article.NewPrice = (decimal)_articleServerComponent.bcGetDouble((int)Static_Properties.IDST_AgreedPrice);
 			}
 			Dispose();
