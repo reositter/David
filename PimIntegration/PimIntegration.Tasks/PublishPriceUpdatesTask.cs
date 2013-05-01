@@ -2,6 +2,7 @@
 using PimIntegration.Tasks.Database;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PimApi;
+using PimIntegration.Tasks.VismaGlobal;
 
 namespace PimIntegration.Tasks
 {
@@ -9,17 +10,20 @@ namespace PimIntegration.Tasks
 	{
 		private readonly ILastCallsRepository _lastCallsRepository;
 		private readonly IPriceUpdateQuery _priceUpdateQuery;
+		private readonly ICustomerAgreementQuery _customerAgreementQuery;
 		private readonly IPimCommandService _pimCommandService;
 		private DateTime _timeOfLastQueryForPriceUpdates;
 
 		public PublishPriceUpdatesTask(
 			ILastCallsRepository lastCallsRepository, 
-			IPriceUpdateQuery priceUpdateQuery, 
+			IPriceUpdateQuery priceUpdateQuery,
+			ICustomerAgreementQuery customerAgreementQuery,
 			IPimCommandService pimCommandService)
 		{
 			_lastCallsRepository = lastCallsRepository;
 			_priceUpdateQuery = priceUpdateQuery;
 			_pimCommandService = pimCommandService;
+			_customerAgreementQuery = customerAgreementQuery;
 
 			_timeOfLastQueryForPriceUpdates = lastCallsRepository.GetTimeOfLastQueryForPriceUpdates();
 		}
@@ -29,7 +33,11 @@ namespace PimIntegration.Tasks
 			var timeOfThisQuery = DateTime.Now;
 			var articlesForPriceUpdate = _priceUpdateQuery.GetArticlesForPriceUpdate(_timeOfLastQueryForPriceUpdates);
 
-			// Get prices for each market
+			// Get price for each article and market
+			foreach (var article in articlesForPriceUpdate)
+			{
+				_customerAgreementQuery.GetPrice(1000, article.ArticleNo);
+			}
 
 			// Update each market
 

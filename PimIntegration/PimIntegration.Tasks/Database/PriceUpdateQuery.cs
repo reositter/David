@@ -35,10 +35,10 @@ namespace PimIntegration.Tasks.Database
 						while (reader.Read())
 						{
 							list.Add(new ArticleForPriceUpdate
-							{
-								ArticleNo = (string)reader["ArticleNo"],
-								PimSku = (string)reader["PimSku"]
-							});
+							(
+								(string)reader["ArticleNo"],
+								(string)reader["PimSku"]
+							));
 						}
 					}
 				}

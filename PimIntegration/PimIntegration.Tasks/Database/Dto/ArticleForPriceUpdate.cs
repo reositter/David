@@ -2,7 +2,13 @@
 {
 	public class ArticleForPriceUpdate
 	{
-		public string ArticleNo { get; set; }
-		public string PimSku { get; set; }
+		public string ArticleNo { get; private set; }
+		public string PimSku { get; private set; }
+
+		public ArticleForPriceUpdate(string articleNo, string pimSku)
+		{
+			ArticleNo = articleNo;
+			PimSku = pimSku;
+		}
 	}
 }

@@ -92,6 +92,7 @@
     <Compile Include="VismaGlobal\IArticleManager.cs" />
     <Compile Include="Database\Interfaces\IStockBalanceQuery.cs" />
     <Compile Include="VismaGlobal\Dto\ArticleForPriceAndStockUpdate.cs" />
+    <Compile Include="VismaGlobal\ICustomerAgreementQuery.cs" />
     <Compile Include="VismaGlobal\VismaConnection.cs" />
     <Compile Include="VismaGlobal\ZUsrFields.cs" />
   </ItemGroup>

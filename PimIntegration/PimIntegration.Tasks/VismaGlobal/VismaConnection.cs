@@ -13,7 +13,8 @@ namespace PimIntegration.Tasks.VismaGlobal
 
 	    ~VismaConnection()
 	    {
-			Connection = null;
+			if (Connection != null)
+				System.Runtime.InteropServices.Marshal.ReleaseComObject(Connection);
 	    }
 
 		public static int Open(string clientName, string user, string password, string bapiKey)
