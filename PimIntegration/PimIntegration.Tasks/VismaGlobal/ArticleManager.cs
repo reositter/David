@@ -1,5 +1,6 @@
 ﻿using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.Setup;
+using PimIntegration.Tasks.VismaGlobal.Interfaces;
 using RG_SRVLib.Interop;
 
 namespace PimIntegration.Tasks.VismaGlobal

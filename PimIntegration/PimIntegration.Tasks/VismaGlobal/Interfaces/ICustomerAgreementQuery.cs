@@ -1,10 +1,11 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using PimIntegration.Tasks.Database.Dto;
 
 namespace PimIntegration.Tasks.VismaGlobal.Interfaces
 {
-	public interface ICustomerAgreementQuery : IDisposable
+	public interface ICustomerAgreementQuery
 	{
-		void Initialize();
 		decimal GetPrice(int customerNo, string articleNo);
+		void PopulateNewPrice(int customerNo, IList<ArticleForPriceUpdate> articlesForPriceUpdate);
 	}
 }

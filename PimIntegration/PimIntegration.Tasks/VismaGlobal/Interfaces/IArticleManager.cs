@@ -1,7 +1,6 @@
 ﻿using PimIntegration.Tasks.PIMServiceEndpoint;
-using PimIntegration.Tasks.Setup;
 
-namespace PimIntegration.Tasks.VismaGlobal
+namespace PimIntegration.Tasks.VismaGlobal.Interfaces
 {
 	public interface IArticleManager
 	{

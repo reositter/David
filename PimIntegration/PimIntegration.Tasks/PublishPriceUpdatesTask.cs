@@ -3,6 +3,7 @@ using PimIntegration.Tasks.Database;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PimApi;
 using PimIntegration.Tasks.VismaGlobal;
+using PimIntegration.Tasks.VismaGlobal.Interfaces;
 
 namespace PimIntegration.Tasks
 {
@@ -33,7 +34,7 @@ namespace PimIntegration.Tasks
 			var timeOfThisQuery = DateTime.Now;
 			var articlesForPriceUpdate = _priceUpdateQuery.GetArticlesForPriceUpdate(_timeOfLastQueryForPriceUpdates);
 
-			// Get price for each article and market
+			// Get price for each article
 			foreach (var article in articlesForPriceUpdate)
 			{
 				_customerAgreementQuery.GetPrice(1000, article.ArticleNo);

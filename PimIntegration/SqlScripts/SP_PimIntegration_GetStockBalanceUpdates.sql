@@ -8,19 +8,11 @@ ALTER PROCEDURE [LuthmanAB].[SP_PimIntegration_GetStockBalanceUpdates] (
 	@Since DATETIME
 )
 AS
-	-- TODO: Write a query that actually works.
-	SELECT
-		ART.ZUsrPimSku AS PimSku,
-		SUM(SST.UnitInStock-SST.UnitOnOrder) AS StockBalance
-	FROM
-		LuthmanAB.StockSurveyTotalsView SST INNER JOIN LuthmanAB.Article ART ON ART.ArticleNo = SST.ArticleNo
-	WHERE
-			SST.WareHouseNo = 1 OR SST.WareHouseNo = 26
-		AND
-			SST.LastUpdate > @Since
-		AND
-			ART.ZUsrPimSku IS NOT NULL
-	GROUP BY 
-		SST.ArticleNo, 
-		ART.ZUsrPimSku;
+	SELECT     SSTV.ArticleNo, A.ZUsrPimSku, SUM(SSTV.UnitInStock - SSTV.UnitOnOrder) AS StockBalance
+	FROM         _Luthman_.StockSurveyTotalsView AS SSTV INNER JOIN
+						  _Luthman_.Article AS A ON SSTV.ArticleNo = A.ArticleNo
+	WHERE     (SSTV.WareHouseNo = 1) OR
+						  (SSTV.WareHouseNo = 26)
+	GROUP BY SSTV.ArticleNo, SSTV.LastUpdate,A.ZUsrPimSku
+	HAVING      SSTV.LastUpdate > @Since
 GO

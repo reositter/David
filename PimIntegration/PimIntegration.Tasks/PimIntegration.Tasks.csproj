@@ -67,6 +67,7 @@
     <Compile Include="Database\PriceUpdateQuery.cs" />
     <Compile Include="Database\Interfaces\ILastCallsRepository.cs" />
     <Compile Include="Database\StockBalanceQuery.cs" />
+    <Compile Include="Exceptions\PimIntegrationVismaObjectNotFoundException.cs" />
     <Compile Include="Exceptions\PimIntegrationConfigurationException.cs" />
     <Compile Include="Exceptions\PimIntegrationDbException.cs" />
     <Compile Include="GetNewProductsTask.cs" />
@@ -89,10 +90,11 @@
     <Compile Include="VismaGlobal\Dto\ArticleForGetNewProductsScenario.cs" />
     <Compile Include="VismaGlobal\ArticleManager.cs" />
     <Compile Include="VismaGlobal\ExtensionMethods.cs" />
-    <Compile Include="VismaGlobal\IArticleManager.cs" />
+    <Compile Include="VismaGlobal\CustomerAgreementQuery.cs" />
+    <Compile Include="VismaGlobal\Interfaces\IArticleManager.cs" />
     <Compile Include="Database\Interfaces\IStockBalanceQuery.cs" />
     <Compile Include="VismaGlobal\Dto\ArticleForPriceAndStockUpdate.cs" />
-    <Compile Include="VismaGlobal\ICustomerAgreementQuery.cs" />
+    <Compile Include="VismaGlobal\Interfaces\ICustomerAgreementQuery.cs" />
     <Compile Include="VismaGlobal\VismaConnection.cs" />
     <Compile Include="VismaGlobal\ZUsrFields.cs" />
   </ItemGroup>

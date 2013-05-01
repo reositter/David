@@ -9,6 +9,7 @@ using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PimApi;
 using PimIntegration.Tasks.VismaGlobal;
 using PimIntegration.Tasks.VismaGlobal.Dto;
+using PimIntegration.Tasks.VismaGlobal.Interfaces;
 
 namespace PimIntegration.Test.UnitTests
 {
