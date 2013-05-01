@@ -10,7 +10,7 @@ namespace PimIntegration.Test
 			{
 				MaximumNumberOfRetries = maximumNumberOfRetries,
 				MillisecondsBetweenRetries = millisecondsBetweenRetries,
-				TimeStampFormat = "yyyy-MM-dd HH:mm:ss.sss"
+				TimeStampFormat = "yyyy-MM-dd HH:mm:ss.fff"
 			};
 		} 
 	}

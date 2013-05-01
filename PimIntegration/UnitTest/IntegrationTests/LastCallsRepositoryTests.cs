@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Configuration;
 using NUnit.Framework;
 using PimIntegration.Tasks.Database;
+using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.Setup;
 
 namespace PimIntegration.Test.IntegrationTests
 {
-	//[Ignore("Only used during development")]
 	[TestFixture]
 	public class LastCallsRepositoryTests : TestBase
 	{
@@ -15,10 +16,9 @@ namespace PimIntegration.Test.IntegrationTests
 		[SetUp]
 		public void SetUp()
 		{
-			var connectionStringWrapper = new SqliteConnectionStringWrapper("Data Source=Database/PimIntegrationDb.s3db");
-
 			_settings = CreateTaskSettings(10);
-			_repository = new LastCallsRepository(connectionStringWrapper, _settings);
+			_settings.SqliteConnectionString = ConfigurationManager.ConnectionStrings["SQLite"].ConnectionString;
+			_repository = new LastCallsRepository(_settings);
 		}
 
 		[Test]
@@ -38,14 +38,13 @@ namespace PimIntegration.Test.IntegrationTests
 		{
 			// Arrange
 			var now = DateTime.Now;
-			var expected = now.ToString(_settings.TimeStampFormat);
 
 			// Act
 			_repository.UpdateTimeOfLastRequestForNewProducts(now);
 			var timestamp = _repository.GetTimeOfLastRequestForNewProducts();
 
 			// Assert
-			Assert.That(timestamp, Is.EqualTo(expected));
+			Assert.That(timestamp.ToString(_settings.TimeStampFormat), Is.EqualTo(now.ToString(_settings.TimeStampFormat)));
 		}
 	}
 }
