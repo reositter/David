@@ -7,13 +7,15 @@ using PimIntegration.Tasks.Database;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.PimApi;
+using PimIntegration.Tasks.Setup;
 using PimIntegration.Tasks.VismaGlobal.Dto;
 
 namespace PimIntegration.Test.UnitTests
 {
-	public class PublishStockBalanceUpdatesTaskTests
+	public class PublishStockBalanceUpdatesTaskTests : TestBase
 	{
 		private IPublishStockBalanceUpdatesTask _task;
+		private ITaskSettings _settings;
 		private Mock<ILastCallsRepository> _stateRepository;
 		private Mock<IStockBalanceQuery> _stockBalanceQuery;
 		private Mock<IPimCommandService> _pimCommandService;
@@ -27,8 +29,10 @@ namespace PimIntegration.Test.UnitTests
 			_pimCommandService = new Mock<IPimCommandService>();
 			_timeOfLastQuery = DateTime.Now.AddHours(-2);
 
+			_settings = GetSettingsFromAppConfigForUnitTests();
+
 			_stateRepository.Setup(repo => repo.GetTimeOfLastQueryForStockBalanceUpdates()).Returns(_timeOfLastQuery);
-			_task = new PublishStockBalanceUpdatesTask(_stateRepository.Object, _stockBalanceQuery.Object, _pimCommandService.Object);
+			_task = new PublishStockBalanceUpdatesTask(_settings, _stateRepository.Object, _stockBalanceQuery.Object, _pimCommandService.Object);
 		}
 
 		[Test]
@@ -56,7 +60,7 @@ namespace PimIntegration.Test.UnitTests
 		}
 
 		[Test]
-		public void Should_publish_stock_balance_updates_when_updates_exists()
+		public void Should_publish_stock_balance_updates_for_each_market_when_updates_exists()
 		{
 			// Arrange
 
@@ -64,15 +68,15 @@ namespace PimIntegration.Test.UnitTests
 			_task.Execute();
 
 			// Assert
-			_pimCommandService.Verify(x => x.PublishStockBalanceUpdates(It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>()), Times.Once());
+			_pimCommandService.Verify(x => x.PublishStockBalanceUpdates(_settings.Markets[0].MarketKey, It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>()), Times.Once());
+			_pimCommandService.Verify(x => x.PublishStockBalanceUpdates(_settings.Markets[1].MarketKey, It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>()), Times.Once());
+			_pimCommandService.Verify(x => x.PublishStockBalanceUpdates(_settings.Markets[2].MarketKey, It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>()), Times.Once());
 		}
 
 		[Test]
-		public void Should_update_time_of_last_request_when_request_is_successful()
+		public void Should_update_time_of_last_request_when_executing_task()
 		{
 			// Arrange
-			_pimCommandService.Setup(service => service.PublishStockBalanceUpdates(It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>())).Returns(true);
-
 			// Act
 			_task.Execute();
 

@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using PimIntegration.Tasks;
-using PimIntegration.Tasks.Database;
 using PimIntegration.Tasks.Database.Dto;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PimApi;
-using PimIntegration.Tasks.VismaGlobal;
+using PimIntegration.Tasks.Setup;
 using PimIntegration.Tasks.VismaGlobal.Dto;
 using PimIntegration.Tasks.VismaGlobal.Interfaces;
 
 namespace PimIntegration.Test.UnitTests
 {
-	public class PublishPriceUpdatesTaskTests
+	public class PublishPriceUpdatesTaskTests : TestBase
 	{
 		private IPublishPriceUpdatesTask _task;
+		private ITaskSettings _settings;
 		private Mock<ILastCallsRepository> _stateRepository;
 		private Mock<IPriceUpdateQuery> _priceUpdateQuery;
 		private Mock<ICustomerAgreementQuery> _customerAgreementQuery;
@@ -31,14 +31,17 @@ namespace PimIntegration.Test.UnitTests
 			_pimCommandService = new Mock<IPimCommandService>();
 			_timeOfLastQuery = DateTime.Now.AddHours(-2);
 
+			_settings = GetSettingsFromAppConfigForUnitTests();
+
 			_stateRepository.Setup(repo => repo.GetTimeOfLastQueryForPriceUpdates()).Returns(_timeOfLastQuery);
-			_task = new PublishPriceUpdatesTask(_stateRepository.Object, _priceUpdateQuery.Object, _customerAgreementQuery.Object, _pimCommandService.Object);
+			_task = new PublishPriceUpdatesTask(_settings, _stateRepository.Object, _priceUpdateQuery.Object, _customerAgreementQuery.Object, _pimCommandService.Object);
 		}
 
 		[Test]
 		public void Should_get_time_of_last_publish_from_db_when_ctor_is_called()
 		{
 			// Arrange
+			_priceUpdateQuery.Setup(q => q.GetArticlesForPriceUpdate(_timeOfLastQuery)).Returns(new List<ArticleForPriceUpdate>());
 
 			// Act
 			_task.Execute();
@@ -51,6 +54,7 @@ namespace PimIntegration.Test.UnitTests
 		public void Should_get_articles_for_price_update()
 		{
 			// Arrange
+			_priceUpdateQuery.Setup(q => q.GetArticlesForPriceUpdate(_timeOfLastQuery)).Returns(new List<ArticleForPriceUpdate>());
 
 			// Act
 			_task.Execute();
@@ -60,7 +64,7 @@ namespace PimIntegration.Test.UnitTests
 		}
 
 		[Test]
-		public void Should_get_current_price_each_article()
+		public void Should_populate_new_price_once_for_each_market()
 		{
 			// Arrange
 			var article1 = new ArticleForPriceUpdate("181", string.Empty);
@@ -76,29 +80,31 @@ namespace PimIntegration.Test.UnitTests
 			_task.Execute();
 
 			// Assert
-			_customerAgreementQuery.Verify(x => x.GetPrice(1000, article1.ArticleNo), Times.Once());
-			_customerAgreementQuery.Verify(x => x.GetPrice(1000, article2.ArticleNo), Times.Once());
+			_customerAgreementQuery.Verify(x => x.PopulateNewPrice(_settings.Markets[0].VismaCustomerNoForPriceCalculation, articlesForPriceUpdates), Times.Once());
+			_customerAgreementQuery.Verify(x => x.PopulateNewPrice(_settings.Markets[1].VismaCustomerNoForPriceCalculation, articlesForPriceUpdates), Times.Once());
+			_customerAgreementQuery.Verify(x => x.PopulateNewPrice(_settings.Markets[2].VismaCustomerNoForPriceCalculation, articlesForPriceUpdates), Times.Once());
 		}
 
-		[Ignore("WIP")]
 		[Test]
-		public void Should_publish_price_updates_when_updates_exists()
+		public void Should_publish_price_updates_for_each_market_when_updates_exists()
 		{
 			// Arrange
+			_priceUpdateQuery.Setup(q => q.GetArticlesForPriceUpdate(_timeOfLastQuery)).Returns(new List<ArticleForPriceUpdate>());
 
 			// Act
 			_task.Execute();
 
 			// Assert
-			_pimCommandService.Verify(x => x.PublishPriceUpdates(It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>()), Times.Once());
+			_pimCommandService.Verify(x => x.PublishPriceUpdates(_settings.Markets[0].MarketKey, It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>()), Times.Once());
+			_pimCommandService.Verify(x => x.PublishPriceUpdates(_settings.Markets[1].MarketKey, It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>()), Times.Once());
+			_pimCommandService.Verify(x => x.PublishPriceUpdates(_settings.Markets[2].MarketKey, It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>()), Times.Once());
 		}
 
-		[Ignore("WIP")]
 		[Test]
-		public void Should_update_time_of_last_request_when_request_is_successful()
+		public void Should_update_time_of_last_request_when_executing_task()
 		{
 			// Arrange
-			_pimCommandService.Setup(service => service.PublishPriceUpdates(It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>())).Returns(true);
+			_priceUpdateQuery.Setup(q => q.GetArticlesForPriceUpdate(_timeOfLastQuery)).Returns(new List<ArticleForPriceUpdate>());
 
 			// Act
 			_task.Execute();

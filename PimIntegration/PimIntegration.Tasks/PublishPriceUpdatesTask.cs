@@ -1,14 +1,18 @@
 ﻿using System;
-using PimIntegration.Tasks.Database;
+using System.Collections.Generic;
+using System.Linq;
+using PimIntegration.Tasks.Database.Dto;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PimApi;
-using PimIntegration.Tasks.VismaGlobal;
+using PimIntegration.Tasks.Setup;
+using PimIntegration.Tasks.VismaGlobal.Dto;
 using PimIntegration.Tasks.VismaGlobal.Interfaces;
 
 namespace PimIntegration.Tasks
 {
 	public class PublishPriceUpdatesTask : IPublishPriceUpdatesTask
 	{
+		private readonly ITaskSettings _settings;
 		private readonly ILastCallsRepository _lastCallsRepository;
 		private readonly IPriceUpdateQuery _priceUpdateQuery;
 		private readonly ICustomerAgreementQuery _customerAgreementQuery;
@@ -16,11 +20,13 @@ namespace PimIntegration.Tasks
 		private DateTime _timeOfLastQueryForPriceUpdates;
 
 		public PublishPriceUpdatesTask(
+			ITaskSettings settings,
 			ILastCallsRepository lastCallsRepository, 
 			IPriceUpdateQuery priceUpdateQuery,
 			ICustomerAgreementQuery customerAgreementQuery,
 			IPimCommandService pimCommandService)
 		{
+			_settings = settings;
 			_lastCallsRepository = lastCallsRepository;
 			_priceUpdateQuery = priceUpdateQuery;
 			_pimCommandService = pimCommandService;
@@ -34,19 +40,26 @@ namespace PimIntegration.Tasks
 			var timeOfThisQuery = DateTime.Now;
 			var articlesForPriceUpdate = _priceUpdateQuery.GetArticlesForPriceUpdate(_timeOfLastQueryForPriceUpdates);
 
-			// Get price for each article
-			foreach (var article in articlesForPriceUpdate)
+			foreach (var market in _settings.Markets)
 			{
-				_customerAgreementQuery.GetPrice(1000, article.ArticleNo);
+				_customerAgreementQuery.PopulateNewPrice(market.VismaCustomerNoForPriceCalculation, articlesForPriceUpdate);
+				var articlesWithPriceUpdates = MapToArticleForPriceAndStockUpdate(articlesForPriceUpdate);
+				_pimCommandService.PublishPriceUpdates(market.MarketKey, articlesWithPriceUpdates);
 			}
 
-			// Update each market
+			_lastCallsRepository.UpdateTimeOfLastQueryForPriceUpdates(timeOfThisQuery);
+			_timeOfLastQueryForPriceUpdates = timeOfThisQuery;			
+		}
 
-			//if (_pimCommandService.PublishPriceUpdates(articlesForPriceUpdate))
-			//{
-			//	_lastCallsRepository.UpdateTimeOfLastQueryForPriceUpdates(timeOfThisQuery);
-			//	_timeOfLastQueryForPriceUpdates = timeOfThisQuery;
-			//}
+		private IEnumerable<ArticleForPriceAndStockUpdate> MapToArticleForPriceAndStockUpdate(IEnumerable<ArticleForPriceUpdate> source)
+		{
+			return from s in source
+					select new ArticleForPriceAndStockUpdate
+					{
+						ArticleNo = s.ArticleNo,
+						PimSku = s.PimSku,
+						Price = s.NewPrice
+					};
 		}
 	}
 

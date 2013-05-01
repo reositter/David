@@ -31,10 +31,27 @@ namespace PimIntegration.Host
 				VismaPriceCalcMethodsNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaPriceCalcMethodsNo"]),
 				VismaStockProfileNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaStockProfileNo"]),
 				VismaDbSchema = ConfigurationManager.AppSettings["VismaDbSchema"],
-				VismaDbConnectionString = ConfigurationManager.ConnectionStrings["VismaDb"].ConnectionString,
-				CustomerNoDenmark = Convert.ToInt32(ConfigurationManager.AppSettings["CustomerNoDenmark"]),
-				CustomerNoNorway = Convert.ToInt32(ConfigurationManager.AppSettings["CustomerNoNorway"])
+				VismaDbConnectionString = ConfigurationManager.ConnectionStrings["VismaDb"].ConnectionString
 			};
+
+			var marketSettingsDenmark = new Market(
+				ConfigurationManager.AppSettings["MarketKeyDenmark"],
+				Convert.ToInt32(ConfigurationManager.AppSettings["VendorIdDenmark"]),
+				Convert.ToInt32(ConfigurationManager.AppSettings["CustomerNoDenmark"]));
+
+			var marketSettingsNorway = new Market(
+				ConfigurationManager.AppSettings["MarketKeyNorway"],
+				Convert.ToInt32(ConfigurationManager.AppSettings["VendorIdNorway"]),
+				Convert.ToInt32(ConfigurationManager.AppSettings["CustomerNoNorway"]));
+
+			var marketSettingsSweden = new Market(
+				ConfigurationManager.AppSettings["MarketKeySweden"],
+				Convert.ToInt32(ConfigurationManager.AppSettings["VendorIdSweden"]),
+				Convert.ToInt32(ConfigurationManager.AppSettings["CustomerNoSweden"]));
+
+			AppSettings.Markets.Add(marketSettingsDenmark);
+			AppSettings.Markets.Add(marketSettingsNorway);
+			AppSettings.Markets.Add(marketSettingsSweden);
 
 			Log.ForCurrent.InfoFormat("IntervalInSecondsForGetNewProducts converted to ms: {0}", IntervalInSecondsForGetNewProducts);
 			Log.ForCurrent.InfoFormat("IntervalInSecondsForPublishProductUpdates converted to ms: {0}", IntervalInSecondsForPublishProductUpdates);

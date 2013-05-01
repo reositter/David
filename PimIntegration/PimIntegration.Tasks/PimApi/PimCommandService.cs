@@ -42,7 +42,7 @@ namespace PimIntegration.Tasks.PimApi
 			return false;
 		}
 
-		public bool PublishStockBalanceUpdates(IEnumerable<ArticleForPriceAndStockUpdate> articlesWithStockUpdates)
+		public bool PublishStockBalanceUpdates(string marketKey, IEnumerable<ArticleForPriceAndStockUpdate> articlesWithStockUpdates)
 		{
 			if (articlesWithStockUpdates.Count() == 0) 
 				return true;
@@ -52,7 +52,7 @@ namespace PimIntegration.Tasks.PimApi
 			var messageId = client.EnqueueMessage("UpdateProductBySKU", "PriceAndStock", articlesWithStockUpdates.Select(article => new ProductUpdateRequestItem
 			{
 				SKU = article.PimSku,
-				MarketName = string.Empty, // TODO: Fix it
+				MarketName = marketKey,
 				Stock = Convert.ToInt32(article.StockBalance)
 
 			}).ToArray());
@@ -69,7 +69,7 @@ namespace PimIntegration.Tasks.PimApi
 			return false;
 		}
 
-		public bool PublishPriceUpdates(IEnumerable<ArticleForPriceAndStockUpdate> articlesWithPriceUpdates)
+		public bool PublishPriceUpdates(string marketKey, IEnumerable<ArticleForPriceAndStockUpdate> articlesWithPriceUpdates)
 		{
 			if (articlesWithPriceUpdates.Count() == 0)
 				return true;
@@ -79,7 +79,7 @@ namespace PimIntegration.Tasks.PimApi
 			var messageId = client.EnqueueMessage("UpdateProductBySKU", "PriceAndStock", articlesWithPriceUpdates.Select(article => new ProductUpdateRequestItem
 			{
 				SKU = article.PimSku,
-				MarketName = string.Empty, // TODO: Fix it
+				MarketName = marketKey,
 				Price = article.Price
 
 			}).ToArray());

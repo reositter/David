@@ -8,26 +8,14 @@ using PimIntegration.Tasks.Setup;
 namespace PimIntegration.Test.IntegrationTests
 {
 	[TestFixture]
-	public class PimIntegrationSetupTests
+	public class PimIntegrationSetupTests : TestBase
 	{
 		private AppSettings _settings;
 
 		[SetUp]
 		public void SetUp()
 		{
-			_settings = new AppSettings
-			{
-				SqliteConnectionString = @"Data Source=C:\4 Uppdrag\Arego\dev\PimIntegration\PimIntegration.Tasks\Database\PimIntegrationDb.s3db",
-				VismaClientName = ConfigurationManager.AppSettings["VismaClientName"],
-				VismaBapiKey = ConfigurationManager.AppSettings["VismaBapiKey"],
-				VismaUserName = ConfigurationManager.AppSettings["VismaUserName"],
-				VismaPassword = ConfigurationManager.AppSettings["VismaPassword"],
-				VismaPostingTemplateNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaPostingTemplateNo"].Trim()),
-				VismaPriceCalcMethodsNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaPriceCalcMethodsNo"].Trim()),
-				VismaStockProfileNo = Convert.ToInt32(ConfigurationManager.AppSettings["VismaStockProfileNo"].Trim()),
-				VismaDbSchema = ConfigurationManager.AppSettings["VismaDbSchema"],
-				VismaDbConnectionString = ConfigurationManager.ConnectionStrings["VismaDb"].ConnectionString
-			};
+			_settings = GetSettingsFromAppConfigForUnitTests();
 		}
 
 		[Test]

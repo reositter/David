@@ -1,22 +1,25 @@
 ﻿using System;
-using PimIntegration.Tasks.Database;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PimApi;
+using PimIntegration.Tasks.Setup;
 
 namespace PimIntegration.Tasks
 {
 	public class PublishStockBalanceUpdatesTask : IPublishStockBalanceUpdatesTask
 	{
+		private readonly ITaskSettings _settings;
 		private readonly ILastCallsRepository _lastCallsRepository;
 		private readonly IStockBalanceQuery _stockBalanceQuery;
 		private readonly IPimCommandService _pimCommandService;
 		private DateTime _timeOfLastQueryForStockBalanceUpdates;
 
 		public PublishStockBalanceUpdatesTask(
+			ITaskSettings settings,
 			ILastCallsRepository lastCallsRepository, 
 			IStockBalanceQuery stockBalanceQuery, 
 			IPimCommandService pimCommandService)
 		{
+			_settings = settings;
 			_lastCallsRepository = lastCallsRepository;
 			_stockBalanceQuery = stockBalanceQuery;
 			_pimCommandService = pimCommandService;
@@ -28,11 +31,13 @@ namespace PimIntegration.Tasks
 			var timeOfThisQuery = DateTime.Now;
 			var stockBalanceUpdates = _stockBalanceQuery.GetStockBalanceUpdatesSince(_timeOfLastQueryForStockBalanceUpdates);
 
-			if (_pimCommandService.PublishStockBalanceUpdates(stockBalanceUpdates))
+			foreach (var market in _settings.Markets)
 			{
-				_lastCallsRepository.UpdateTimeOfLastQueryForStockBalanceUpdates(timeOfThisQuery);
-				_timeOfLastQueryForStockBalanceUpdates = timeOfThisQuery;
+				_pimCommandService.PublishStockBalanceUpdates(market.MarketKey, stockBalanceUpdates);
 			}
+			
+			_lastCallsRepository.UpdateTimeOfLastQueryForStockBalanceUpdates(timeOfThisQuery);
+			_timeOfLastQueryForStockBalanceUpdates = timeOfThisQuery;
 		}
 	}
 

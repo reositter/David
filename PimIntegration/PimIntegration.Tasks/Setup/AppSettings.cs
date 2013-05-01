@@ -1,12 +1,18 @@
-﻿namespace PimIntegration.Tasks.Setup
+﻿using System.Collections.Generic;
+
+namespace PimIntegration.Tasks.Setup
 {
 	public class AppSettings : ITaskSettings, IVismaSettings
 	{
+		public AppSettings()
+		{
+			Markets = new List<Market>();
+		}
+
+		public string SqliteConnectionString { get; set; }
 		public int MaximumNumberOfRetries { get; set; }
 		public int MillisecondsBetweenRetries { get; set; }
 		public string TimeStampFormat { get; set; }
-
-		public string SqliteConnectionString { get; set; }
 
 		public string VismaClientName { get; set; }
 		public string VismaBapiKey { get; set; }
@@ -17,8 +23,7 @@
 		public int VismaStockProfileNo { get; set; }
 		public string VismaDbSchema { get; set; }
 		public string VismaDbConnectionString { get; set; }
-		public int CustomerNoDenmark { get; set; }
-		public int CustomerNoNorway { get; set; }
+		public IList<Market> Markets { get; private set; } 
 	}
 
 	public interface IVismaSettings
@@ -32,8 +37,6 @@
 		int VismaStockProfileNo { get; }
 		string VismaDbSchema { get; }
 		string VismaDbConnectionString { get; }
-		int CustomerNoDenmark { get; }
-		int CustomerNoNorway { get; }
 	}
 
 	public interface ITaskSettings
@@ -42,5 +45,20 @@
 		int MaximumNumberOfRetries { get; }
 		int MillisecondsBetweenRetries { get; }
 		string TimeStampFormat { get; }
+		IList<Market> Markets { get; }
+	}
+
+	public class Market
+	{
+		public string MarketKey { get; private set; }
+		public int VendorId { get; private set; }
+		public int VismaCustomerNoForPriceCalculation { get; private set; }
+
+		public Market(string marketKey, int vendorId, int vismaCustomerNoForPriceCalculation)
+		{
+			MarketKey = marketKey;
+			VendorId = vendorId;
+			VismaCustomerNoForPriceCalculation = vismaCustomerNoForPriceCalculation;
+		}
 	}
 }
