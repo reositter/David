@@ -21,6 +21,7 @@ namespace PimIntegration.Host
 		public Service()
 		{
 			XmlConfigurator.Configure();
+
 		}
 
 		public void Start()

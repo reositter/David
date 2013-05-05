@@ -1,4 +1,4 @@
-﻿namespace PimIntegration.Host
+﻿namespace PimIntegration.Host.Modules
 {
 	public class DashboardModule : Nancy.NancyModule
 	{
