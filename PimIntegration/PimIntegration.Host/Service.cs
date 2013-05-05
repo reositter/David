@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Nancy.Hosting.Self;
 using PimIntegration.Tasks;
 using PimIntegration.Tasks.Setup;
 using StructureMap;
@@ -15,6 +16,8 @@ namespace PimIntegration.Host
 		private Timer _publishPriceUpdatesTimer;
 		private IContainer _container;
 
+		private NancyHost _nancyHost;
+
 		public Service()
 		{
 			XmlConfigurator.Configure();
@@ -22,22 +25,31 @@ namespace PimIntegration.Host
 
 		public void Start()
 	    {
+			if(_nancyHost == null)
+				_nancyHost = new NancyHost(new Uri("http://localhost:4000"));
+
+			Log.ForCurrent.Info("Starting Nancy UI host");
+			_nancyHost.Start();
+
 			Log.ForCurrent.Info("Starting PIM Integration Service");
 
 			_container = PimIntegrationSetup.BootstrapEverything(PimIntegrationSettings.AppSettings);
 
 			_getNewProductsTimer = new Timer(GetNewProducts, null, Timeout.Infinite, Timeout.Infinite);
-		    _getNewProductsTimer.Change(0, Timeout.Infinite);
+		    //_getNewProductsTimer.Change(0, Timeout.Infinite);
 
 			_publishStockBalanceUpdatesTimer = new Timer(PublishStockBalanceUpdates, null, Timeout.Infinite, Timeout.Infinite);
-			_publishStockBalanceUpdatesTimer.Change(0, Timeout.Infinite);
+			//_publishStockBalanceUpdatesTimer.Change(0, Timeout.Infinite);
 
 			_publishPriceUpdatesTimer = new Timer(PublishPriceUpdates, null, Timeout.Infinite, Timeout.Infinite);
-			_publishPriceUpdatesTimer.Change(0, Timeout.Infinite);
+			//_publishPriceUpdatesTimer.Change(0, Timeout.Infinite);
 	    }
 
 	    public void Stop()
 	    {
+			Log.ForCurrent.Info("Stopping Nancy UI host");
+			_nancyHost.Stop();
+
 			Log.ForCurrent.Info("Stopping PIM Integration Service");
 
 			_getNewProductsTimer.Dispose();
