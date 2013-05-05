@@ -9,6 +9,7 @@ namespace PimIntegration.Tasks.Setup
 			Markets = new List<Market>();
 		}
 
+		public int NancyUiPort { get; set; }
 		public string SqliteConnectionString { get; set; }
 		public int MaximumNumberOfRetries { get; set; }
 		public int MillisecondsBetweenRetries { get; set; }

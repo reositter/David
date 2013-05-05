@@ -27,7 +27,7 @@ namespace PimIntegration.Host
 		public void Start()
 	    {
 			if(_nancyHost == null)
-				_nancyHost = new NancyHost(new Uri("http://localhost:4000"));
+				_nancyHost = new NancyHost(new Uri(string.Concat("http://localhost:", PimIntegrationSettings.AppSettings.NancyUiPort)));
 
 			Log.ForCurrent.Info("Starting Nancy UI host");
 			_nancyHost.Start();
