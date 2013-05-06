@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.PimApi;
+using PimIntegration.Tasks.Setup;
 using PimIntegration.Tasks.VismaGlobal.Dto;
 using PimIntegration.Tasks.VismaGlobal.Interfaces;
 
 namespace PimIntegration.Tasks
 {
+	public interface IGetNewProductsTask
+	{
+		void Execute();
+	}
+
 	public class GetNewProductsTask : IGetNewProductsTask
 	{
+		private readonly ITaskSettings _settings;
 		private readonly ILastCallsRepository _lastCallsRepository;
 		private readonly IPimQueryService _pimQueryService;
 		private readonly IPimCommandService _pimCommandService;
@@ -17,11 +24,13 @@ namespace PimIntegration.Tasks
 		private DateTime _timeOfLastRequest;
 
 		public GetNewProductsTask(
+			ITaskSettings settings,
 			ILastCallsRepository lastCallsRepository, 
 			IPimQueryService pimQueryService,
 			IPimCommandService pimCommandService,
 			IArticleManager articleManager)
 		{
+			_settings = settings;
 			_lastCallsRepository = lastCallsRepository;
 			_pimQueryService = pimQueryService;
 			_pimCommandService = pimCommandService;
@@ -34,16 +43,17 @@ namespace PimIntegration.Tasks
 			var	timeOfThisRequest = DateTime.Now;
 			var newProducts = _pimQueryService.GetNewProductsSince(_timeOfLastRequest);
 
-			if (newProducts == null) return;
-
-			// Map to list
-			var createdArticles = _articleManager.CreateArticles(MapPimProductToVismaArticle(newProducts));
-
-			if (createdArticles.Count > 0)
-				_pimCommandService.ReportVismaProductNumbers(createdArticles);
-
 			_lastCallsRepository.UpdateTimeOfLastRequestForNewProducts(timeOfThisRequest);
 			_timeOfLastRequest = timeOfThisRequest;
+
+			if (newProducts == null || newProducts.Length == 0) return;
+
+			var createdArticles = _articleManager.CreateArticles(MapPimProductToVismaArticle(newProducts));
+
+			foreach (var market in _settings.Markets)
+			{
+				_pimCommandService.ReportVismaProductNumbers(market.MarketKey, market.VendorId, createdArticles);
+			}
 		}
 
 		private IList<ArticleForCreate> MapPimProductToVismaArticle(ProductQueryResponseItem[] pimProducts)
@@ -61,10 +71,5 @@ namespace PimIntegration.Tasks
 
 			return list;
 		}
-	}
-
-	public interface IGetNewProductsTask
-	{
-		void Execute();
 	}
 }

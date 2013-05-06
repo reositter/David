@@ -10,6 +10,11 @@ using PimIntegration.Tasks.VismaGlobal.Interfaces;
 
 namespace PimIntegration.Tasks
 {
+	public interface IPublishPriceUpdatesTask
+	{
+		void Execute();
+	}
+
 	public class PublishPriceUpdatesTask : IPublishPriceUpdatesTask
 	{
 		private readonly ITaskSettings _settings;
@@ -61,10 +66,5 @@ namespace PimIntegration.Tasks
 						Price = s.NewPrice
 					};
 		}
-	}
-
-	public interface IPublishPriceUpdatesTask
-	{
-		void Execute();
 	}
 }

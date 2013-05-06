@@ -90,6 +90,7 @@
     <Compile Include="VismaGlobal\Dto\ArticleForCreate.cs" />
     <Compile Include="VismaGlobal\Dto\ArticleForGetNewProductsScenario.cs" />
     <Compile Include="VismaGlobal\ArticleManager.cs" />
+    <Compile Include="VismaGlobal\Dto\CreatedArticle.cs" />
     <Compile Include="VismaGlobal\ExtensionMethods.cs" />
     <Compile Include="VismaGlobal\CustomerAgreementQuery.cs" />
     <Compile Include="VismaGlobal\Interfaces\IArticleManager.cs" />

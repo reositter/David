@@ -17,17 +17,17 @@ namespace PimIntegration.Tasks.PimApi
 			_settings = settings;
 		}
 
-		public bool ReportVismaProductNumbers(IEnumerable<ArticleForGetNewProductsScenario> newProducts)
+		public bool ReportVismaProductNumbers(string marketKey, int vendorId, IEnumerable<CreatedArticle> newProducts)
 		{
 			var client = new QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient();
 
 			var messageId = client.EnqueueMessage("UpdateProductBySKU", "IndentificationDetails", newProducts.Select(newProduct => new ProductUpdateRequestItem
 			{
-				SKU = newProduct.ResponseItem.SKU, 
-				MarketName = string.Empty, 
-				VendorId = default(int), 
-				ProductCodeVendor = newProduct.VismaArticleNo, 
-				EAN = newProduct.ResponseItem.EAN
+				SKU = newProduct.PimSku,
+				MarketName = marketKey,
+				VendorId = vendorId, 
+				ProductCodeVendor = newProduct.ArticleNo 
+				//EAN = newProduct.ResponseItem.EAN
 			}).ToArray());
 
 			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)

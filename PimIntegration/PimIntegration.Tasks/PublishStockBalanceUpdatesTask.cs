@@ -5,6 +5,11 @@ using PimIntegration.Tasks.Setup;
 
 namespace PimIntegration.Tasks
 {
+	public interface IPublishStockBalanceUpdatesTask
+	{
+		void Execute();
+	}
+
 	public class PublishStockBalanceUpdatesTask : IPublishStockBalanceUpdatesTask
 	{
 		private readonly ITaskSettings _settings;
@@ -39,10 +44,5 @@ namespace PimIntegration.Tasks
 			_lastCallsRepository.UpdateTimeOfLastQueryForStockBalanceUpdates(timeOfThisQuery);
 			_timeOfLastQueryForStockBalanceUpdates = timeOfThisQuery;
 		}
-	}
-
-	public interface IPublishStockBalanceUpdatesTask
-	{
-		void Execute();
 	}
 }

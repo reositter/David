@@ -1,4 +1,4 @@
-﻿using PimIntegration.Tasks.Setup;
+﻿using System.Collections.Generic;
 using PimIntegration.Tasks.VismaGlobal.Dto;
 using PimIntegration.Tasks.VismaGlobal.Interfaces;
 using RG_SRVLib.Interop;
@@ -7,52 +7,54 @@ namespace PimIntegration.Tasks.VismaGlobal
 {
 	public class ArticleManager : VismaConnection, IArticleManager 
 	{
-		private readonly BusinessComponentNavigate _articleComponent;
-		private readonly IVismaSettings _settings;
-
-		public ArticleManager(IVismaSettings settings)
+		public IList<CreatedArticle> CreateArticles(IList<ArticleForCreate> articles)
 		{
-			_articleComponent = Connection.GetBusinessComponent(GLOBAL_Components.BC_Article);
-			_settings = settings;
+			var list = new List<CreatedArticle>();
+			var articleComponent = Connection.GetBusinessComponent(GLOBAL_Components.BC_Article);
+
+			foreach (var article in articles)
+			{
+				var articleNo = CreateArticle(article, articleComponent);
+				if (string.IsNullOrEmpty(articleNo))
+					list.Add(new CreatedArticle(articleNo, article.PimSku));
+			}
+
+			System.Runtime.InteropServices.Marshal.ReleaseComObject(articleComponent);
+			return list;
 		}
 
-		~ArticleManager()
-		{
-			System.Runtime.InteropServices.Marshal.ReleaseComObject(_articleComponent);
-		}
-
-		public string CreateArticle(ArticleForCreate article)
+		private string CreateArticle(ArticleForCreate article, IBisComNavigate articleComponent)
 		{
 			var articleNo = string.Empty;
-			_articleComponent.bcInitData();
-			_articleComponent.bcSetInitialValues();
+			articleComponent.bcInitData();
+			articleComponent.bcSetInitialValues();
 
-			_articleComponent.bcNewRecord();
-			articleNo = _articleComponent.bcGetStr((int)Article_Properties.ART_ArticleNo);
-			_articleComponent.bcUpdateStr((int)Article_Properties.ART_Name, article.Name);
-			_articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrPimSku, article.PimSku);
-			//_articleComponent.bcUpdateInt((int) Article_Properties.ART_ExtraCostUnitIINo, article.BrandId);
-			//_articleComponent.bcUpdateStr((int)Article_Properties.ART_EANNo, article.EAN);
-			_articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextDan, string.Empty);
-			_articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextSwe, string.Empty);
-			_articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextNor, string.Empty);
-			_articleComponent.bcUpdateStr((int)Article_Properties.ART_SupplArtNo, string.Empty);
+			articleComponent.bcNewRecord();
+			articleNo = articleComponent.bcGetStr((int)Article_Properties.ART_ArticleNo);
+			articleComponent.bcUpdateStr((int)Article_Properties.ART_Name, article.Name);
+			articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrPimSku, article.PimSku);
+			//articleComponent.bcUpdateInt((int) Article_Properties.ART_ExtraCostUnitIINo, article.BrandId);
+			//articleComponent.bcUpdateStr((int)Article_Properties.ART_EANNo, article.EAN);
+			articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextDan, string.Empty);
+			articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextSwe, string.Empty);
+			articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextNor, string.Empty);
+			articleComponent.bcUpdateStr((int)Article_Properties.ART_SupplArtNo, string.Empty);
 
 			if (article.PostingTemplateNo.HasValue)
-				_articleComponent.bcUpdateInt((int)Article_Properties.ART_PostingTemplateNo, article.PostingTemplateNo.Value); // Konteringsmall
+				articleComponent.bcUpdateInt((int)Article_Properties.ART_PostingTemplateNo, article.PostingTemplateNo.Value); // Konteringsmall
 
 			if (article.PriceCalcMethodsNo.HasValue)
-				_articleComponent.bcUpdateInt((int)Article_Properties.ART_PriceCalcMethodsNo, article.PriceCalcMethodsNo.Value); // Prisprofil
+				articleComponent.bcUpdateInt((int)Article_Properties.ART_PriceCalcMethodsNo, article.PriceCalcMethodsNo.Value); // Prisprofil
 
 			if (article.StockProfileNo.HasValue)
-				_articleComponent.bcUpdateInt((int)Article_Properties.ART_StockProfileNo, article.StockProfileNo.Value); // Lagerprofil
+				articleComponent.bcUpdateInt((int)Article_Properties.ART_StockProfileNo, article.StockProfileNo.Value); // Lagerprofil
 
-			var errCode = _articleComponent.bcSaveRecord();
+			var errCode = articleComponent.bcSaveRecord();
 
 			if (errCode != 0)
 			{
-				_articleComponent.bcCancelRecord();
-				Log.ForCurrent.ErrorFormat("Attempt to create article failed. SKU: {0} Code {1} - {2}", article.PimSku, errCode, _articleComponent.bcGetMessageText(errCode));
+				articleComponent.bcCancelRecord();
+				Log.ForCurrent.ErrorFormat("Attempt to create article failed. SKU: {0} Code {1} - {2}", article.PimSku, errCode, articleComponent.bcGetMessageText(errCode));
 			}
 
 			return articleNo;

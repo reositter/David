@@ -6,6 +6,7 @@ using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.PimApi;
+using PimIntegration.Tasks.Setup;
 using PimIntegration.Tasks.VismaGlobal.Dto;
 using PimIntegration.Tasks.VismaGlobal.Interfaces;
 
@@ -15,6 +16,7 @@ namespace PimIntegration.Test.UnitTests
     public class GetNewProductsTaskTests : TestBase
     {
 		private IGetNewProductsTask _task;
+		private ITaskSettings _settings;
 		private Mock<ILastCallsRepository> _stateRepository;
 		private Mock<IPimQueryService> _pimQueryService;
 		private Mock<IPimCommandService> _pimCommandService;
@@ -30,8 +32,10 @@ namespace PimIntegration.Test.UnitTests
 			_articleManager = new Mock<IArticleManager>();
 			_timeOfLastRequest = DateTime.Now.AddHours(-2);
 
+			_settings = GetSettingsFromAppConfigForUnitTests();
+
 			_stateRepository.Setup(repo => repo.GetTimeOfLastRequestForNewProducts()).Returns(_timeOfLastRequest);
-			_task = new GetNewProductsTask(_stateRepository.Object, _pimQueryService.Object, _pimCommandService.Object, _articleManager.Object);
+			_task = new GetNewProductsTask(_settings, _stateRepository.Object, _pimQueryService.Object, _pimCommandService.Object, _articleManager.Object);
 		}
 
 		[Test]
@@ -41,7 +45,7 @@ namespace PimIntegration.Test.UnitTests
 			var repo = new Mock<ILastCallsRepository>();
 
 			// Act
-			_task = new GetNewProductsTask(repo.Object, _pimQueryService.Object, _pimCommandService.Object, _articleManager.Object);
+			_task = new GetNewProductsTask(_settings, repo.Object, _pimQueryService.Object, _pimCommandService.Object, _articleManager.Object);
 
 			// Assert
 			repo.Verify(x => x.GetTimeOfLastRequestForNewProducts());
@@ -94,7 +98,7 @@ namespace PimIntegration.Test.UnitTests
 		}
 
 		[Test]
-		public void Should_report_visma_article_numbers_to_pim_when_articles_are_created()
+		public void Should_report_visma_product_numbers_to_each_market_when_articles_are_created()
 		{
 			// Arrange
 			var newProducts = new[]
@@ -110,7 +114,9 @@ namespace PimIntegration.Test.UnitTests
 			_task.Execute();
 
 			// Assert
-			_pimCommandService.Verify(service => service.ReportVismaProductNumbers(It.IsAny<List<ArticleForGetNewProductsScenario>>()), Times.Once());
+			_pimCommandService.Verify(service => service.ReportVismaProductNumbers(_settings.Markets[0].MarketKey, _settings.Markets[0].VendorId, It.IsAny<List<CreatedArticle>>()), Times.Once());
+			_pimCommandService.Verify(service => service.ReportVismaProductNumbers(_settings.Markets[1].MarketKey, _settings.Markets[1].VendorId, It.IsAny<List<CreatedArticle>>()), Times.Once());
+			_pimCommandService.Verify(service => service.ReportVismaProductNumbers(_settings.Markets[2].MarketKey, _settings.Markets[2].VendorId, It.IsAny<List<CreatedArticle>>()), Times.Once());
 		}
 
 		[Test]
@@ -124,19 +130,6 @@ namespace PimIntegration.Test.UnitTests
 
 			// Assert
 			_stateRepository.Verify(repo => repo.UpdateTimeOfLastRequestForNewProducts(It.IsAny<DateTime>()));
-		}
-
-		[Test]
-		public void Should_not_update_time_of_last_request_when_there_is_no_response()
-		{
-			// Arrange
-			_pimQueryService.Setup(service => service.GetNewProductsSince(_timeOfLastRequest)).Returns((ProductQueryResponseItem[])null);
-
-			// Act
-			_task.Execute();
-
-			// Assert
-			_stateRepository.Verify(repo => repo.UpdateTimeOfLastRequestForNewProducts(It.IsAny<DateTime>()), Times.Never());
 		}
     }
 }

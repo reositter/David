@@ -5,7 +5,7 @@ namespace PimIntegration.Tasks.PimApi
 {
 	public interface IPimCommandService
 	{
-		bool ReportVismaProductNumbers(IEnumerable<CreatedArticle> newArticles);
+		bool ReportVismaProductNumbers(string marketKey, int vendorId, IEnumerable<CreatedArticle> newArticles);
 		bool PublishStockBalanceUpdates(string marketKey, IEnumerable<ArticleForPriceAndStockUpdate> articlesWithStockUpdates);
 		bool PublishPriceUpdates(string marketKey, IEnumerable<ArticleForPriceAndStockUpdate> articlesWithPriceUpdates);
 	}

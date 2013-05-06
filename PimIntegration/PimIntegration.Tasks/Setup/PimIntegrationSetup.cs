@@ -1,11 +1,10 @@
 ﻿using System;
-using PimIntegration.Tasks.Database;
 using PimIntegration.Tasks.VismaGlobal;
 using StructureMap;
 
 namespace PimIntegration.Tasks.Setup
 {
-	public class PimIntegrationSetup
+	public static class PimIntegrationSetup
 	{
 		public static IContainer BootstrapEverything(AppSettings settings)
 		{

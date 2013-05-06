@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
 using PimIntegration.Tasks.Database.Dto;
-using PimIntegration.Tasks.PIMServiceEndpoint;
-using PimIntegration.Tasks.Setup;
 using PimIntegration.Tasks.VismaGlobal;
 using PimIntegration.Tasks.VismaGlobal.Dto;
 
@@ -69,17 +67,17 @@ namespace PimIntegration.Test.IntegrationTests
 			ZUsrFields.Initialize(VismaConnection.Connection);
 			var articleManager = new ArticleManager();
 
-			var article = new ArticleForCreate
+			var articles = new List<ArticleForCreate>
 			{
-				Name = "PIM Unit Test 3",
-				PimSku = "PIM47"
+				new ArticleForCreate { Name = "PIM Integration Test", PimSku = "PIM48", PostingTemplateNo = 1, PriceCalcMethodsNo = 1, StockProfileNo = 1},
+				new ArticleForCreate { Name = "PIM Integration Test", PimSku = "PIM49", PostingTemplateNo = 1, PriceCalcMethodsNo = 1, StockProfileNo = 1}
 			};
 
 			// Act
-			var articleNo = articleManager.CreateArticle(article);
+			var createdArticles = articleManager.CreateArticles(articles);
 
 			// Assert
-			Assert.That(articleNo, Is.Not.Empty);
+			Assert.That(createdArticles.Count, Is.EqualTo(2));
 		}
 	}
 }
