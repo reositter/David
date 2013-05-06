@@ -36,12 +36,8 @@ namespace PimIntegration.Tasks
 
 			if (newProducts == null) return;
 
-			var createdArticles = new List<ArticleForGetNewProductsScenario>();
-			foreach (var product in newProducts)
-			{
-				var articleNo = _articleManager.CreateArticle(MapPimProductToVismaArticle(product));
-				createdArticles.Add(new ArticleForGetNewProductsScenario(product, articleNo));
-			}
+			// Map to list
+			var createdArticles = _articleManager.CreateArticles(MapPimProductToVismaArticle(newProducts));
 
 			if (createdArticles.Count > 0)
 				_pimCommandService.ReportVismaProductNumbers(createdArticles);
@@ -50,13 +46,20 @@ namespace PimIntegration.Tasks
 			_timeOfLastRequest = timeOfThisRequest;
 		}
 
-		private ArticleForCreate MapPimProductToVismaArticle(ProductQueryResponseItem pimProduct)
+		private IList<ArticleForCreate> MapPimProductToVismaArticle(ProductQueryResponseItem[] pimProducts)
 		{
-			return new ArticleForCreate
+			var list = new List<ArticleForCreate>();
+
+			foreach (var pimProduct in pimProducts)
 			{
-				Name = pimProduct.Brand,
-				PimSku = pimProduct.SKU
-			};
+				list.Add(new ArticleForCreate
+				{
+					Name = pimProduct.Brand,
+					PimSku = pimProduct.SKU
+				});
+			}
+
+			return list;
 		}
 	}
 

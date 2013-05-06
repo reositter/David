@@ -77,7 +77,7 @@ namespace PimIntegration.Test.UnitTests
 			_task.Execute();
 
 			// Assert
-			_articleManager.Verify(am => am.CreateArticle(It.IsAny<ArticleForCreate>()), Times.Exactly(newProducts.Length));
+			_articleManager.Verify(am => am.CreateArticles(It.IsAny<IList<ArticleForCreate>>()), Times.Once());
 		}
 
 		[Test]
@@ -90,7 +90,7 @@ namespace PimIntegration.Test.UnitTests
 			_task.Execute();
 
 			// Assert
-			_articleManager.Verify(am => am.CreateArticle(It.IsAny<ArticleForCreate>()), Times.Never());
+			_articleManager.Verify(am => am.CreateArticles(It.IsAny<IList<ArticleForCreate>>()), Times.Never());
 		}
 
 		[Test]

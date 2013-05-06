@@ -1,9 +1,10 @@
-﻿using PimIntegration.Tasks.VismaGlobal.Dto;
+﻿using System.Collections.Generic;
+using PimIntegration.Tasks.VismaGlobal.Dto;
 
 namespace PimIntegration.Tasks.VismaGlobal.Interfaces
 {
 	public interface IArticleManager
 	{
-		string CreateArticle(ArticleForCreate article);
+		IList<CreatedArticle> CreateArticles(IList<ArticleForCreate> articles);
 	}
 }
