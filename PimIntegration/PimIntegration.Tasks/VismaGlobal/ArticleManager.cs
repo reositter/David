@@ -1,5 +1,5 @@
-﻿using PimIntegration.Tasks.PIMServiceEndpoint;
-using PimIntegration.Tasks.Setup;
+﻿using PimIntegration.Tasks.Setup;
+using PimIntegration.Tasks.VismaGlobal.Dto;
 using PimIntegration.Tasks.VismaGlobal.Interfaces;
 using RG_SRVLib.Interop;
 
@@ -20,33 +20,42 @@ namespace PimIntegration.Tasks.VismaGlobal
 		{
 			System.Runtime.InteropServices.Marshal.ReleaseComObject(_articleComponent);
 		}
-		public string CreateArticle(ProductQueryResponseItem article)
+
+		public string CreateArticle(ArticleForCreate article)
 		{
+			var articleNo = string.Empty;
 			_articleComponent.bcInitData();
 			_articleComponent.bcSetInitialValues();
 
-			//_articleComponent.bcSetValueFromStr((int)Article_Properties.ART_ArticleNo, articleNo);
-			_articleComponent.bcUpdateStr((int)Article_Properties.ART_Name, article.Model);
-			_articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrPimSku, article.SKU);
-			_articleComponent.bcUpdateInt((int) Article_Properties.ART_ExtraCostUnitIINo, article.BrandId);
-			_articleComponent.bcUpdateStr((int)Article_Properties.ART_EANNo, article.EAN);
+			_articleComponent.bcNewRecord();
+			articleNo = _articleComponent.bcGetStr((int)Article_Properties.ART_ArticleNo);
+			_articleComponent.bcUpdateStr((int)Article_Properties.ART_Name, article.Name);
+			_articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrPimSku, article.PimSku);
+			//_articleComponent.bcUpdateInt((int) Article_Properties.ART_ExtraCostUnitIINo, article.BrandId);
+			//_articleComponent.bcUpdateStr((int)Article_Properties.ART_EANNo, article.EAN);
 			_articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextDan, string.Empty);
 			_articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextSwe, string.Empty);
 			_articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextNor, string.Empty);
 			_articleComponent.bcUpdateStr((int)Article_Properties.ART_SupplArtNo, string.Empty);
-			_articleComponent.bcUpdateInt((int)Article_Properties.ART_PostingTemplateNo, _settings.VismaPostingTemplateNo); // Konteringsmall
-			_articleComponent.bcUpdateInt((int)Article_Properties.ART_PriceCalcMethodsNo, _settings.VismaPriceCalcMethodsNo); // Prisprofil
-			_articleComponent.bcUpdateInt((int)Article_Properties.ART_StockProfileNo, _settings.VismaStockProfileNo); // Lagerprofil
 
-			var errCode = _articleComponent.bcAddNew();
+			if (article.PostingTemplateNo.HasValue)
+				_articleComponent.bcUpdateInt((int)Article_Properties.ART_PostingTemplateNo, article.PostingTemplateNo.Value); // Konteringsmall
+
+			if (article.PriceCalcMethodsNo.HasValue)
+				_articleComponent.bcUpdateInt((int)Article_Properties.ART_PriceCalcMethodsNo, article.PriceCalcMethodsNo.Value); // Prisprofil
+
+			if (article.StockProfileNo.HasValue)
+				_articleComponent.bcUpdateInt((int)Article_Properties.ART_StockProfileNo, article.StockProfileNo.Value); // Lagerprofil
+
+			var errCode = _articleComponent.bcSaveRecord();
 
 			if (errCode != 0)
 			{
 				_articleComponent.bcCancelRecord();
-				Log.ForCurrent.ErrorFormat("Attempt to create article failed. SKU: {0} Code {1} - {2}", article.SKU, errCode, _articleComponent.bcGetMessageText(errCode));
+				Log.ForCurrent.ErrorFormat("Attempt to create article failed. SKU: {0} Code {1} - {2}", article.PimSku, errCode, _articleComponent.bcGetMessageText(errCode));
 			}
 
-			return string.Empty;
+			return articleNo;
 		}
 	}
 }

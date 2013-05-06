@@ -6,7 +6,6 @@ using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.PimApi;
-using PimIntegration.Tasks.VismaGlobal;
 using PimIntegration.Tasks.VismaGlobal.Dto;
 using PimIntegration.Tasks.VismaGlobal.Interfaces;
 
@@ -78,7 +77,7 @@ namespace PimIntegration.Test.UnitTests
 			_task.Execute();
 
 			// Assert
-			_articleManager.Verify(am => am.CreateArticle(It.IsAny<ProductQueryResponseItem>()), Times.Exactly(newProducts.Length));
+			_articleManager.Verify(am => am.CreateArticle(It.IsAny<ArticleForCreate>()), Times.Exactly(newProducts.Length));
 		}
 
 		[Test]
@@ -91,7 +90,7 @@ namespace PimIntegration.Test.UnitTests
 			_task.Execute();
 
 			// Assert
-			_articleManager.Verify(am => am.CreateArticle(It.IsAny<ProductQueryResponseItem>()), Times.Never());
+			_articleManager.Verify(am => am.CreateArticle(It.IsAny<ArticleForCreate>()), Times.Never());
 		}
 
 		[Test]

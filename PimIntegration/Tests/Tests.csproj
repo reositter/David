@@ -38,6 +38,9 @@
     <Reference Include="nunit.framework">
       <HintPath>..\ExternalComponents\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="RG_SRVLib.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=93fd3ccf6df11053">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\ExternalComponents\StructureMap.dll</HintPath>
     </Reference>

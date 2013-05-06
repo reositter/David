@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using PimIntegration.Tasks.Database;
 using PimIntegration.Tasks.Database.Interfaces;
+using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.PimApi;
-using PimIntegration.Tasks.VismaGlobal;
 using PimIntegration.Tasks.VismaGlobal.Dto;
 using PimIntegration.Tasks.VismaGlobal.Interfaces;
 
@@ -40,7 +39,7 @@ namespace PimIntegration.Tasks
 			var createdArticles = new List<ArticleForGetNewProductsScenario>();
 			foreach (var product in newProducts)
 			{
-				var articleNo = _articleManager.CreateArticle(product);
+				var articleNo = _articleManager.CreateArticle(MapPimProductToVismaArticle(product));
 				createdArticles.Add(new ArticleForGetNewProductsScenario(product, articleNo));
 			}
 
@@ -49,6 +48,15 @@ namespace PimIntegration.Tasks
 
 			_lastCallsRepository.UpdateTimeOfLastRequestForNewProducts(timeOfThisRequest);
 			_timeOfLastRequest = timeOfThisRequest;
+		}
+
+		private ArticleForCreate MapPimProductToVismaArticle(ProductQueryResponseItem pimProduct)
+		{
+			return new ArticleForCreate
+			{
+				Name = pimProduct.Brand,
+				PimSku = pimProduct.SKU
+			};
 		}
 	}
 

@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="Setup\PimIntegrationSetup.cs" />
     <Compile Include="Setup\AppSettings.cs" />
+    <Compile Include="VismaGlobal\Dto\ArticleForCreate.cs" />
     <Compile Include="VismaGlobal\Dto\ArticleForGetNewProductsScenario.cs" />
     <Compile Include="VismaGlobal\ArticleManager.cs" />
     <Compile Include="VismaGlobal\ExtensionMethods.cs" />
