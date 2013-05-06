@@ -9,6 +9,7 @@ namespace PimIntegration.Tasks.Setup
 			Markets = new List<Market>();
 		}
 
+		public bool TrialMode { get; set; }
 		public int NancyUiPort { get; set; }
 		public string SqliteConnectionString { get; set; }
 		public int MaximumNumberOfRetries { get; set; }
@@ -24,7 +25,7 @@ namespace PimIntegration.Tasks.Setup
 		public int VismaStockProfileNo { get; set; }
 		public string VismaDbSchema { get; set; }
 		public string VismaDbConnectionString { get; set; }
-		public IList<Market> Markets { get; private set; } 
+		public IList<Market> Markets { get; private set; }
 	}
 
 	public interface IVismaSettings

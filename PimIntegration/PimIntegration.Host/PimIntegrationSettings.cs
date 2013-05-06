@@ -21,6 +21,7 @@ namespace PimIntegration.Host
 
 			AppSettings = new AppSettings
 			{
+				TrialMode = Convert.ToBoolean(ConfigurationManager.AppSettings["TrialMode"]),
 				NancyUiPort = Convert.ToInt32(ConfigurationManager.AppSettings["NancyUiPort"]),
 				MaximumNumberOfRetries = Convert.ToInt32(ConfigurationManager.AppSettings["MaximumNumberOfRetries"]),
 				MillisecondsBetweenRetries = Convert.ToInt32(ConfigurationManager.AppSettings["MillisecondsBetweenRetries"]),

@@ -21,7 +21,6 @@ namespace PimIntegration.Host
 		public Service()
 		{
 			XmlConfigurator.Configure();
-
 		}
 
 		public void Start()
@@ -37,13 +36,15 @@ namespace PimIntegration.Host
 			_container = PimIntegrationSetup.BootstrapEverything(PimIntegrationSettings.AppSettings);
 
 			_getNewProductsTimer = new Timer(GetNewProducts, null, Timeout.Infinite, Timeout.Infinite);
-		    _getNewProductsTimer.Change(0, Timeout.Infinite);
-
 			_publishStockBalanceUpdatesTimer = new Timer(PublishStockBalanceUpdates, null, Timeout.Infinite, Timeout.Infinite);
-			_publishStockBalanceUpdatesTimer.Change(0, Timeout.Infinite);
-
 			_publishPriceUpdatesTimer = new Timer(PublishPriceUpdates, null, Timeout.Infinite, Timeout.Infinite);
-			_publishPriceUpdatesTimer.Change(0, Timeout.Infinite);
+
+			if (!PimIntegrationSettings.AppSettings.TrialMode)
+			{
+				_getNewProductsTimer.Change(0, Timeout.Infinite);
+				_publishStockBalanceUpdatesTimer.Change(0, Timeout.Infinite);
+				_publishPriceUpdatesTimer.Change(0, Timeout.Infinite);
+			}
 	    }
 
 	    public void Stop()
