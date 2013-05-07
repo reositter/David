@@ -56,7 +56,7 @@ namespace PimIntegration.Tasks
 			}
 		}
 
-		private IList<ArticleForCreate> MapPimProductToVismaArticle(ProductQueryResponseItem[] pimProducts)
+		private static IList<ArticleForCreate> MapPimProductToVismaArticle(IEnumerable<ProductQueryResponseItem> pimProducts)
 		{
 			var list = new List<ArticleForCreate>();
 

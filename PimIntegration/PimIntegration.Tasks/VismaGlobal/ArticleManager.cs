@@ -5,15 +5,25 @@ using RG_SRVLib.Interop;
 
 namespace PimIntegration.Tasks.VismaGlobal
 {
-	public class ArticleManager : VismaConnection, IArticleManager 
+	public class ArticleManager : VismaConnection, IArticleManager
 	{
+		private string _colZUsrPimSku;
+
 		public IList<CreatedArticle> CreateArticles(IList<ArticleForCreate> articles)
 		{
 			var list = new List<CreatedArticle>();
 			var articleComponent = Connection.GetBusinessComponent(GLOBAL_Components.BC_Article);
 
+			_colZUsrPimSku = articleComponent.bcGetTableObjectName(ZUsrFields.ArticleZUsrPimSku);
+
 			foreach (var article in articles)
 			{
+				if (ArticleExists(article.PimSku, articleComponent))
+				{
+					Log.ForCurrent.InfoFormat("Article with PIM SKU '{0}' already exists and will not be created.", article.PimSku);
+					continue;
+				}
+
 				var articleNo = CreateArticle(article, articleComponent);
 				if (string.IsNullOrEmpty(articleNo))
 					list.Add(new CreatedArticle(articleNo, article.PimSku));
@@ -58,6 +68,14 @@ namespace PimIntegration.Tasks.VismaGlobal
 			}
 
 			return articleNo;
+		}
+
+		private bool ArticleExists(string pimSku, IBisComNavigate articleComponent)
+		{
+			articleComponent.bcSetFilterRequeryStr(string.Format("{0} = '{1}'", _colZUsrPimSku, pimSku));
+			articleComponent.bcFetchFirst(0);
+
+			return articleComponent.bcGetNoOfRecords() > 0;
 		}
 	}
 }
