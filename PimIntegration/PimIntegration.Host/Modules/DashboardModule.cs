@@ -1,4 +1,6 @@
-﻿namespace PimIntegration.Host.Modules
+﻿using PimIntegration.Tasks;
+
+namespace PimIntegration.Host.Modules
 {
 	public class DashboardModule : Nancy.NancyModule
 	{
@@ -6,7 +8,18 @@
 		{
 			Get["/"] = parameters =>
 			{
-				return View["dashboard.cshtml", parameters];
+				dynamic model = new
+				{
+					Title = "Dashboard",
+					Parameters = parameters
+				};
+				return View["dashboard.cshtml", model];
+			};
+
+			Post["/trial"] = o =>
+			{
+				Log.ForCurrent.Debug("POST to /trial");
+				return 200;
 			};
 		}
 	}
