@@ -2,7 +2,19 @@
     Layout = "shared/_Layout.cshtml";
 }
 
+@section HeadScripts { 
+	<script src="/js/libs/jsontree.min.js"></script> 
+	<script src="/js/pim.devtools.js"></script> 
+}
+
 <h1>Dev Tools</h1>
-<form action="products" method="POST">
-	<button type="submit">Trial</button>
-</form>
+<div id="methods-wrapper">
+	<h2>Methods</h2>
+	<ul>
+		<li><a id="btnGetNewProductsByDateDummy" href="#">GetNewProductsByDateDummy</a></li>
+	</ul>
+</div>
+<div id="response-wrapper">
+	<h2>Response</h2>
+	<div id="response"></div>
+</div>
