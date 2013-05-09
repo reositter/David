@@ -42,7 +42,8 @@ namespace PimIntegration.Tasks.PimApi
 		{
 			var client = new QueueOf_ProductQueryRequest_ProductQueryResponseClient();
 
-			var messageId = client.EnqueueMessage(null, "GetProductByDateDummy", string.Empty);
+			var messageId = client.EnqueueMessage(null, "GetProductByDateDummy", "None");
+			Log.ForCurrent.DebugFormat("Message ID = {0}", messageId);
 			ProductQueryResponseItem[] products = null;
 
 			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
