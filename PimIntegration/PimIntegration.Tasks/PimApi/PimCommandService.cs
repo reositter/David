@@ -32,9 +32,9 @@ namespace PimIntegration.Tasks.PimApi
 
 			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
 			{
+				Thread.Sleep(_settings.MillisecondsBetweenRetries);
 				var result = client.DequeueMessage(messageId);
 				if (result != null) return true;
-				Thread.Sleep(_settings.MillisecondsBetweenRetries);
 			}
 
 			Log.ForCurrent.ErrorFormat("ReportVismaProductNumbers: No response found for message ID '{0}'", messageId);
@@ -59,9 +59,9 @@ namespace PimIntegration.Tasks.PimApi
 
 			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
 			{
+				Thread.Sleep(_settings.MillisecondsBetweenRetries);
 				var result = client.DequeueMessage(messageId);
 				if (result != null) return true;
-				Thread.Sleep(_settings.MillisecondsBetweenRetries);
 			}
 
 			Log.ForCurrent.ErrorFormat("PublishStockBalanceUpdates: No response found for message ID '{0}'", messageId);

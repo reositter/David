@@ -64,7 +64,7 @@ namespace PimIntegration.Tasks
 			{
 				list.Add(new ArticleForCreate
 				{
-					Name = pimProduct.Brand,
+					Name = pimProduct.MasterModel,
 					PimSku = pimProduct.SKU
 				});
 			}

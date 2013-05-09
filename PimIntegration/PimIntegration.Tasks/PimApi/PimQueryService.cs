@@ -30,9 +30,9 @@ namespace PimIntegration.Tasks.PimApi
 
 			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
 			{
+				Thread.Sleep(_settings.MillisecondsBetweenRetries);
 				products = client.DequeueMessage(messageId);
 				if (products != null) break;
-				Thread.Sleep(_settings.MillisecondsBetweenRetries);
 			}
 
 			return products;
@@ -48,9 +48,9 @@ namespace PimIntegration.Tasks.PimApi
 
 			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
 			{
+				Thread.Sleep(_settings.MillisecondsBetweenRetries);
 				products = client.DequeueMessage(messageId);
 				if (products != null) break;
-				Thread.Sleep(_settings.MillisecondsBetweenRetries);
 			}
 
 			return products;
