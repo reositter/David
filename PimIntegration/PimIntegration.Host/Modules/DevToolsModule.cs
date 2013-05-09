@@ -21,9 +21,7 @@ namespace PimIntegration.Host.Modules
 				Log.ForCurrent.Info("POST /products");
 
 				var pimQueryService = ObjectFactory.Container.GetInstance<IPimQueryService>();
-
-				var products = pimQueryService.GetNewProductsSince(DateTime.Now.AddHours(-4));
-
+				var products = pimQueryService.GetNewProductsSinceDummy(DateTime.Now.AddHours(-4));
 
 				var response = (Response) products.Length.ToString();
 				response.ContentType = "applicatin/json";

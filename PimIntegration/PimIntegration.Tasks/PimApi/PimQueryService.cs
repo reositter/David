@@ -37,5 +37,22 @@ namespace PimIntegration.Tasks.PimApi
 
 			return products;
 		}
+
+		public ProductQueryResponseItem[] GetNewProductsSinceDummy(DateTime lastRequest)
+		{
+			var client = new QueueOf_ProductQueryRequest_ProductQueryResponseClient();
+
+			var messageId = client.EnqueueMessage(null, "GetProductByDateDummy", string.Empty);
+			ProductQueryResponseItem[] products = null;
+
+			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
+			{
+				products = client.DequeueMessage(messageId);
+				if (products != null) break;
+				Thread.Sleep(_settings.MillisecondsBetweenRetries);
+			}
+
+			return products;
+		}
 	}
 }
