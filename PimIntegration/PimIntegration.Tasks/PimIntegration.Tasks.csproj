@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\Dto\ArticleForPriceUpdate.cs" />
+    <Compile Include="Database\Dto\ArticleForStockBalanceUpdate.cs" />
     <Compile Include="Database\Interfaces\IPriceUpdateQuery.cs" />
     <Compile Include="Database\PriceUpdateQuery.cs" />
     <Compile Include="Database\Interfaces\ILastCallsRepository.cs" />

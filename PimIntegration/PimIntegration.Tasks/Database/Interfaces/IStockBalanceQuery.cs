@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using PimIntegration.Tasks.VismaGlobal.Dto;
+using PimIntegration.Tasks.Database.Dto;
 
 namespace PimIntegration.Tasks.Database.Interfaces
 {
 	public interface IStockBalanceQuery
 	{
-		IList<ArticleForPriceAndStockUpdate> GetStockBalanceUpdatesSince(DateTime lastQuery);
+		IList<ArticleForStockBalanceUpdate> GetStockBalanceUpdatesSince(DateTime lastQuery);
 	}
 }

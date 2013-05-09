@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using PimIntegration.Tasks.Database.Dto;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.Setup;
-using PimIntegration.Tasks.VismaGlobal.Dto;
 
 namespace PimIntegration.Tasks.Database
 {
@@ -17,9 +17,9 @@ namespace PimIntegration.Tasks.Database
 			_settings = settings;
 		}
 
-		public IList<ArticleForPriceAndStockUpdate> GetStockBalanceUpdatesSince(DateTime lastQuery)
+		public IList<ArticleForStockBalanceUpdate> GetStockBalanceUpdatesSince(DateTime lastQuery)
 		{
-			var list = new List<ArticleForPriceAndStockUpdate>();
+			var list = new List<ArticleForStockBalanceUpdate>();
 
 			using (var conn = new SqlConnection(_settings.VismaDbConnectionString))
 			{
@@ -34,10 +34,10 @@ namespace PimIntegration.Tasks.Database
 					{
 						while (reader.Read())
 						{
-							list.Add(new ArticleForPriceAndStockUpdate
+							list.Add(new ArticleForStockBalanceUpdate
 							{
 								ArticleNo = (string)reader["ArticleNo"],
-								PimSku = (string)reader["PimSku"],
+								PimSku = reader["ZUsrPimSku"] != DBNull.Value ? (string)reader["ZUsrPimSku"] : string.Empty,
 								StockBalance = Convert.ToDecimal(reader["StockBalance"])
 							});
 						}

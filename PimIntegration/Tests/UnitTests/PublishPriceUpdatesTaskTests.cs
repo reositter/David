@@ -67,8 +67,8 @@ namespace PimIntegration.Test.UnitTests
 		public void Should_populate_new_price_once_for_each_market()
 		{
 			// Arrange
-			var article1 = new ArticleForPriceUpdate("181", string.Empty);
-			var article2 = new ArticleForPriceUpdate("100", string.Empty);
+			var article1 = new ArticleForPriceUpdate("181", string.Empty, "DK");
+			var article2 = new ArticleForPriceUpdate("100", string.Empty, "DK");
 			var articlesForPriceUpdates = new List<ArticleForPriceUpdate>
 			{
 				article1,

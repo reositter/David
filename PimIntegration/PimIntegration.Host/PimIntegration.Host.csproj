@@ -50,9 +50,6 @@
     <Reference Include="Nancy.ViewEngines.Razor.BuildProviders">
       <HintPath>..\ExternalComponents\Nancy.ViewEngines.Razor.BuildProviders.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\ExternalComponents\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\ExternalComponents\StructureMap.dll</HintPath>
     </Reference>

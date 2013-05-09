@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using PimIntegration.Tasks.Database.Dto;
 using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.Setup;
 using PimIntegration.Tasks.VismaGlobal.Dto;
@@ -42,14 +43,14 @@ namespace PimIntegration.Tasks.PimApi
 			return false;
 		}
 
-		public bool PublishStockBalanceUpdates(string marketKey, IEnumerable<ArticleForPriceAndStockUpdate> articlesWithStockUpdates)
+		public bool PublishStockBalanceUpdates(string marketKey, IEnumerable<ArticleForStockBalanceUpdate> stockBalanceUpdates)
 		{
-			if (articlesWithStockUpdates.Count() == 0) 
+			if (stockBalanceUpdates.Count() == 0) 
 				return true;
 
 			var client = new QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient();
 
-			var messageId = client.EnqueueMessage("UpdateProductBySKU", "PriceAndStock", articlesWithStockUpdates.Select(article => new ProductUpdateRequestItem
+			var messageId = client.EnqueueMessage("UpdateProductBySKU", "PriceAndStock", stockBalanceUpdates.Select(article => new ProductUpdateRequestItem
 			{
 				SKU = article.PimSku,
 				MarketName = marketKey,
@@ -86,9 +87,9 @@ namespace PimIntegration.Tasks.PimApi
 
 			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
 			{
+				Thread.Sleep(_settings.MillisecondsBetweenRetries);
 				var result = client.DequeueMessage(messageId);
 				if (result != null) return true;
-				Thread.Sleep(_settings.MillisecondsBetweenRetries);
 			}
 
 			Log.ForCurrent.ErrorFormat("PublishPriceUpdates: No response found for message ID '{0}'", messageId);

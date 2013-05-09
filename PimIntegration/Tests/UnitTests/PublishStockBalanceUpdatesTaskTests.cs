@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using PimIntegration.Tasks;
-using PimIntegration.Tasks.Database;
+using PimIntegration.Tasks.Database.Dto;
 using PimIntegration.Tasks.Database.Interfaces;
-using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.PimApi;
 using PimIntegration.Tasks.Setup;
-using PimIntegration.Tasks.VismaGlobal.Dto;
 
 namespace PimIntegration.Test.UnitTests
 {
@@ -68,9 +66,9 @@ namespace PimIntegration.Test.UnitTests
 			_task.Execute();
 
 			// Assert
-			_pimCommandService.Verify(x => x.PublishStockBalanceUpdates(_settings.Markets[0].MarketKey, It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>()), Times.Once());
-			_pimCommandService.Verify(x => x.PublishStockBalanceUpdates(_settings.Markets[1].MarketKey, It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>()), Times.Once());
-			_pimCommandService.Verify(x => x.PublishStockBalanceUpdates(_settings.Markets[2].MarketKey, It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>()), Times.Once());
+			_pimCommandService.Verify(x => x.PublishStockBalanceUpdates(_settings.Markets[0].MarketKey, It.IsAny<IEnumerable<ArticleForStockBalanceUpdate>>()), Times.Once());
+			_pimCommandService.Verify(x => x.PublishStockBalanceUpdates(_settings.Markets[1].MarketKey, It.IsAny<IEnumerable<ArticleForStockBalanceUpdate>>()), Times.Once());
+			_pimCommandService.Verify(x => x.PublishStockBalanceUpdates(_settings.Markets[2].MarketKey, It.IsAny<IEnumerable<ArticleForStockBalanceUpdate>>()), Times.Once());
 		}
 
 		[Test]

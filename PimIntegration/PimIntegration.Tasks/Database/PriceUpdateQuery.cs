@@ -37,7 +37,8 @@ namespace PimIntegration.Tasks.Database
 							list.Add(new ArticleForPriceUpdate
 							(
 								(string)reader["ArticleNo"],
-								(string)reader["PimSku"]
+								reader["ZUsrPimSku"] != DBNull.Value? (string)reader["ZUsrPimSku"] : string.Empty,
+								(string)reader["Market"]
 							));
 						}
 					}

@@ -49,8 +49,8 @@ namespace PimIntegration.Test.IntegrationTests
 			var query = new CustomerAgreementQuery();
 			var articlesForPriceUpdate = new List<ArticleForPriceUpdate>
 			{
-				new ArticleForPriceUpdate("181", string.Empty),
-				new ArticleForPriceUpdate("110", string.Empty)
+				new ArticleForPriceUpdate("181", string.Empty, "DK"),
+				new ArticleForPriceUpdate("110", string.Empty, "DK")
 			};
 
 			// Act
