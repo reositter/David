@@ -28,13 +28,15 @@ namespace PimIntegration.Tasks.VismaGlobal
 			var fetchCode = _articleServerComponent.bcFetchFirst(0);
 
 			if (fetchCode != 0)
-			{
 				throw new PimIntegrationVismaObjectNotFoundException(string.Format("ArticleNo = {0} Code = {1}", articleNo, fetchCode));
-			}
 
-			// TODO: Verify exchange price and handle it
-			var exchangeSalesPrice = (decimal)_articleServerComponent.bcGetDouble(21419); //Avtalat valutapris.
-			var agreedPrice = (decimal)_articleServerComponent.bcGetDouble((int)Static_Properties.IDST_AgreedPrice);
+			decimal agreedPrice;
+
+			if (customerDiscountSettings.CurrencyNo == 0)
+				agreedPrice = (decimal)_articleServerComponent.bcGetDouble((int)Static_Properties.IDST_AgreedPrice);
+			else
+				agreedPrice = (decimal)_articleServerComponent.bcGetDouble(21419); //Avtalat valutapris.
+
 			Dispose();
 
 			return agreedPrice;
@@ -57,13 +59,13 @@ namespace PimIntegration.Tasks.VismaGlobal
 				var fetchCode = _articleServerComponent.bcFetchFirst(0);
 
 				if (fetchCode != 0)
-				{
 					throw new PimIntegrationVismaObjectNotFoundException(string.Format("ArticleNo = {0} Code = {1}", article.ArticleNo, fetchCode));
-				}
 
-				// TODO: Verify exchange price and handle it
-				var exchangeSalesPrice = (decimal)_articleServerComponent.bcGetDouble(21419); //Avtalat valutapris.
-				article.NewPrice = (decimal)_articleServerComponent.bcGetDouble((int)Static_Properties.IDST_AgreedPrice);
+				if (customerDiscountSettings.CurrencyNo == 0)
+					article.NewPrice = (decimal)_articleServerComponent.bcGetDouble((int)Static_Properties.IDST_AgreedPrice);
+				else
+					article.NewPrice = (decimal)_articleServerComponent.bcGetDouble(21419); // Avtalat valutapris.
+				
 			}
 			Dispose();
 		}
@@ -98,6 +100,7 @@ namespace PimIntegration.Tasks.VismaGlobal
 
 			return new CustomerDiscountSettings
 			{
+				CurrencyNo = _customerComponent.bcGetInt((int)Customer_Properties.CUS_CurrencyNo),
 				ChainNo = _customerComponent.bcGetInt((int)Customer_Properties.CUS_ChainNo),
 				PriceListNo = _customerComponent.bcGetInt((int)Customer_Properties.CUS_PriceListNo),
 				CustomerGroupNo = _customerComponent.bcGetInt((int)Customer_Properties.CUS_CustomerGrpNo)
@@ -107,6 +110,7 @@ namespace PimIntegration.Tasks.VismaGlobal
 
 	internal class CustomerDiscountSettings
 	{
+		public int CurrencyNo { get; set; }
 		public int ChainNo { get; set; }
 		public int PriceListNo { get; set; }
 		public int CustomerGroupNo { get; set; }

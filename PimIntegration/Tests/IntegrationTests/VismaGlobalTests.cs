@@ -27,20 +27,22 @@ namespace PimIntegration.Test.IntegrationTests
 			// Arrange
 			VismaConnection.Open("Luthman AB", string.Empty, string.Empty, "59618988851856124");
 			var query = new CustomerAgreementQuery();
+			const string articleNo = "100";
 
 			// Act
-
-			var agreedPriceForCustomer1 = query.GetPrice(10001, "181");
-			var agreedPriceForCustomer2 = query.GetPrice(10002, "181");
+			var agreedPriceForSwe = query.GetPrice(11801, articleNo);
+			var agreedPriceForNor = query.GetPrice(10648, articleNo);
+			var agreedPriceForDen = query.GetPrice(10048, articleNo);
 			
 			// Assert
-			Assert.That(agreedPriceForCustomer1, Is.Not.Null);
-			Assert.That(agreedPriceForCustomer2, Is.Not.Null);
-			Assert.That(agreedPriceForCustomer1, Is.Not.EqualTo(agreedPriceForCustomer2));
+			Assert.That(agreedPriceForSwe, Is.Not.Null);
+			Assert.That(agreedPriceForNor, Is.Not.Null);
+			Assert.That(agreedPriceForDen, Is.Not.Null);
+			Assert.That(agreedPriceForSwe, Is.Not.EqualTo(agreedPriceForNor));
 		}
 
 		[Test]
-		public void Should_get_prices_for_all_aricles_for_price_updates()
+		public void Should_get_prices_of_all_articles_for_price_updates()
 		{
 			// Arrange
 			VismaConnection.Open("Luthman AB", string.Empty, string.Empty, "59618988851856124");
