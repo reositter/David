@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Configuration;
+using System.Runtime.CompilerServices;
 using NUnit.Framework;
 using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.Setup;
+using PimIntegration.Tasks.VismaGlobal;
 
 namespace PimIntegration.Test.IntegrationTests
 {
@@ -67,6 +68,20 @@ namespace PimIntegration.Test.IntegrationTests
 
 			// Assert
 			Assert.That(result, Is.Not.Null);
+		}
+
+		[Test]
+		public void Should_always_use_same_instance_of_IVismaConnection()
+		{
+			// Arrange
+			var container = PimIntegrationSetup.BootstrapEverything(_settings);
+
+			// Act
+			var conn1 = container.GetInstance<IVismaConnection>();
+			var conn2 = container.GetInstance<IVismaConnection>();
+
+			// Assert
+			Assert.That(RuntimeHelpers.GetHashCode(conn1), Is.EqualTo(RuntimeHelpers.GetHashCode(conn2)));
 		}
 	}
 }

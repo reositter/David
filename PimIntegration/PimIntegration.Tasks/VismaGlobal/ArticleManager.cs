@@ -5,14 +5,21 @@ using RG_SRVLib.Interop;
 
 namespace PimIntegration.Tasks.VismaGlobal
 {
-	public class ArticleManager : VismaConnection, IArticleManager
+	public class ArticleManager : IArticleManager
 	{
+		private IVismaConnection _vismaConnection;
 		private string _colZUsrPimSku;
+
+		public ArticleManager(IVismaConnection vismaConnection)
+		{
+			_vismaConnection = vismaConnection;
+		}
 
 		public IList<CreatedArticle> CreateArticles(IList<ArticleForCreate> articles)
 		{
 			var list = new List<CreatedArticle>();
-			var articleComponent = Connection.GetBusinessComponent(GLOBAL_Components.BC_Article);
+			var connection = _vismaConnection.Open();
+			var articleComponent = connection.GetBusinessComponent(GLOBAL_Components.BC_Article);
 
 			_colZUsrPimSku = articleComponent.bcGetTableObjectName(ZUsrFields.ArticleZUsrPimSku);
 
