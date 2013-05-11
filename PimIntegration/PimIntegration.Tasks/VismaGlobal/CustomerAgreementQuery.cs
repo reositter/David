@@ -6,11 +6,17 @@ using RG_SRVLib.Interop;
 
 namespace PimIntegration.Tasks.VismaGlobal
 {
-	public class CustomerAgreementQuery : VismaConnection, ICustomerAgreementQuery
+	public class CustomerAgreementQuery : ICustomerAgreementQuery
 	{
 		private ArticleServerComponent _articleServerComponent;
 		private BusinessComponentNavigate _customerComponent;
 		private string _articleNoColumnName;
+		private IVismaConnection _vismaConnection;
+
+		public CustomerAgreementQuery(IVismaConnection vismaConnection)
+		{
+			_vismaConnection = vismaConnection;
+		}
 
 		public decimal GetPrice(int customerNo, string articleNo)
 		{
@@ -45,6 +51,7 @@ namespace PimIntegration.Tasks.VismaGlobal
 		public void PopulateNewPrice(int customerNo, IList<ArticleForPriceUpdate> articlesForPriceUpdate)
 		{
 			Initialize();
+
 			foreach (var article in articlesForPriceUpdate)
 			{
 				var customerDiscountSettings = GetCustomerDiscountSettings(customerNo);
@@ -67,6 +74,7 @@ namespace PimIntegration.Tasks.VismaGlobal
 					article.NewPrice = (decimal)_articleServerComponent.bcGetDouble(21419); // Avtalat valutapris.
 				
 			}
+
 			Dispose();
 		}
 
@@ -81,13 +89,15 @@ namespace PimIntegration.Tasks.VismaGlobal
 
 		private void Initialize()
 		{
-			_articleServerComponent = (ArticleServerComponent)Connection.bcBusinessComponent[(int)GLOBAL_Components.BC_Article];
+			var connection = _vismaConnection.Open();
+
+			_articleServerComponent = (ArticleServerComponent)connection.bcBusinessComponent[(int)GLOBAL_Components.BC_Article];
 			_articleServerComponent.bcEstablishData();
 			_articleServerComponent.bcBindData();
 
 			_articleNoColumnName = _articleServerComponent.bcGetTableObjectName((int)Article_Properties.ART_ArticleNo);
 
-			_customerComponent = Connection.GetBusinessComponent(GLOBAL_Components.BC_Customer);
+			_customerComponent = connection.GetBusinessComponent(GLOBAL_Components.BC_Customer);
 		}
 
 		private CustomerDiscountSettings GetCustomerDiscountSettings(int customerNo)

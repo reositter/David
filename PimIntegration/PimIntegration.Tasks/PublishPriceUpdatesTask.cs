@@ -56,7 +56,7 @@ namespace PimIntegration.Tasks
 			_timeOfLastQueryForPriceUpdates = timeOfThisQuery;			
 		}
 
-		private IEnumerable<ArticleForPriceAndStockUpdate> MapToArticleForPriceAndStockUpdate(IEnumerable<ArticleForPriceUpdate> source)
+		private static IEnumerable<ArticleForPriceAndStockUpdate> MapToArticleForPriceAndStockUpdate(IEnumerable<ArticleForPriceUpdate> source)
 		{
 			return from s in source
 					select new ArticleForPriceAndStockUpdate

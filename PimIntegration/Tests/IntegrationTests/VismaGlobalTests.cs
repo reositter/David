@@ -9,24 +9,31 @@ namespace PimIntegration.Test.IntegrationTests
 	[TestFixture]
 	public class VismaGlobalTests
 	{
+		private VismaConnection _vismaConnection;
+
+		[SetUp]
+		public void SetUp()
+		{
+			_vismaConnection = new VismaConnection("Luthman AB", string.Empty, string.Empty, "59618988851856124");
+		}
+
 		[Test]
 		public void Should_connect_to_visma()
 		{
 			// Arrange
 
 			// Act
-			var loginCode = VismaConnection.Open("Luthman AB", string.Empty, string.Empty, "59618988851856124");
+			var vismaConnection = new VismaConnection("Luthman AB", string.Empty, string.Empty, "59618988851856124").Open();
 
 			// Assert
-			Assert.That(loginCode, Is.EqualTo(0));
+			Assert.That(vismaConnection, Is.Not.Null);
 		}
 
 		[Test]
 		public void Should_get_agreed_prices_from_visma_for_different_customers()
 		{
 			// Arrange
-			VismaConnection.Open("Luthman AB", string.Empty, string.Empty, "59618988851856124");
-			var query = new CustomerAgreementQuery();
+			var query = new CustomerAgreementQuery(_vismaConnection);
 			const string articleNo = "100";
 
 			// Act
@@ -45,8 +52,7 @@ namespace PimIntegration.Test.IntegrationTests
 		public void Should_get_prices_of_all_articles_for_price_updates()
 		{
 			// Arrange
-			VismaConnection.Open("Luthman AB", string.Empty, string.Empty, "59618988851856124");
-			var query = new CustomerAgreementQuery();
+			var query = new CustomerAgreementQuery(_vismaConnection);
 			var articlesForPriceUpdate = new List<ArticleForPriceUpdate>
 			{
 				new ArticleForPriceUpdate("181", string.Empty, "DK"),
@@ -65,9 +71,8 @@ namespace PimIntegration.Test.IntegrationTests
 		public void Should_create_new_article_that_gets_an_automatically_assigned_article_no()
 		{
 			// Arrange
-			VismaConnection.Open("Luthman AB", string.Empty, string.Empty, "59618988851856124");
-			ZUsrFields.Initialize(VismaConnection.Connection);
-			var articleManager = new ArticleManager();
+			ZUsrFields.Initialize(_vismaConnection.Open());
+			var articleManager = new ArticleManager(_vismaConnection);
 
 			var articles = new List<ArticleForCreate>
 			{
