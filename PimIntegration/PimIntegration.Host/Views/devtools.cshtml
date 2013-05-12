@@ -2,22 +2,24 @@
     Layout = "shared/_Layout.cshtml";
 }
 
-@section HeadScripts { 
+@section HeadScripts {
+	<link rel="stylesheet" href="/css/jquery.treeview/jquery.treeview.css"/>
 	<script src="/js/libs/jsontree.min.js"></script> 
+	<script src="/js/libs/jquery.treeview.js"></script> 
 	<script src="/js/pim.devtools.js"></script> 
 }
 
 <h1>Dev Tools</h1>
-<div id="methods-wrapper">
-	<h2>Methods</h2>
+<div id="devtool-options">
 	<ul>
 		<li><a id="btnGetNewProductsByDateDummy" href="#">GetNewProductsByDateDummy</a></li>
+		<li><a id="lnkGetNewProductsByDate" href="#">GetNewProductsByDate</a></li>
 		<li><a id="btnGetArticlesForPriceUpdate" href="#">GetArticlesForPriceUpdate (DB)</a></li>
 		<li><a id="btnGetArticlesForPriceUpdateAndCalcAgreedPrice" href="#">GetArticlesForPriceUpdateAndCalcAgreedPrice (DB + Visma)</a></li>
 		<li><a id="btnGetStockBalanceQuery" href="#">GetStockBalanceQuery (DB)</a></li>
 	</ul>
 </div>
-<div id="response-wrapper">
-	<h2>Response</h2>
+<div id="main">
+	<div id="form-wrapper"></div>
 	<div id="response"></div>
 </div>

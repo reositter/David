@@ -3,13 +3,12 @@ using Nancy;
 using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PimApi;
-using PimIntegration.Tasks.Setup;
 using PimIntegration.Tasks.VismaGlobal.Interfaces;
 using StructureMap;
 
 namespace PimIntegration.Host.Modules
 {
-	public class DevToolsModule : Nancy.NancyModule
+	public class DevToolsModule : NancyModule
 	{
 		public DevToolsModule()
 		{
@@ -19,8 +18,13 @@ namespace PimIntegration.Host.Modules
 				return View["devtools.cshtml", o];
 			};
 
-			Get["/products/new"] = o =>
+			Get["/devtools/method/newproducts"] = o => View["partial/GetNewProductsSince.cshtml", o];
+
+			Get["/products/new"] = parameters =>
 			{
+				Log.ForCurrent.Info("GET /products/new");
+				Log.ForCurrent.InfoFormat("Hour = {0} Minute = {1}", Request.Query.Hour, Request.Query.Minute);
+
 				var pimQueryService = ObjectFactory.Container.GetInstance<IPimQueryService>();
 				var products = pimQueryService.GetNewProductsSinceDummy(DateTime.Now.AddHours(-4));
 

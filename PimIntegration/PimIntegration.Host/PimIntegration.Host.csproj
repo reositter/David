@@ -98,6 +98,9 @@
     <None Include="Views\devtools.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Views\partial\GetNewProductsSince.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Views\shared\_Layout.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -116,6 +119,29 @@
     <Content Include="Content\css\bootstrap.min.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\css\jquery.treeview\images\ajax-loader.gif" />
+    <Content Include="Content\css\jquery.treeview\images\file.gif" />
+    <Content Include="Content\css\jquery.treeview\images\folder-closed.gif" />
+    <Content Include="Content\css\jquery.treeview\images\folder.gif" />
+    <Content Include="Content\css\jquery.treeview\images\minus.gif" />
+    <Content Include="Content\css\jquery.treeview\images\plus.gif" />
+    <Content Include="Content\css\jquery.treeview\images\treeview-black-line.gif" />
+    <Content Include="Content\css\jquery.treeview\images\treeview-black.gif" />
+    <Content Include="Content\css\jquery.treeview\images\treeview-default-line.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\css\jquery.treeview\images\treeview-default.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\css\jquery.treeview\images\treeview-famfamfam-line.gif" />
+    <Content Include="Content\css\jquery.treeview\images\treeview-famfamfam.gif" />
+    <Content Include="Content\css\jquery.treeview\images\treeview-gray-line.gif" />
+    <Content Include="Content\css\jquery.treeview\images\treeview-gray.gif" />
+    <Content Include="Content\css\jquery.treeview\images\treeview-red-line.gif" />
+    <Content Include="Content\css\jquery.treeview\images\treeview-red.gif" />
+    <Content Include="Content\css\jquery.treeview\jquery.treeview.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\css\pim.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -123,6 +149,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\js\libs\jquery-2.0.0.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\js\libs\jquery.treeview.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\js\libs\jsontree.min.js">

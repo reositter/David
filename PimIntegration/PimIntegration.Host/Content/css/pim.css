@@ -4,12 +4,13 @@
           box-sizing: border-box;
 }
 
-#methods-wrapper, #response-wrapper {
+#devtool-options, #main {
 	float: left;
 	min-height: 400px;
 	border: solid 3px #d3d3d3;
-	margin: 20px;
+	margin-right: 20px;
 	padding: 10px;
 }
 
-#methods-wrapper { min-width: 340px; }
+#devtool-options { min-width: 340px; }
+#main { min-width: 400px; }

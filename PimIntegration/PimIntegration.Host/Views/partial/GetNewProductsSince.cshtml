@@ -1,0 +1,17 @@
+@using System
+<h2>Get New Products</h2>
+<form class="form-horizontal">
+	<div class="control-group">
+		<label class="control-label" for="txtHour">Hour</label>
+		<div class="controls">
+			<input type='text' id='txtHour' value="@DateTime.Now.Hour" />
+		</div>
+	</div>
+		<div class="control-group">
+		<label class="control-label" for="txtMinute">Minute</label>
+		<div class="controls">
+			<input type='text' id='txtMinute' value="@DateTime.Now.Minute" />
+		</div>
+	</div>
+	<button id="btnGetNewProductsSince" class="btn btn-success">GET</button>
+</form>
