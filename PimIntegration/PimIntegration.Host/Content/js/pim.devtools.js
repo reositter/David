@@ -1,32 +1,39 @@
 ﻿$(document).ready(function () {
 	function displayJsonResponse(json) {
 		$('#response').html(jsontree(json));
-		$('#response > ul').first().treeview();
+		$('#response > ul').first().treeview({
+			collapsed: false
+		});
 	}
 
-	$('#lnkGetNewProductsByDate').on('click', function(e) {
+	function loadForm(e) {
 		e.preventDefault();
-		$.get('devtools/method/newproducts', function(markup) {
+		var href = $(this).attr('href');
+		$.get(href, function (markup) {
 			$('#form-wrapper').html(markup);
+			$('#response').empty();
 		});
-	});
+	}
 
-	$('#form-wrapper').on('click', '#btnGetNewProductsSince', function (e) {
+	$('#devtool-options').on('click', 'li > a', loadForm);
+
+	$('#form-wrapper').on('click', '#btnGetProductByDate', function (e) {
 		e.preventDefault();
 		$.ajax({
-			type: 'GET', url: 'products/new',
+			type: 'GET', url: 'products/new/getproductbydate',
 			data: {
 				Hour: $('#txtHour').val(),
-				Minute: $('#txtMinute').val()
+				Minute: $('#txtMinute').val(),
+				Second: $('#txtSecond').val()
 			},
 			success: displayJsonResponse
 		});
 	});
 
-	$('#btnGetNewProductsByDateDummy').on('click', function(e) {
+	$('#form-wrapper').on('click', '#btnGetProductByDateDummy', function (e) {
 		e.preventDefault();
 		$.ajax({
-			type: 'GET', url: 'products/new',
+			type: 'GET', url: '/products/new/getproductbydatedummy',
 			data: {},
 			success: displayJsonResponse
 		});

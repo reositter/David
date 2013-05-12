@@ -18,15 +18,44 @@ namespace PimIntegration.Host.Modules
 				return View["devtools.cshtml", o];
 			};
 
-			Get["/devtools/method/newproducts"] = o => View["partial/GetNewProductsSince.cshtml", o];
+			Get["/devtools/form/getproductbydatedummy"] = o => View["partial/GetProductByDateDummy.cshtml", o];
+			Get["/devtools/form/getproductbydate"] = o => View["partial/GetProductByDate.cshtml", o];
+			Get["/devtools/form/getnewproductstask"] = o => View["partial/GetNewProductsTask.cshtml", o];
 
-			Get["/products/new"] = parameters =>
+			Get["/products/new/getproductbydatedummy"] = parameters =>
 			{
-				Log.ForCurrent.Info("GET /products/new");
-				Log.ForCurrent.InfoFormat("Hour = {0} Minute = {1}", Request.Query.Hour, Request.Query.Minute);
+				var pimQueryService = ObjectFactory.Container.GetInstance<IPimQueryService>();
+				var products = pimQueryService.GetNewProductsSinceDummy();
+
+				return Response.AsJson(products);
+			};
+
+			Get["/products/new/getproductbydate"] = parameters =>
+			{
+				Log.ForCurrent.InfoFormat("{0} {1}", Request.Method, Request.Path);
+
+				var now = DateTime.Now;
+				var timestamp = new DateTime(now.Year, now.Month, now.Day, Request.Query.Hour, Request.Query.Minute, Request.Query.Second);
+
+				Log.ForCurrent.InfoFormat("Timestamp {0}", timestamp.ToString(PimIntegrationSettings.AppSettings.TimeStampFormat));
 
 				var pimQueryService = ObjectFactory.Container.GetInstance<IPimQueryService>();
-				var products = pimQueryService.GetNewProductsSinceDummy(DateTime.Now.AddHours(-4));
+				var products = pimQueryService.GetNewProductsSince(timestamp);
+
+				return Response.AsJson(products);
+			};
+
+			Post["/products/getnewproductstask"] = parameters =>
+			{
+				Log.ForCurrent.InfoFormat("{0} {1}", Request.Method, Request.Path);
+
+				var now = DateTime.Now;
+				var timestamp = new DateTime(now.Year, now.Month, now.Day, Request.Query.Hour, Request.Query.Minute, Request.Query.Second);
+
+				Log.ForCurrent.InfoFormat("Timestamp {0}", timestamp.ToString(PimIntegrationSettings.AppSettings.TimeStampFormat));
+
+				var pimQueryService = ObjectFactory.Container.GetInstance<IPimQueryService>();
+				var products = pimQueryService.GetNewProductsSince(timestamp);
 
 				return Response.AsJson(products);
 			};

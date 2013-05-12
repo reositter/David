@@ -7,7 +7,7 @@ namespace PimIntegration.Tasks.VismaGlobal
 {
 	public class ArticleManager : IArticleManager
 	{
-		private IVismaConnection _vismaConnection;
+		private readonly IVismaConnection _vismaConnection;
 		private string _colZUsrPimSku;
 
 		public ArticleManager(IVismaConnection vismaConnection)
@@ -40,7 +40,7 @@ namespace PimIntegration.Tasks.VismaGlobal
 			return list;
 		}
 
-		private string CreateArticle(ArticleForCreate article, IBisComNavigate articleComponent)
+		private static string CreateArticle(ArticleForCreate article, IBisComNavigate articleComponent)
 		{
 			var articleNo = string.Empty;
 			articleComponent.bcInitData();
@@ -50,12 +50,9 @@ namespace PimIntegration.Tasks.VismaGlobal
 			articleNo = articleComponent.bcGetStr((int)Article_Properties.ART_ArticleNo);
 			articleComponent.bcUpdateStr((int)Article_Properties.ART_Name, article.Name);
 			articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrPimSku, article.PimSku);
-			//articleComponent.bcUpdateInt((int) Article_Properties.ART_ExtraCostUnitIINo, article.BrandId);
-			//articleComponent.bcUpdateStr((int)Article_Properties.ART_EANNo, article.EAN);
-			articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextDan, string.Empty);
-			articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextSwe, string.Empty);
-			articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextNor, string.Empty);
-			articleComponent.bcUpdateStr((int)Article_Properties.ART_SupplArtNo, string.Empty);
+			articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextDen, article.ShortDescriptionDen);
+			articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextNor, article.ShortDescriptionNor);
+			articleComponent.bcUpdateStr(ZUsrFields.ArticleZUsrLuthmanKortTextSwe, article.ShortDescriptionSwe);
 
 			if (article.PostingTemplateNo.HasValue)
 				articleComponent.bcUpdateInt((int)Article_Properties.ART_PostingTemplateNo, article.PostingTemplateNo.Value); // Konteringsmall

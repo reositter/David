@@ -62,11 +62,30 @@ namespace PimIntegration.Tasks
 
 			foreach (var pimProduct in pimProducts)
 			{
-				list.Add(new ArticleForCreate
+				var article = new ArticleForCreate
 				{
 					Name = pimProduct.MasterModel,
 					PimSku = pimProduct.SKU
-				});
+				};
+
+				foreach (var market in pimProduct.Markets)
+				{
+					switch (market.Market)
+					{
+						case "4Sound.dk":
+							article.ShortDescriptionDen = market.Description;
+							break;
+						case "4Sound.no":
+							article.ShortDescriptionNor = market.Description;
+							break;
+						case "4Sound.se":
+							article.Name = market.DisplayName,
+							article.ShortDescriptionSwe = market.Description;
+							break;
+					}
+				}
+
+				list.Add(article);
 			}
 
 			return list;

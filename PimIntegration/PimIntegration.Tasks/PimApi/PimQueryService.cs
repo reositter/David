@@ -44,7 +44,7 @@ namespace PimIntegration.Tasks.PimApi
 			return products;
 		}
 
-		public ProductQueryResponseItem[] GetNewProductsSinceDummy(DateTime lastRequest)
+		public ProductQueryResponseItem[] GetNewProductsSinceDummy()
 		{
 			var client = new QueueOf_ProductQueryRequest_ProductQueryResponseClient();
 

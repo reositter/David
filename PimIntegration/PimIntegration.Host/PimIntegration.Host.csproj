@@ -98,7 +98,10 @@
     <None Include="Views\devtools.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\partial\GetNewProductsSince.cshtml">
+    <None Include="Views\partial\GetProductByDateDummy.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\partial\GetProductByDate.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Views\shared\_Layout.cshtml">
