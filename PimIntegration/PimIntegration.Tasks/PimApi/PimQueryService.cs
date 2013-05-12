@@ -20,20 +20,26 @@ namespace PimIntegration.Tasks.PimApi
 
 			var queryItem = new ProductQueryRequestItem
 			{
-				CreatedOn = lastRequest,
-				ProductGroupId = 10,
-				BrandId = 10
+				CreatedOn = lastRequest
 			};
 
-			var messageId = client.EnqueueMessage(queryItem, "GetProductByDate", "MarketAll");
+			Log.ForCurrent.DebugFormat("Calling PIM API. Primary action: GetProductByDate. Secondary action: None. CreatedOn: {0}", lastRequest.ToString(_settings.TimeStampFormat));
+			var messageId = client.EnqueueMessage(queryItem, "GetProductByDate", "None");
+			Log.ForCurrent.DebugFormat("MessageId for GetProductByDate reguest: {0}", messageId);
 			ProductQueryResponseItem[] products = null;
 
+			var failedAttempts = 0;
 			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
 			{
 				Thread.Sleep(_settings.MillisecondsBetweenRetries);
 				products = client.DequeueMessage(messageId);
+
 				if (products != null) break;
+
+				failedAttempts++;
 			}
+
+			Log.ForCurrent.DebugFormat("Dequeued message {0}. {1} failed attempts.", messageId, failedAttempts);
 
 			return products;
 		}
