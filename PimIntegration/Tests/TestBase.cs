@@ -6,7 +6,7 @@ namespace PimIntegration.Test
 {
 	public class TestBase
 	{
-		protected ITaskSettings CreateTaskSettings(int millisecondsBetweenRetries, int maximumNumberOfRetries = 5)
+		protected static ITaskSettings CreateTaskSettings(int millisecondsBetweenRetries, int maximumNumberOfRetries = 5)
 		{
 			return new AppSettings
 			{
@@ -16,7 +16,7 @@ namespace PimIntegration.Test
 			};
 		}
 
-		protected AppSettings GetSettingsFromAppConfigForUnitTests()
+		protected static AppSettings GetSettingsFromAppConfigForUnitTests()
 		{
 			var settings = new AppSettings
 			{

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using PimIntegration.Tasks.Database.Interfaces;
-using PimIntegration.Tasks.PIMServiceEndpoint;
-using PimIntegration.Tasks.PimApi;
+using PimIntegration.Tasks.PimApi.Interfaces;
 using PimIntegration.Tasks.Setup;
-using PimIntegration.Tasks.VismaGlobal.Dto;
 using PimIntegration.Tasks.VismaGlobal.Interfaces;
 
 namespace PimIntegration.Tasks
@@ -21,6 +18,7 @@ namespace PimIntegration.Tasks
 		private readonly IPimQueryService _pimQueryService;
 		private readonly IPimCommandService _pimCommandService;
 		private readonly IArticleManager _articleManager;
+		private readonly IMapper _mapper;
 		private DateTime _timeOfLastRequest;
 
 		public GetNewProductsTask(
@@ -28,13 +26,15 @@ namespace PimIntegration.Tasks
 			ILastCallsRepository lastCallsRepository, 
 			IPimQueryService pimQueryService,
 			IPimCommandService pimCommandService,
-			IArticleManager articleManager)
+			IArticleManager articleManager, 
+			IMapper mapper)
 		{
 			_settings = settings;
 			_lastCallsRepository = lastCallsRepository;
 			_pimQueryService = pimQueryService;
 			_pimCommandService = pimCommandService;
 			_articleManager = articleManager;
+			_mapper = mapper;
 			_timeOfLastRequest = _lastCallsRepository.GetTimeOfLastRequestForNewProducts();
 		}
 
@@ -48,47 +48,14 @@ namespace PimIntegration.Tasks
 
 			if (newProducts == null || newProducts.Length == 0) return;
 
-			var createdArticles = _articleManager.CreateArticles(MapPimProductToVismaArticle(newProducts));
+			var createdArticles = _articleManager.CreateArticles(_mapper.MapPimProductsToVismaArticles(newProducts));
+
+			if (createdArticles.Count == 0) return;
 
 			foreach (var market in _settings.Markets)
 			{
 				_pimCommandService.ReportVismaProductNumbers(market.MarketKey, market.VendorId, createdArticles);
 			}
-		}
-
-		private static IList<ArticleForCreate> MapPimProductToVismaArticle(IEnumerable<ProductQueryResponseItem> pimProducts)
-		{
-			var list = new List<ArticleForCreate>();
-
-			foreach (var pimProduct in pimProducts)
-			{
-				var article = new ArticleForCreate
-				{
-					Name = pimProduct.MasterModel,
-					PimSku = pimProduct.SKU
-				};
-
-				foreach (var market in pimProduct.Markets)
-				{
-					switch (market.Market)
-					{
-						case "4Sound.dk":
-							article.ShortDescriptionDen = market.Description;
-							break;
-						case "4Sound.no":
-							article.ShortDescriptionNor = market.Description;
-							break;
-						case "4Sound.se":
-							article.Name = market.DisplayName,
-							article.ShortDescriptionSwe = market.Description;
-							break;
-					}
-				}
-
-				list.Add(article);
-			}
-
-			return list;
 		}
 	}
 }

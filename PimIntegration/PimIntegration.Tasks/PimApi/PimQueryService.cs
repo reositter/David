@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using PimIntegration.Tasks.PIMServiceEndpoint;
+using PimIntegration.Tasks.PimApi.Interfaces;
 using PimIntegration.Tasks.Setup;
 
 namespace PimIntegration.Tasks.PimApi

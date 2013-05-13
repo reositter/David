@@ -5,7 +5,7 @@ using NUnit.Framework;
 using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PIMServiceEndpoint;
-using PimIntegration.Tasks.PimApi;
+using PimIntegration.Tasks.PimApi.Interfaces;
 using PimIntegration.Tasks.Setup;
 using PimIntegration.Tasks.VismaGlobal.Dto;
 using PimIntegration.Tasks.VismaGlobal.Interfaces;
@@ -16,7 +16,7 @@ namespace PimIntegration.Test.UnitTests
     public class GetNewProductsTaskTests : TestBase
     {
 		private IGetNewProductsTask _task;
-		private ITaskSettings _settings;
+		private AppSettings _settings;
 		private Mock<ILastCallsRepository> _stateRepository;
 		private Mock<IPimQueryService> _pimQueryService;
 		private Mock<IPimCommandService> _pimCommandService;
@@ -35,7 +35,13 @@ namespace PimIntegration.Test.UnitTests
 			_settings = GetSettingsFromAppConfigForUnitTests();
 
 			_stateRepository.Setup(repo => repo.GetTimeOfLastRequestForNewProducts()).Returns(_timeOfLastRequest);
-			_task = new GetNewProductsTask(_settings, _stateRepository.Object, _pimQueryService.Object, _pimCommandService.Object, _articleManager.Object);
+			_task = new GetNewProductsTask(
+				_settings, 
+				_stateRepository.Object, 
+				_pimQueryService.Object, 
+				_pimCommandService.Object, 
+				_articleManager.Object,
+				new Mapper(_settings));
 		}
 
 		[Test]
@@ -45,7 +51,7 @@ namespace PimIntegration.Test.UnitTests
 			var repo = new Mock<ILastCallsRepository>();
 
 			// Act
-			_task = new GetNewProductsTask(_settings, repo.Object, _pimQueryService.Object, _pimCommandService.Object, _articleManager.Object);
+			_task = new GetNewProductsTask(_settings, repo.Object, _pimQueryService.Object, _pimCommandService.Object, _articleManager.Object, new Mapper(_settings));
 
 			// Assert
 			repo.Verify(x => x.GetTimeOfLastRequestForNewProducts());
@@ -70,12 +76,13 @@ namespace PimIntegration.Test.UnitTests
 			// Arrange
 			var newProducts = new[]
 			{
-				new ProductQueryResponseItem {SKU = "PIM00001"},
-				new ProductQueryResponseItem {SKU = "PIM00002"},
-				new ProductQueryResponseItem {SKU = "PIM00003"}
+				new ProductQueryResponseItem {SKU = "PIM00001", Markets = new ProductQueryResponseMarketItem[0]},
+				new ProductQueryResponseItem {SKU = "PIM00002", Markets = new ProductQueryResponseMarketItem[0]},
+				new ProductQueryResponseItem {SKU = "PIM00003", Markets = new ProductQueryResponseMarketItem[0]}
 			};
 
 			_pimQueryService.Setup(service => service.GetNewProductsSince(_timeOfLastRequest)).Returns(newProducts);
+			_articleManager.Setup(x => x.CreateArticles(It.IsAny<IList<ArticleForCreate>>())).Returns(new List<CreatedArticle>());
 
 			// Act
 			_task.Execute();
@@ -103,12 +110,26 @@ namespace PimIntegration.Test.UnitTests
 			// Arrange
 			var newProducts = new[]
 			{
-				new ProductQueryResponseItem {SKU = "PIM00001"},
-				new ProductQueryResponseItem {SKU = "PIM00002"},
-				new ProductQueryResponseItem {SKU = "PIM00003"}
+				new ProductQueryResponseItem { 
+					SKU = "PIM00001", 
+					Markets = new [] { 
+						new ProductQueryResponseMarketItem { Market = "4Sound.dk", Description = "Dejlig" },
+						new ProductQueryResponseMarketItem { Market = "4Sound.no", Description = "Den e go" },
+						new ProductQueryResponseMarketItem { Market = "4Sound.se", Description = "Bra", DisplayName = "Flying V"}
+					}
+				},
+				new ProductQueryResponseItem {SKU = "PIM00002", Markets = new ProductQueryResponseMarketItem[0]},
+				new ProductQueryResponseItem {SKU = "PIM00003", Markets = new ProductQueryResponseMarketItem[0]}
+			};
+			var createdArticles = new List<CreatedArticle>
+			{
+				new CreatedArticle("111", "PIM00001"),
+				new CreatedArticle("112", "PIM00002"),
+				new CreatedArticle("113", "PIM00003")
 			};
 
 			_pimQueryService.Setup(service => service.GetNewProductsSince(_timeOfLastRequest)).Returns(newProducts);
+			_articleManager.Setup(x => x.CreateArticles(It.IsAny<IList<ArticleForCreate>>())).Returns(createdArticles);
 
 			// Act
 			_task.Execute();

@@ -30,6 +30,19 @@
 		});
 	});
 
+	$('#form-wrapper').on('click', '#btnGetNewProductsTask', function (e) {
+		e.preventDefault();
+		$.ajax({
+			type: 'POST', url: '/products/getnewproductstask',
+			data: {
+				Hour: $('#txtHour').val(),
+				Minute: $('#txtMinute').val(),
+				Second: $('#txtSecond').val()
+			},
+			success: displayJsonResponse
+		});
+	});
+	
 	$('#form-wrapper').on('click', '#btnGetProductByDateDummy', function (e) {
 		e.preventDefault();
 		$.ajax({

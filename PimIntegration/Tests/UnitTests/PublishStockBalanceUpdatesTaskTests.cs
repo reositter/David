@@ -6,6 +6,7 @@ using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database.Dto;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PimApi;
+using PimIntegration.Tasks.PimApi.Interfaces;
 using PimIntegration.Tasks.Setup;
 
 namespace PimIntegration.Test.UnitTests

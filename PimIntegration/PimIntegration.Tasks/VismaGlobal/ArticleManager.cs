@@ -32,7 +32,7 @@ namespace PimIntegration.Tasks.VismaGlobal
 				}
 
 				var articleNo = CreateArticle(article, articleComponent);
-				if (string.IsNullOrEmpty(articleNo))
+				if (!string.IsNullOrEmpty(articleNo))
 					list.Add(new CreatedArticle(articleNo, article.PimSku));
 			}
 

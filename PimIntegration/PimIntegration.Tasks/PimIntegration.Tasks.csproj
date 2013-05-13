@@ -64,6 +64,8 @@
   <ItemGroup>
     <Compile Include="Database\Dto\ArticleForPriceUpdate.cs" />
     <Compile Include="Database\Dto\ArticleForStockBalanceUpdate.cs" />
+    <Compile Include="Database\Dto\PimMessageResult.cs" />
+    <Compile Include="Database\Interfaces\IPimMessageResultRepository.cs" />
     <Compile Include="Database\Interfaces\IPriceUpdateQuery.cs" />
     <Compile Include="Database\PriceUpdateQuery.cs" />
     <Compile Include="Database\Interfaces\ILastCallsRepository.cs" />
@@ -74,10 +76,14 @@
     <Compile Include="GetNewProductsTask.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Database\LastCallsRepository.cs" />
-    <Compile Include="PimApi\IPimCommandService.cs" />
-    <Compile Include="PimApi\IPimQueryService.cs" />
+    <Compile Include="Mapper.cs" />
+    <Compile Include="PimApi\Dto\MessageResult.cs" />
+    <Compile Include="PimApi\PrimaryAction.cs" />
+    <Compile Include="PimApi\Interfaces\IPimCommandService.cs" />
+    <Compile Include="PimApi\Interfaces\IPimQueryService.cs" />
     <Compile Include="PimApi\PimCommandService.cs" />
     <Compile Include="PimApi\PimQueryService.cs" />
+    <Compile Include="PimApi\SecondaryAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublishPriceUpdatesTask.cs" />
     <Compile Include="PublishStockBalanceUpdatesTask.cs" />

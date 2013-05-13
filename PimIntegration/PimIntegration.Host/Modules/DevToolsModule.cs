@@ -3,6 +3,7 @@ using Nancy;
 using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PimApi;
+using PimIntegration.Tasks.PimApi.Interfaces;
 using PimIntegration.Tasks.VismaGlobal.Interfaces;
 using StructureMap;
 
@@ -47,17 +48,21 @@ namespace PimIntegration.Host.Modules
 
 			Post["/products/getnewproductstask"] = parameters =>
 			{
-				Log.ForCurrent.InfoFormat("{0} {1}", Request.Method, Request.Path);
-
 				var now = DateTime.Now;
-				var timestamp = new DateTime(now.Year, now.Month, now.Day, Request.Query.Hour, Request.Query.Minute, Request.Query.Second);
+				var timestamp = new DateTime(now.Year, now.Month, now.Day, Request.Form.Hour, Request.Form.Minute, Request.Form.Second);
 
-				Log.ForCurrent.InfoFormat("Timestamp {0}", timestamp.ToString(PimIntegrationSettings.AppSettings.TimeStampFormat));
-
+				// Emulate GetNewProductsTask.Execute()
 				var pimQueryService = ObjectFactory.Container.GetInstance<IPimQueryService>();
-				var products = pimQueryService.GetNewProductsSince(timestamp);
+				var newProducts = pimQueryService.GetNewProductsSinceDummy();
+				var articlesForCreate = ObjectFactory.Container.GetInstance<IMapper>().MapPimProductsToVismaArticles(newProducts);
+				var createdArticles = ObjectFactory.Container.GetInstance<IArticleManager>().CreateArticles(articlesForCreate);
 
-				return Response.AsJson(products);
+				return Response.AsJson(new
+				{
+					NewProductsFromPim = newProducts, 
+					ArticlesBeforeCreate = articlesForCreate,
+					CreatedArticles = createdArticles
+				});
 			};
 
 			Get["/products/forpriceupdate"] = o =>
