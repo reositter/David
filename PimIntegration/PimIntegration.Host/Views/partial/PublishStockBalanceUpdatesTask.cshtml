@@ -1,0 +1,10 @@
+@using System
+
+<h2>Publish Stock Balance Updates</h2>
+<form class="form-inline">
+	<label class="control-label" for="txtMinute">Since</label>
+	<input type='text' id='txtHour' class="input-mini" value="@DateTime.Now.Hour" />				
+	<input type='text' id='txtMinute' class="input-mini" value="@DateTime.Now.Minute" />
+	<input type='text' id='txtSecond' class="input-mini" value="@DateTime.Now.Second" />
+	<button id="btnPublishStockBalanceUpdatesTask" class="btn btn-success">POST</button>
+</form>

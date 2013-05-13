@@ -1,0 +1,29 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<System.Collections.Generic.IList<PimIntegration.Tasks.Database.Dto.PimMessageResult>>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Message Id</th>
+			<th>Primary Action</th>
+			<th>Secondary Action</th>
+			<th>Enqueued</th>
+			<th>Dequeued</th>
+			<th>No of failed attempts to dequeue</th>
+			<th>Status</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var msg in Model)
+		{
+			<tr>
+				<td>@msg.MessageId</td>
+				<td>@msg.PrimaryAction</td>
+				<td>@msg.SecondaryAction</td>
+				<td>@msg.EnqueuedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
+				<td>@(msg.DequeuedAt.HasValue ? msg.DequeuedAt.Value.ToString("yyyy-MM-dd HH:mm:ss") : string.Empty)</td>
+				<td>@msg.NumberOfFailedAttemptsToDequeue</td>
+				<td>@msg.Status</td>
+			</tr>
+		}
+	</tbody>
+</table>

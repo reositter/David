@@ -1,4 +1,5 @@
-﻿using PimIntegration.Tasks;
+﻿using PimIntegration.Tasks.Database.Interfaces;
+using StructureMap;
 
 namespace PimIntegration.Host.Modules
 {
@@ -10,16 +11,17 @@ namespace PimIntegration.Host.Modules
 			{
 				dynamic model = new
 				{
-					Title = "Dashboard",
-					Parameters = parameters
+					Title = "Dashboard"
 				};
 				return View["dashboard.cshtml", model];
 			};
 
-			Post["/trial"] = o =>
+			Get["/lostmessages/{limit}"] = parameters =>
 			{
-				Log.ForCurrent.Debug("POST to /trial");
-				return 200;
+				var repo = ObjectFactory.Container.GetInstance<IPimMessageResultRepository>();
+				var lostMessages = repo.GetMessagesWithoutResponse(parameters.limit);
+
+				return View["partial/MessageResults.cshtml", lostMessages];
 			};
 		}
 	}

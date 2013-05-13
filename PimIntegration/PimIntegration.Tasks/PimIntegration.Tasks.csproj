@@ -67,6 +67,7 @@
     <Compile Include="Database\Dto\PimMessageResult.cs" />
     <Compile Include="Database\Interfaces\IPimMessageResultRepository.cs" />
     <Compile Include="Database\Interfaces\IPriceUpdateQuery.cs" />
+    <Compile Include="Database\PimMessageResultRepository.cs" />
     <Compile Include="Database\PriceUpdateQuery.cs" />
     <Compile Include="Database\Interfaces\ILastCallsRepository.cs" />
     <Compile Include="Database\StockBalanceQuery.cs" />
@@ -113,7 +114,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Database\PimIntegrationDb.s3db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Service References\PIMServiceEndpoint\item.wsdl" />

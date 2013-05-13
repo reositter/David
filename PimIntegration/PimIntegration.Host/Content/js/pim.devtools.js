@@ -2,7 +2,7 @@
 	function displayJsonResponse(json) {
 		$('#response').html(jsontree(json));
 		$('#response > ul').first().treeview({
-			collapsed: false
+			collapsed: true
 		});
 	}
 
@@ -51,8 +51,34 @@
 			success: displayJsonResponse
 		});
 	});
+	
+	$('#form-wrapper').on('click', '#btnGetArticlesForStockBalanceUpdate', function (e) {
+		e.preventDefault();
+		$.ajax({
+			type: 'GET', url: 'products/forstockbalanceupdate',
+			data: {
+				Hour: $('#txtHour').val(),
+				Minute: $('#txtMinute').val(),
+				Second: $('#txtSecond').val()
+			},
+			success: displayJsonResponse
+		});
+	});
+	
+	$('#form-wrapper').on('click', '#btnPublishStockBalanceUpdatesTask', function (e) {
+		e.preventDefault();
+		$.ajax({
+			type: 'POST', url: '/products/publishstockbalanceupdatestask',
+			data: {
+				Hour: $('#txtHour').val(),
+				Minute: $('#txtMinute').val(),
+				Second: $('#txtSecond').val()
+			},
+			success: displayJsonResponse
+		});
+	});
 
-	$('#btnGetArticlesForPriceUpdate').on('click', function(e) {
+	$('#form-wrapper').on('click', '#btnGetArticlesForPriceUpdate', function (e) {
 		e.preventDefault();
 		$.ajax({
 			type: 'GET', url: 'products/forpriceupdate',
@@ -60,22 +86,5 @@
 			success: displayJsonResponse
 		});
 	});
-	
-	$('#btnGetArticlesForPriceUpdateAndCalcAgreedPrice').on('click', function (e) {
-		e.preventDefault();
-		$.ajax({
-			type: 'GET', url: 'products/forpriceupdatewithagreedprice',
-			data: {},
-			success: displayJsonResponse
-		});
-	});
-	
-	$('#btnGetStockBalanceQuery').on('click', function (e) {
-		e.preventDefault();
-		$.ajax({
-			type: 'GET', url: 'products/forstockbalanceupdate',
-			data: {},
-			success: displayJsonResponse
-		});
-	});
+
 });

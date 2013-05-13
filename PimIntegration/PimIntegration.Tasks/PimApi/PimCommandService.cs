@@ -84,23 +84,23 @@ namespace PimIntegration.Tasks.PimApi
 				return;
 
 			var client = new QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient();
-
-			var messageId = client.EnqueueMessage(PrimaryAction.UpdateProductBySku, SecondaryAction.PriceAndStock, stockBalanceUpdates.Select(article => new ProductUpdateRequestItem
+			var msg = new MessageResult(PrimaryAction.UpdateProductBySku, SecondaryAction.PriceAndStock);
+			var productUpdates = stockBalanceUpdates.Select(article => new ProductUpdateRequestItem
 			{
 				SKU = article.PimSku,
 				MarketName = marketKey,
 				Stock = Convert.ToInt32(article.StockBalance)
+			}).ToArray();
 
-			}).ToArray());
+			var messageId = client.EnqueueMessage(msg.PrimaryAction, msg.SecondaryAction, productUpdates);
 
-			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
-			{
-				Thread.Sleep(_settings.MillisecondsBetweenRetries);
-				var result = client.DequeueMessage(messageId);
-				if (result != null) return;
-			}
+			msg.Status = MessageStatus.Enqueued;
+			msg.MessageId = messageId;
+			msg.EnqueuedAt = DateTime.Now;
 
-			Log.ForCurrent.ErrorFormat("PublishStockBalanceUpdates: No response found for message ID '{0}'", messageId);
+			DequeueMessage(msg, client);
+
+			_pimMessageResultRepository.SaveMessageResult(MapToDbDto(msg));
 		}
 
 		public void PublishPriceUpdates(string marketKey, IEnumerable<ArticleForPriceAndStockUpdate> articlesWithPriceUpdates)

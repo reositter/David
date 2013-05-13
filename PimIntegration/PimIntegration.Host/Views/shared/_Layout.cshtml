@@ -8,9 +8,15 @@
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" href="css/pim.css" />
 		<script src="js/libs/jquery-2.0.0.min.js"></script>
-		@RenderSection("HeadScripts")
+		@RenderSection("HeadScripts", required: false)
 	</head>
 	<body>
+		<nav>
+			<ul>
+				<li><a href="/">Dashboard</a></li>
+				<li><a href="devtools">Trial</a></li>
+			</ul>
+		</nav>
 		@RenderBody()
 	</body>
 </html>

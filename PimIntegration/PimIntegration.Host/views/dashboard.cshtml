@@ -2,12 +2,10 @@
     Layout = "shared/_Layout.cshtml";
 }
 
-<nav>
-	<ul>
-		<li><a href="devtools">devtools</a></li>
-	</ul>
-</nav>
+@section HeadScripts {
+	<script src="/js/pim.dashboard.js"></script> 
+}
+
 <h1>Dashboard</h1>
-<form action="trial" method="POST">
-	<button type="submit">Trial</button>
-</form>
+<h2>Lost Messages</h2>
+<div id="lostMessagesWrapper"></div>
