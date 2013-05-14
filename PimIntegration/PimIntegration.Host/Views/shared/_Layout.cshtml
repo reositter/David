@@ -12,12 +12,18 @@
 		@RenderSection("HeadScripts", required: false)
 	</head>
 	<body>
-		<nav>
-			<ul>
-				<li><a href="/">Dashboard</a></li>
-				<li><a href="devtools">Trial</a></li>
-			</ul>
-		</nav>
-		@RenderBody()
+		<div id="top-bar">
+			<div id="nav-wrapper">
+				<nav>
+					<ul id="main-menu">
+						<li><a href="/">Dashboard</a></li>
+						<li><a href="devtools">Trial</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<div id="site-content">
+			@RenderBody()
+		</div>
 	</body>
 </html>

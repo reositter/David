@@ -1,9 +1,19 @@
 ﻿$(document).ready(function () {
+
+	function displayInProgress() {
+		$('#response').html('Waiting...');
+	}
+
 	function displayJsonResponse(json) {
-		$('#response').html(jsontree(json));
-		$('#response > ul').first().treeview({
-			collapsed: true
-		});
+		if (!json || ($.isArray(json) && json.length == 0)) {
+			$('#response').html('Empty result');
+		}
+		else {
+			$('#response').html(jsontree(json));
+			$('#response > ul').first().treeview({
+				collapsed: true
+			});
+		}
 	}
 
 	function loadForm(e) {
@@ -16,9 +26,20 @@
 	}
 
 	$('#devtool-options').on('click', 'li > a', loadForm);
+	
+	$('#form-wrapper').on('click', '#btnGetProductByDateDummy', function (e) {
+		e.preventDefault();
+		displayInProgress();
+		$.ajax({
+			type: 'GET', url: '/products/new/getproductbydatedummy',
+			data: {},
+			success: displayJsonResponse
+		});
+	});
 
 	$('#form-wrapper').on('click', '#btnGetProductByDate', function (e) {
 		e.preventDefault();
+		displayInProgress();
 		$.ajax({
 			type: 'GET', url: 'products/new/getproductbydate',
 			data: {
@@ -32,6 +53,7 @@
 
 	$('#form-wrapper').on('click', '#btnGetNewProductsTask', function (e) {
 		e.preventDefault();
+		displayInProgress();
 		$.ajax({
 			type: 'POST', url: '/products/getnewproductstask',
 			data: {
@@ -43,17 +65,9 @@
 		});
 	});
 	
-	$('#form-wrapper').on('click', '#btnGetProductByDateDummy', function (e) {
-		e.preventDefault();
-		$.ajax({
-			type: 'GET', url: '/products/new/getproductbydatedummy',
-			data: {},
-			success: displayJsonResponse
-		});
-	});
-	
 	$('#form-wrapper').on('click', '#btnGetArticlesForStockBalanceUpdate', function (e) {
 		e.preventDefault();
+		displayInProgress();
 		$.ajax({
 			type: 'GET', url: 'products/forstockbalanceupdate',
 			data: {
@@ -67,6 +81,7 @@
 	
 	$('#form-wrapper').on('click', '#btnPublishStockBalanceUpdatesTask', function (e) {
 		e.preventDefault();
+		displayInProgress();
 		$.ajax({
 			type: 'POST', url: '/products/publishstockbalanceupdatestask',
 			data: {
@@ -80,6 +95,7 @@
 
 	$('#form-wrapper').on('click', '#btnGetArticlesForPriceUpdate', function (e) {
 		e.preventDefault();
+		displayInProgress();
 		$.ajax({
 			type: 'GET', url: 'products/forpriceupdate',
 			data: {},

@@ -1,4 +1,38 @@
-﻿#devtool-options, #main {
+﻿#top-bar {
+	position: fixed;
+	top: 0;
+	width: 100%; 
+	height: 44px; 
+	z-index: 100; 
+	background-color: black;
+}
+
+#nav-wrapper {
+	 max-width: 900px; 
+	 margin: 0 auto;
+}
+
+#main-menu > li {
+	float: left;
+	color: white;
+	font: 24px Arial;
+	list-style-type: none;
+	margin: 0 30px 0;
+}
+
+#site-content {
+	position: relative;
+	top: 44px;
+	max-width: 1020px;
+	margin: 0 auto;
+}
+
+h2 {
+	font-size: 20px;
+	line-height: 20px;
+}
+
+#devtool-options, #main {
 	float: left;
 	min-height: 400px;
 	border: solid 3px #d3d3d3;
@@ -6,5 +40,4 @@
 	padding: 10px;
 }
 
-#devtool-options { min-width: 340px; }
 #main { min-width: 400px; }

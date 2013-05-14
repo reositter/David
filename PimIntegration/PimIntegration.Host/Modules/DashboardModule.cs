@@ -16,10 +16,10 @@ namespace PimIntegration.Host.Modules
 				return View["dashboard.cshtml", model];
 			};
 
-			Get["/lostmessages/{limit}"] = parameters =>
+			Get["/recentmessages/{limit}"] = parameters =>
 			{
 				var repo = ObjectFactory.Container.GetInstance<IPimMessageResultRepository>();
-				var lostMessages = repo.GetMessagesWithoutResponse(parameters.limit);
+				var lostMessages = repo.GetRecentMessages(parameters.limit);
 
 				return View["partial/MessageResults.cshtml", lostMessages];
 			};

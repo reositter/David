@@ -52,6 +52,12 @@ namespace PimIntegration.Host.Modules
 				// Emulate GetNewProductsTask.Execute()
 				var pimQueryService = ObjectFactory.Container.GetInstance<IPimQueryService>();
 				var newProducts = pimQueryService.GetNewProductsSince(timestamp);
+
+				if (newProducts == null || newProducts.Length == 0)
+				{
+					return Response.AsJson(new {});
+				}
+
 				var articlesForCreate = ObjectFactory.Container.GetInstance<IMapper>().MapPimProductsToVismaArticles(newProducts);
 				var createdArticles = ObjectFactory.Container.GetInstance<IArticleManager>().CreateArticles(articlesForCreate);
 				var pimCommandService = ObjectFactory.Container.GetInstance<IPimCommandService>();

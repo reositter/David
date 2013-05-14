@@ -8,7 +8,6 @@
 			<th>Secondary Action</th>
 			<th>Enqueued</th>
 			<th>Dequeued</th>
-			<th>No of failed attempts to dequeue</th>
 			<th>Status</th>
 		</tr>
 	</thead>
@@ -21,7 +20,6 @@
 				<td>@msg.SecondaryAction</td>
 				<td>@msg.EnqueuedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
 				<td>@(msg.DequeuedAt.HasValue ? msg.DequeuedAt.Value.ToString("yyyy-MM-dd HH:mm:ss") : string.Empty)</td>
-				<td>@msg.NumberOfFailedAttemptsToDequeue</td>
 				<td>@msg.Status</td>
 			</tr>
 		}

@@ -1,9 +1,9 @@
 $(document).ready(function() {
 	$.ajax({
-		type: 'GET', url: '/lostmessages/20',
+		type: 'GET', url: '/recentmessages/30',
 		data: {},
 		success: function(table) {
-			$('#lostMessagesWrapper').html(table);
+			$('#messagesWrapper').html(table);
 		}
 	});
 });
