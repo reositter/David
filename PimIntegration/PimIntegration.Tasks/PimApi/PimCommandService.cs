@@ -16,11 +16,16 @@ namespace PimIntegration.Tasks.PimApi
 	{
 		private readonly ITaskSettings _settings;
 		private readonly IPimMessageResultRepository _pimMessageResultRepository;
+		private readonly IMapper _mapper;
 
-		public PimCommandService(ITaskSettings settings, IPimMessageResultRepository pimMessageResultRepository)
+		public PimCommandService(
+			ITaskSettings settings, 
+			IPimMessageResultRepository pimMessageResultRepository, 
+			IMapper mapper)
 		{
 			_settings = settings;
 			_pimMessageResultRepository = pimMessageResultRepository;
+			_mapper = mapper;
 		}
 
 		public void ReportVismaProductNumbers(string marketKey, int vendorId, IEnumerable<CreatedArticle> newProducts)
@@ -43,20 +48,7 @@ namespace PimIntegration.Tasks.PimApi
 
 			DequeueMessage(msg, client);
 
-			_pimMessageResultRepository.SaveMessageResult(MapToDbDto(msg));
-		}
-
-		private static PimMessageResult MapToDbDto(MessageResult msg)
-		{
-			return new PimMessageResult
-			{
-				MessageId = msg.MessageId,
-				PrimaryAction = msg.PrimaryAction,
-				SecondaryAction = msg.SecondaryAction,
-				EnqueuedAt = msg.EnqueuedAt,
-				DequeuedAt = msg.DequeuedAt,
-				Status = (int)msg.Status
-			};
+			_pimMessageResultRepository.SaveMessageResult(_mapper.MapMessageResultToPimMessageResult(msg));
 		}
 
 		private void DequeueMessage(MessageResult msg, QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient client)
@@ -100,7 +92,7 @@ namespace PimIntegration.Tasks.PimApi
 
 			DequeueMessage(msg, client);
 
-			_pimMessageResultRepository.SaveMessageResult(MapToDbDto(msg));
+			_pimMessageResultRepository.SaveMessageResult(_mapper.MapMessageResultToPimMessageResult(msg));
 		}
 
 		public void PublishPriceUpdates(string marketKey, IEnumerable<ArticleForPriceAndStockUpdate> articlesWithPriceUpdates)

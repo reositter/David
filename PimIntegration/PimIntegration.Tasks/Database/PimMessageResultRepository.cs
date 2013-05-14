@@ -40,14 +40,14 @@ namespace PimIntegration.Tasks.Database
 			}
 		}
 
-		public IEnumerable<PimMessageResult> GetMessagesWithoutResponse(int maximumNumberOfItems)
+		public IEnumerable<PimMessageResult> GetRecentMessages(int maximumNumberOfItems)
 		{
 			var list = new List<PimMessageResult>();
 
 			using (var conn = new SQLiteConnection(_connectionString))
 			{
 				conn.Open();
-				var query = string.Format("SELECT * FROM {0} WHERE Status = 404 ORDER BY Id DESC LIMIT @MaximumNumberOfItems;", TableName);
+				var query = string.Format("SELECT * FROM {0} ORDER BY Id DESC LIMIT @MaximumNumberOfItems;", TableName);
 
 				using (var cmd = new SQLiteCommand(query, conn))
 				{

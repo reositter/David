@@ -5,7 +5,7 @@ namespace PimIntegration.Tasks.Database.Interfaces
 {
 	public interface IPimMessageResultRepository
 	{
-		IEnumerable<PimMessageResult> GetMessagesWithoutResponse(int maximumNumberOfItems);
+		IEnumerable<PimMessageResult> GetRecentMessages(int maximumNumberOfItems);
 		void SaveMessageResult(PimMessageResult pimMessageResult);
 	}
 }
