@@ -134,6 +134,7 @@
     <Folder Include="Content\img\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\bootstrap-responsive.min.css" />
     <Content Include="Content\css\bootstrap.min.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
