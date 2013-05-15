@@ -22,6 +22,7 @@
 		$.get(href, function (markup) {
 			$('#form-wrapper').html(markup);
 			$('#response').empty();
+			$('.now').val(moment().format('YYYY-MM-DD hh:mm:ss'));
 		});
 	}
 
@@ -98,7 +99,9 @@
 		displayInProgress();
 		$.ajax({
 			type: 'GET', url: 'products/forpriceupdate',
-			data: {},
+			data: {
+				Timestamp: $('#txtTimestamp').val()
+			},
 			success: displayJsonResponse
 		});
 	});

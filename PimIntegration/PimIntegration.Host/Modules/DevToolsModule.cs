@@ -110,14 +110,19 @@ namespace PimIntegration.Host.Modules
 			Get["/devtools/form/forpriceupdate"] = o => View["partial/GetArticlesForPriceUpdate.cshtml", o];
 			Get["products/forpriceupdate"] = o =>
 			{
+				var timestamp = Convert.ToDateTime(Request.Query.Timestamp.ToString());
+
 				var dbQuery = ObjectFactory.Container.GetInstance<IPriceUpdateQuery>();
 				var customerAgreementQuery = ObjectFactory.Container.GetInstance<ICustomerAgreementQuery>();
-				var articlesForPriceUpdate = dbQuery.GetArticlesForPriceUpdate(DateTime.Now.AddHours(-4));
+				var articlesForPriceUpdate = dbQuery.GetArticlesForPriceUpdate(timestamp);
 				var settings = PimIntegrationSettings.AppSettings;
 
 				customerAgreementQuery.PopulateNewPrice(settings.Markets[0].VismaCustomerNoForPriceCalculation, articlesForPriceUpdate);
 
-				return Response.AsJson(articlesForPriceUpdate);
+				return Response.AsJson(new
+				{
+					ArticlesForPriceUpdate = articlesForPriceUpdate
+				});
 			};
 		}
 	}

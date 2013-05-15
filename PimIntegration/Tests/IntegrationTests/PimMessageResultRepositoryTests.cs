@@ -40,7 +40,7 @@ namespace PimIntegration.Test.IntegrationTests
 			_repository.SaveMessageResult(messageResult);
 
 			// Assert
-			var lastMessages = _repository.GetMessagesWithoutResponse(2);
+			var lastMessages = _repository.GetRecentMessages(2);
 			Assert.That(lastMessages.Any(msg => msg.MessageId == 19), Is.True);
 		}
 	}
