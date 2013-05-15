@@ -1,9 +1,6 @@
-@using System
 <h2>GetProductByDate</h2>
 <form class="form-inline">
-	<label class="control-label" for="txtMinute">Since</label>
-	<input type='text' id='txtHour' class="input-mini" placeholder="hh" value="@DateTime.Now.Hour" />				
-	<input type='text' id='txtMinute' class="input-mini" placeholder="mm" value="@DateTime.Now.Minute" />
-	<input type='text' id='txtSecond' class="input-mini" placeholder="ss" value="@DateTime.Now.Second" />
+	<label class="control-label" for="txtTimestamp">Since</label>
+	<input type="text" id="txtTimestamp" class="now" />
 	<button id="btnGetProductByDate" class="btn btn-success">GET</button>
 </form>

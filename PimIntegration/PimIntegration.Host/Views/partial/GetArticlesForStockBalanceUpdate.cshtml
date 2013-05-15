@@ -1,10 +1,6 @@
-@using System
-
 <h2>GetArticlesForStockBalanceUpdate</h2>
 <form class="form-inline">
-	<label class="control-label" for="txtMinute">Since</label>
-	<input type='text' id='txtHour' class="input-mini" value="@DateTime.Now.Hour" />				
-	<input type='text' id='txtMinute' class="input-mini" value="@DateTime.Now.Minute" />
-	<input type='text' id='txtSecond' class="input-mini" value="@DateTime.Now.Second" />
+	<label class="control-label" for="txtTimestamp">Since</label>
+	<input type="text" id="txtTimestamp" class="now" />
 	<button id="btnGetArticlesForStockBalanceUpdate" class="btn btn-success">GET</button>
 </form>

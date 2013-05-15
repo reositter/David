@@ -44,9 +44,7 @@
 		$.ajax({
 			type: 'GET', url: 'products/new/getproductbydate',
 			data: {
-				Hour: $('#txtHour').val(),
-				Minute: $('#txtMinute').val(),
-				Second: $('#txtSecond').val()
+				Timestamp: $('#txtTimestamp').val()
 			},
 			success: displayJsonResponse
 		});
@@ -58,9 +56,7 @@
 		$.ajax({
 			type: 'POST', url: '/products/getnewproductstask',
 			data: {
-				Hour: $('#txtHour').val(),
-				Minute: $('#txtMinute').val(),
-				Second: $('#txtSecond').val()
+				Timestamp: $('#txtTimestamp').val()
 			},
 			success: displayJsonResponse
 		});
@@ -72,9 +68,7 @@
 		$.ajax({
 			type: 'GET', url: 'products/forstockbalanceupdate',
 			data: {
-				Hour: $('#txtHour').val(),
-				Minute: $('#txtMinute').val(),
-				Second: $('#txtSecond').val()
+				Timestamp: $('#txtTimestamp').val()
 			},
 			success: displayJsonResponse
 		});

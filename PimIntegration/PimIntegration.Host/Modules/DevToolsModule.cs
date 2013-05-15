@@ -32,22 +32,23 @@ namespace PimIntegration.Host.Modules
 			{
 				Log.ForCurrent.InfoFormat("{0} {1}", Request.Method, Request.Path);
 
-				var now = DateTime.Now;
-				var timestamp = new DateTime(now.Year, now.Month, now.Day, Request.Query.Hour, Request.Query.Minute, Request.Query.Second);
+				var timestamp = Convert.ToDateTime(Request.Query.Timestamp.ToString());
 
 				Log.ForCurrent.InfoFormat("Timestamp {0}", timestamp.ToString(PimIntegrationSettings.AppSettings.TimeStampFormat));
 
 				var pimQueryService = ObjectFactory.Container.GetInstance<IPimQueryService>();
 				var products = pimQueryService.GetNewProductsSince(timestamp);
 
-				return Response.AsJson(products);
+				return Response.AsJson(new
+				{
+					NewProductsFromPim = products
+				});
 			};
 
 			Get["/devtools/form/getnewproductstask"] = o => View["partial/GetNewProductsTask.cshtml", o];
 			Post["/products/getnewproductstask"] = parameters =>
 			{
-				var now = DateTime.Now;
-				var timestamp = new DateTime(now.Year, now.Month, now.Day, Request.Form.Hour, Request.Form.Minute, Request.Form.Second);
+				var timestamp = Convert.ToDateTime(Request.Form.Timestamp.ToString());
 
 				// Emulate GetNewProductsTask.Execute()
 				var pimQueryService = ObjectFactory.Container.GetInstance<IPimQueryService>();
@@ -78,12 +79,14 @@ namespace PimIntegration.Host.Modules
 			Get["/devtools/form/forstockbalanceupdate"] = o => View["partial/GetArticlesForStockBalanceUpdate.cshtml", o];
 			Get["/products/forstockbalanceupdate"] = o =>
 			{
-				var now = DateTime.Now;
-				var timestamp = new DateTime(now.Year, now.Month, now.Day, Request.Query.Hour, Request.Query.Minute, Request.Query.Second);
+				var timestamp = Convert.ToDateTime(Request.Query.Timestamp.ToString());
 				var dbQuery = ObjectFactory.Container.GetInstance<IStockBalanceQuery>();
-				var result = dbQuery.GetStockBalanceUpdatesSince(timestamp);
+				var stockBalanceUpdates = dbQuery.GetStockBalanceUpdatesSince(timestamp);
 
-				return Response.AsJson(result);
+				return Response.AsJson(new
+				{
+					StockBalanceUpdates = stockBalanceUpdates
+				});
 			};
 
 			Get["/devtools/form/publishstockbalanceupdatestask"] = o => View["partial/PublishStockBalanceUpdatesTask.cshtml", o];
@@ -114,14 +117,14 @@ namespace PimIntegration.Host.Modules
 
 				var dbQuery = ObjectFactory.Container.GetInstance<IPriceUpdateQuery>();
 				var customerAgreementQuery = ObjectFactory.Container.GetInstance<ICustomerAgreementQuery>();
-				var articlesForPriceUpdate = dbQuery.GetArticlesForPriceUpdate(timestamp);
+				var priceUpdates = dbQuery.GetArticlesForPriceUpdate(timestamp);
 				var settings = PimIntegrationSettings.AppSettings;
 
-				customerAgreementQuery.PopulateNewPrice(settings.Markets[0].VismaCustomerNoForPriceCalculation, articlesForPriceUpdate);
+				customerAgreementQuery.PopulateNewPrice(settings.Markets[0].VismaCustomerNoForPriceCalculation, priceUpdates);
 
 				return Response.AsJson(new
 				{
-					ArticlesForPriceUpdate = articlesForPriceUpdate
+					PriceUpdates = priceUpdates
 				});
 			};
 		}
