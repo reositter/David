@@ -51,25 +51,6 @@ namespace PimIntegration.Tasks.PimApi
 			_pimMessageResultRepository.SaveMessageResult(_mapper.MapMessageResultToPimMessageResult(msg));
 		}
 
-		private void DequeueMessage(MessageResult msg, QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient client)
-		{
-			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
-			{
-				Thread.Sleep(_settings.MillisecondsBetweenRetries);
-				var result = client.DequeueMessage(msg.MessageId);
-
-				if (result != null)
-				{
-					msg.DequeuedAt = DateTime.Now;
-					msg.Status = MessageStatus.Completed;
-					break;
-				}
-
-				msg.Status = MessageStatus.NoResponseFound;
-				msg.NumberOfFailedAttemptsToDequeue++;
-			}
-		}
-
 		public void PublishStockBalanceUpdates(string marketKey, IEnumerable<ArticleForStockBalanceUpdate> stockBalanceUpdates)
 		{
 			if (stockBalanceUpdates.Count() == 0) 
@@ -101,23 +82,41 @@ namespace PimIntegration.Tasks.PimApi
 				return;
 
 			var client = new QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient();
-
-			var messageId = client.EnqueueMessage("UpdateProductBySKU", "PriceAndStock", articlesWithPriceUpdates.Select(article => new ProductUpdateRequestItem
+			var msg = new MessageResult(PrimaryAction.UpdateProductBySku, SecondaryAction.PriceAndStock);
+			var productUpdates = articlesWithPriceUpdates.Select(article => new ProductUpdateRequestItem
 			{
 				SKU = article.PimSku,
 				MarketName = marketKey,
 				Price = article.Price
 
-			}).ToArray());
+			}).ToArray();
 
+			var messageId = client.EnqueueMessage(msg.PrimaryAction, msg.SecondaryAction, productUpdates);
+
+			msg.Status = MessageStatus.Enqueued;
+			msg.MessageId = messageId;
+			msg.EnqueuedAt = DateTime.Now;
+
+			DequeueMessage(msg, client);
+		}
+
+		private void DequeueMessage(MessageResult msg, QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient client)
+		{
 			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
 			{
 				Thread.Sleep(_settings.MillisecondsBetweenRetries);
-				var result = client.DequeueMessage(messageId);
-				if (result != null) return;
-			}
+				var result = client.DequeueMessage(msg.MessageId);
 
-			Log.ForCurrent.ErrorFormat("PublishPriceUpdates: No response found for message ID '{0}'", messageId);
+				if (result != null)
+				{
+					msg.DequeuedAt = DateTime.Now;
+					msg.Status = MessageStatus.Completed;
+					break;
+				}
+
+				msg.Status = MessageStatus.NoResponseFound;
+				msg.NumberOfFailedAttemptsToDequeue++;
+			}
 		}
 	}
 }
