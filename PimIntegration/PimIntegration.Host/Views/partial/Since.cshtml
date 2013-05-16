@@ -1,0 +1,8 @@
+@inherits NancyRazorViewBase<dynamic>
+
+<h2>Publish Stock Balance Updates</h2>
+<form class="form-inline">
+	<label class="control-label" for="txtTimestamp">Since</label>
+	<input type="text" id="txtTimestamp" class="now" />
+	<button id="btnSinceAction" class="btn btn-success" data-url="@Model.ActionUrl" data-method="@Model.Method">@Model.Method</button>
+</form>

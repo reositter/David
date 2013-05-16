@@ -27,7 +27,15 @@ namespace PimIntegration.Host.Modules
 				return Response.AsJson(products);
 			};
 
-			Get["/devtools/form/getproductbydate"] = o => View["partial/GetProductByDate.cshtml", o];
+			Get["/devtools/form/getproductbydate"] = o =>
+			{
+				dynamic model = new
+				{
+					ActionUrl = "products/new/getproductbydate",
+					Method = "GET"
+				};
+				return View["partial/Since.cshtml", model];
+			};
 			Get["/products/new/getproductbydate"] = parameters =>
 			{
 				Log.ForCurrent.InfoFormat("{0} {1}", Request.Method, Request.Path);
@@ -45,7 +53,15 @@ namespace PimIntegration.Host.Modules
 				});
 			};
 
-			Get["/devtools/form/getnewproductstask"] = o => View["partial/GetNewProductsTask.cshtml", o];
+			Get["/devtools/form/getnewproductstask"] = o =>
+			{
+				dynamic model = new
+				{
+					ActionUrl = "products/getnewproductstask",
+					Method = "POST"
+				};
+				return View["partial/Since.cshtml", model];
+			};
 			Post["/products/getnewproductstask"] = parameters =>
 			{
 				var timestamp = Convert.ToDateTime(Request.Form.Timestamp.ToString());
@@ -76,7 +92,15 @@ namespace PimIntegration.Host.Modules
 				});
 			};
 
-			Get["/devtools/form/forstockbalanceupdate"] = o => View["partial/GetArticlesForStockBalanceUpdate.cshtml", o];
+			Get["/devtools/form/forstockbalanceupdate"] = o =>
+			{
+				dynamic model = new
+				{
+					ActionUrl = "products/forstockbalanceupdate",
+					Method = "GET"
+				};
+				return View["partial/Since.cshtml", model];
+			};
 			Get["/products/forstockbalanceupdate"] = o =>
 			{
 				var timestamp = Convert.ToDateTime(Request.Query.Timestamp.ToString());
@@ -89,11 +113,18 @@ namespace PimIntegration.Host.Modules
 				});
 			};
 
-			Get["/devtools/form/publishstockbalanceupdatestask"] = o => View["partial/PublishStockBalanceUpdatesTask.cshtml", o];
+			Get["/devtools/form/publishstockbalanceupdatestask"] = o =>
+			{
+				dynamic model = new
+				{
+					ActionUrl = "products/publishstockbalanceupdatestask",
+					Method = "POST"
+				};
+				return View["partial/Since.cshtml", model];
+			};
 			Post["/products/publishstockbalanceupdatestask"] = parameters =>
 			{
-				var now = DateTime.Now;
-				var timestamp = new DateTime(now.Year, now.Month, now.Day, Request.Form.Hour, Request.Form.Minute, Request.Form.Second);
+				var timestamp = Convert.ToDateTime(Request.Query.Timestamp.ToString());
 
 				// Emulate PublishStockBalanceUpdatesTask.Execute()
 				var articlesForUpdate = ObjectFactory.Container.GetInstance<IStockBalanceQuery>().GetStockBalanceUpdatesSince(timestamp);
@@ -110,7 +141,15 @@ namespace PimIntegration.Host.Modules
 				});
 			};
 
-			Get["/devtools/form/forpriceupdate"] = o => View["partial/GetArticlesForPriceUpdate.cshtml", o];
+			Get["/devtools/form/forpriceupdate"] = o =>
+			{
+				dynamic model = new
+				{
+					ActionUrl = "products/forpriceupdate",
+					Method = "GET"
+				};
+				return View["partial/Since.cshtml", model];
+			};
 			Get["products/forpriceupdate"] = o =>
 			{
 				var timestamp = Convert.ToDateTime(Request.Query.Timestamp.ToString());
@@ -125,6 +164,18 @@ namespace PimIntegration.Host.Modules
 				return Response.AsJson(new
 				{
 					PriceUpdates = priceUpdates
+				});
+			};
+
+			Get["/devtools/form/getproductbysku"] = _ => View["partial/GetProductBySku.cshtml", _];
+			Get["/product/{sku}"] = parameters =>
+			{
+				var pimQueryService = ObjectFactory.Container.GetInstance<IPimQueryService>();
+				var product = pimQueryService.GetProductBySku(parameters.sku);
+
+				return Response.AsJson(new
+				{
+					Product = product
 				});
 			};
 		}

@@ -81,5 +81,44 @@ namespace PimIntegration.Tasks.PimApi
 
 			return products;
 		}
+
+		public ProductQueryResponseItem GetProductBySku(string sku)
+		{
+			var client = new QueueOf_ProductQueryRequest_ProductQueryResponseClient();
+			var msg = new MessageResult(PrimaryAction.GetProductBySku, SecondaryAction.MarketAll);
+
+			var queryItem = new ProductQueryRequestItem
+			{
+				SKU = sku
+			};
+
+			var messageId = client.EnqueueMessage(queryItem, msg.PrimaryAction, msg.SecondaryAction);
+
+			msg.Status = MessageStatus.Enqueued;
+			msg.MessageId = messageId;
+			msg.EnqueuedAt = DateTime.Now;
+
+			ProductQueryResponseItem[] responseItems = null;
+
+			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
+			{
+				Thread.Sleep(_settings.MillisecondsBetweenRetries);
+				responseItems = client.DequeueMessage(msg.MessageId);
+
+				if (responseItems != null)
+				{
+					msg.DequeuedAt = DateTime.Now;
+					msg.Status = MessageStatus.Completed;
+					break;
+				}
+
+				msg.Status = MessageStatus.NoResponseFound;
+				msg.NumberOfFailedAttemptsToDequeue++;
+			}
+
+			_pimMessageResultRepository.SaveMessageResult(_mapper.MapMessageResultToPimMessageResult(msg));
+
+			return responseItems != null ? responseItems[0] : null;
+		}
 	}
 }
