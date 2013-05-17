@@ -74,7 +74,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Modules\DashboardModule.cs" />
-    <Compile Include="Modules\DevToolsModule.cs" />
+    <Compile Include="Modules\MainMenuModule.cs" />
+    <Compile Include="Modules\Trial\PimModule.cs" />
+    <Compile Include="Modules\Trial\TasksModule.cs" />
+    <Compile Include="Modules\Trial\VismaGlobalModule.cs" />
     <Compile Include="NancyBootstrapper.cs" />
     <Compile Include="PimIntegrationSettings.cs" />
     <Compile Include="Program.cs" />
@@ -95,11 +98,8 @@
     <None Include="Views\dashboard.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Views\devtools.cshtml">
+    <None Include="Views\trial.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Views\partial\GetNewProductsTask.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Views\partial\GetProductByDateDummy.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -178,7 +178,7 @@
     <Content Include="Content\js\pim.dashboard.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\js\pim.devtools.js">
+    <Content Include="Content\js\pim.trial.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\jquery-2.0.0.intellisense.js" />

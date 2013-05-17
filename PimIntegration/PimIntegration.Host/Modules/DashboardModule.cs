@@ -7,15 +7,6 @@ namespace PimIntegration.Host.Modules
 	{
 		public DashboardModule()
 		{
-			Get["/"] = parameters =>
-			{
-				dynamic model = new
-				{
-					Title = "Dashboard"
-				};
-				return View["dashboard.cshtml", model];
-			};
-
 			Get["/recentmessages/{limit}"] = parameters =>
 			{
 				var repo = ObjectFactory.Container.GetInstance<IPimMessageResultRepository>();

@@ -32,7 +32,7 @@
 		e.preventDefault();
 		displayInProgress();
 		$.ajax({
-			type: 'GET', url: '/products/new/getproductbydatedummy',
+			type: 'GET', url: '/trial/pim/getproductbydatedummy',
 			data: {},
 			success: displayJsonResponse
 		});
@@ -42,7 +42,7 @@
 		e.preventDefault();
 		displayInProgress();
 
-		var $btn = $('#btnCallToAction');
+		var $btn = $(this);
 
 		$.ajax({
 			type: $btn.data('type'),
@@ -58,7 +58,7 @@
 		e.preventDefault();
 		displayInProgress();
 		$.ajax({
-			type: 'GET', url: 'product/' + $('#txtSku').val(),
+			type: 'GET', url: '/trial/pim/product/' + $('#txtSku').val(),
 			data: { },
 			success: displayJsonResponse
 		});

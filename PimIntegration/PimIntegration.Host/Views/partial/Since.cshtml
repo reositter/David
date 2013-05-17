@@ -1,6 +1,6 @@
-@inherits NancyRazorViewBase<dynamic>
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 
-<h2>Publish Stock Balance Updates</h2>
+<h2>@Model.Title</h2>
 <form class="form-inline">
 	<label class="control-label" for="txtTimestamp">Since</label>
 	<input type="text" id="txtTimestamp" class="now" />

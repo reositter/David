@@ -1,0 +1,37 @@
+@{
+    Layout = "shared/_Layout.cshtml";
+}
+
+@section HeadScripts {
+	<link rel="stylesheet" href="/css/jquery.treeview/jquery.treeview.css"/>
+	<script src="/js/libs/jsontree.min.js"></script> 
+	<script src="/js/libs/jquery.treeview.js"></script> 
+	<script src="/js/libs/moment.min.js"></script> 
+	<script src="/js/pim.trial.js?v1.0"></script> 
+}
+
+<h1>Trial</h1>
+<div id="devtool-options">
+	<h2>Visma Global</h2>
+	<ul>
+		<li><a href="/trial/visma/form/getarticlesforstockbalanceupdate">GetArticlesForStockBalanceUpdate</a></li>
+		<li><a href="/trial/visma/form/getarticlesforpriceupdate">GetArticlesForPriceUpdate</a></li>
+	</ul>
+
+	<h2>PIM</h2>
+	<ul>
+		<li><a href="/trial/pim/form/getproductbydatedummy">GetProductByDateDummy</a></li>
+		<li><a href="/trial/pim/form/getproductbydate">GetProductByDate</a></li>
+		<li><a href="/trial/pim/form/getproductbysku">GetProductBySKU</a></li>
+	</ul>
+	
+	<h2>PIM Integration Tasks</h2>
+	<ul>
+		<li><a href="/trial/task/form/getnewproducts">GetNewProducts</a></li>
+		<li><a href="/trial/task/form/publishstockbalanceupdates">PublishStockBalanceUpdates</a></li>
+	</ul>
+</div>
+<div id="main">
+	<div id="form-wrapper"></div>
+	<div id="response"></div>
+</div>
