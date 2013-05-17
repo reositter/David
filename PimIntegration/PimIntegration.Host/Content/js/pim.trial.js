@@ -45,7 +45,7 @@
 		var $btn = $(this);
 
 		$.ajax({
-			type: $btn.data('type'),
+			type: $btn.data('method'),
 			url: $btn.data('url'),
 			data: {
 				Timestamp: $('#txtTimestamp').val()

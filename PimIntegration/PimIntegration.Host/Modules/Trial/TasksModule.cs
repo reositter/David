@@ -17,7 +17,7 @@ namespace PimIntegration.Host.Modules.Trial
 				dynamic model = new
 				{
 					Title = "GetNewProducts",
-					ActionUrl = "/getnewproducts",
+					ActionUrl = "/trial/task/getnewproducts",
 					Method = "POST"
 				};
 				return View["partial/Since.cshtml", model];
@@ -58,6 +58,7 @@ namespace PimIntegration.Host.Modules.Trial
 			{
 				dynamic model = new
 				{
+					Title = "PublishStockBalanceUpdates",
 					ActionUrl = "/trial/task/publishstockbalanceupdates",
 					Method = "POST"
 				};
@@ -66,7 +67,7 @@ namespace PimIntegration.Host.Modules.Trial
 
 			Post["/publishstockbalanceupdates"] = parameters =>
 			{
-				var timestamp = Convert.ToDateTime(Request.Query.Timestamp.ToString());
+				var timestamp = Convert.ToDateTime(Request.Form.Timestamp.ToString());
 
 				// Emulate PublishStockBalanceUpdatesTask.Execute()
 				var articlesForUpdate = ObjectFactory.Container.GetInstance<IStockBalanceQuery>().GetStockBalanceUpdatesSince(timestamp);
