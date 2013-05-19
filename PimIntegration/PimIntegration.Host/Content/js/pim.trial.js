@@ -4,6 +4,10 @@
 		$('#response').html('Waiting...');
 	}
 
+	function displayError(jqXhr) {
+		$('#response').html(jqXhr.responseText);
+	}
+
 	function displayJsonResponse(json) {
 		if (!json || ($.isArray(json) && json.length == 0)) {
 			$('#response').html('Empty result');
@@ -34,7 +38,8 @@
 		$.ajax({
 			type: 'GET', url: '/trial/pim/getproductbydatedummy',
 			data: {},
-			success: displayJsonResponse
+			success: displayJsonResponse,
+			error: displayError
 		});
 	});
 	
@@ -50,7 +55,8 @@
 			data: {
 				Timestamp: $('#txtTimestamp').val()
 			},
-			success: displayJsonResponse
+			success: displayJsonResponse,
+			error: displayError
 		});
 	});
 
@@ -60,7 +66,8 @@
 		$.ajax({
 			type: 'GET', url: '/trial/pim/product/' + $('#txtSku').val(),
 			data: { },
-			success: displayJsonResponse
+			success: displayJsonResponse,
+			error: displayError
 		});
 	});
 });

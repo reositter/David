@@ -40,4 +40,7 @@ h2 {
 	padding: 10px;
 }
 
-#main { min-width: 400px; }
+#main {
+	min-width: 400px;
+	max-width: 690px;
+}
