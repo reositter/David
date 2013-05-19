@@ -31,7 +31,8 @@ namespace PimIntegration.Tasks.Database
 										+ "EnqueuedAt TIMESTAMP NOT NULL, "
 										+ "DequeuedAt TIMESTAMP, "
 										+ "NumberOfFailedAttemptsToDequeue INTEGER NOT NULL, "
-										+ "Status INTEGER NOT NULL"
+										+ "Status INTEGER, "
+										+ "ErrorDetails TEXT"
 										+");", TableName);
 				using (var cmd = new SQLiteCommand(query, conn))
 				{
@@ -64,7 +65,8 @@ namespace PimIntegration.Tasks.Database
 								EnqueuedAt = Convert.ToDateTime(r["EnqueuedAt"]),
 								DequeuedAt = r.IsDBNull(r.GetOrdinal("DequeuedAt")) ? default(DateTime?) : Convert.ToDateTime(r["DequeuedAt"]),
 								NumberOfFailedAttemptsToDequeue = Convert.ToInt32(r["NumberOfFailedAttemptsToDequeue"]),
-								Status = Convert.ToInt32(r["Status"])
+								Status = r.IsDBNull(r.GetOrdinal("Status")) ? default(int?) : Convert.ToInt32(r["Status"]),
+								ErrorDetails = r.IsDBNull(r.GetOrdinal("ErrorDetails")) ? string.Empty : Convert.ToString(r["ErrorDetails"])
 							});
 						}
 					}
@@ -77,8 +79,8 @@ namespace PimIntegration.Tasks.Database
 		public void SaveMessageResult(PimMessageResult msg)
 		{
 			var query = string.Format(
-				"INSERT INTO {0}(MessageId, PrimaryAction, SecondaryAction, EnqueuedAt, DequeuedAt, NumberOfFailedAttemptsToDequeue, Status) "
-				+ "VALUES(@MessageId, @PrimaryAction, @SecondaryAction, @EnqueuedAt, @DequeuedAt, @NumberOfFailedAttemptsToDequeue, @Status);", TableName);
+				"INSERT INTO {0}(MessageId, PrimaryAction, SecondaryAction, EnqueuedAt, DequeuedAt, NumberOfFailedAttemptsToDequeue, Status, ErrorDetails) "
+				+ "VALUES(@MessageId, @PrimaryAction, @SecondaryAction, @EnqueuedAt, @DequeuedAt, @NumberOfFailedAttemptsToDequeue, @Status, @ErrorDetails);", TableName);
 			using (var conn = new SQLiteConnection(_connectionString))
 			{
 				conn.Open();
@@ -90,7 +92,8 @@ namespace PimIntegration.Tasks.Database
 					cmd.Parameters.AddWithValue("@EnqueuedAt", msg.EnqueuedAt);
 					cmd.Parameters.AddWithValue("@DequeuedAt", msg.DequeuedAt.HasValue ? msg.DequeuedAt.Value : (object)DBNull.Value);
 					cmd.Parameters.AddWithValue("@NumberOfFailedAttemptsToDequeue", msg.NumberOfFailedAttemptsToDequeue);
-					cmd.Parameters.AddWithValue("@Status", msg.Status);
+					cmd.Parameters.AddWithValue("@Status", msg.Status.HasValue ? msg.Status.Value : (object)DBNull.Value);
+					cmd.Parameters.AddWithValue("@ErrorDetails", msg.ErrorDetails);
 
 					cmd.ExecuteNonQuery();
 				}

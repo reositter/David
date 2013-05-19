@@ -71,7 +71,9 @@ namespace PimIntegration.Tasks
 				SecondaryAction = msg.SecondaryAction,
 				EnqueuedAt = msg.EnqueuedAt,
 				DequeuedAt = msg.DequeuedAt,
-				Status = (int)msg.Status
+				NumberOfFailedAttemptsToDequeue = msg.NumberOfFailedAttemptsToDequeue,
+				Status = msg.Status,
+				ErrorDetails = msg.ErrorDetails
 			};
 		}
 	}

@@ -10,6 +10,7 @@ namespace PimIntegration.Tasks.Database.Dto
 		public DateTime EnqueuedAt { get; set; }
 		public DateTime? DequeuedAt { get; set; }
 		public int NumberOfFailedAttemptsToDequeue { get; set; }
-		public int Status { get; set; }
+		public int? Status { get; set; }
+		public string ErrorDetails { get; set; }
 	}
 }

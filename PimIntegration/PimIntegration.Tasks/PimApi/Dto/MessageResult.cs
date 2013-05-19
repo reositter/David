@@ -10,19 +10,13 @@ namespace PimIntegration.Tasks.PimApi.Dto
 		public DateTime EnqueuedAt { get; set; }
 		public DateTime? DequeuedAt { get; set; }
 		public int NumberOfFailedAttemptsToDequeue { get; set; }
-		public MessageStatus Status { get; set; }
+		public int? Status { get; set; }
+		public string ErrorDetails { get; set; }
 
 		public MessageResult(string primaryAction, string secondaryAction)
 		{
 			PrimaryAction = primaryAction;
 			SecondaryAction = secondaryAction;
 		}
-	}
-
-	public enum MessageStatus
-	{
-		Enqueued = 100,
-		Completed = 200,
-		NoResponseFound = 404
 	}
 }

@@ -37,7 +37,6 @@ namespace PimIntegration.Tasks.PimApi
 			Log.ForCurrent.DebugFormat("Calling PIM API. Primary action: GetProductByDate. Secondary action: None. CreatedOn: {0}", lastRequest.ToString(_settings.TimeStampFormat));
 			var messageId = client.EnqueueMessage(queryItem, msg.PrimaryAction, msg.SecondaryAction);
 
-			msg.Status = MessageStatus.Enqueued;
 			msg.MessageId = messageId;
 			msg.EnqueuedAt = DateTime.Now;
 
@@ -51,11 +50,9 @@ namespace PimIntegration.Tasks.PimApi
 				if (products != null)
 				{
 					msg.DequeuedAt = DateTime.Now;
-					msg.Status = MessageStatus.Completed;
 					break;
 				}
 
-				msg.Status = MessageStatus.NoResponseFound;
 				msg.NumberOfFailedAttemptsToDequeue++;
 			}
 
@@ -94,7 +91,6 @@ namespace PimIntegration.Tasks.PimApi
 
 			var messageId = client.EnqueueMessage(queryItem, msg.PrimaryAction, msg.SecondaryAction);
 
-			msg.Status = MessageStatus.Enqueued;
 			msg.MessageId = messageId;
 			msg.EnqueuedAt = DateTime.Now;
 
@@ -108,11 +104,9 @@ namespace PimIntegration.Tasks.PimApi
 				if (responseItems != null)
 				{
 					msg.DequeuedAt = DateTime.Now;
-					msg.Status = MessageStatus.Completed;
 					break;
 				}
 
-				msg.Status = MessageStatus.NoResponseFound;
 				msg.NumberOfFailedAttemptsToDequeue++;
 			}
 

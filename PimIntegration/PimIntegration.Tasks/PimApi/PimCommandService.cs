@@ -42,7 +42,6 @@ namespace PimIntegration.Tasks.PimApi
 
 			var messageId = client.EnqueueMessage(msg.PrimaryAction, msg.SecondaryAction, productUpdates);
 			
-			msg.Status = MessageStatus.Enqueued;
 			msg.MessageId = messageId;
 			msg.EnqueuedAt = DateTime.Now;
 
@@ -67,7 +66,6 @@ namespace PimIntegration.Tasks.PimApi
 
 			var messageId = client.EnqueueMessage(msg.PrimaryAction, msg.SecondaryAction, productUpdates);
 
-			msg.Status = MessageStatus.Enqueued;
 			msg.MessageId = messageId;
 			msg.EnqueuedAt = DateTime.Now;
 
@@ -93,7 +91,6 @@ namespace PimIntegration.Tasks.PimApi
 
 			var messageId = client.EnqueueMessage(msg.PrimaryAction, msg.SecondaryAction, productUpdates);
 
-			msg.Status = MessageStatus.Enqueued;
 			msg.MessageId = messageId;
 			msg.EnqueuedAt = DateTime.Now;
 
@@ -110,11 +107,9 @@ namespace PimIntegration.Tasks.PimApi
 				if (result != null)
 				{
 					msg.DequeuedAt = DateTime.Now;
-					msg.Status = MessageStatus.Completed;
 					break;
 				}
 
-				msg.Status = MessageStatus.NoResponseFound;
 				msg.NumberOfFailedAttemptsToDequeue++;
 			}
 		}
