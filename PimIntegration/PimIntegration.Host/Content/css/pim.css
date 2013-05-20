@@ -32,13 +32,16 @@ h2 {
 	line-height: 20px;
 }
 
-#devtool-options, #main {
+#trial-menu, #main {
 	float: left;
 	min-height: 400px;
 	border: solid 3px #d3d3d3;
-	margin-right: 20px;
 	padding: 10px;
 }
+
+#trial-menu { margin-right: 10px; }
+#trial-menu ul { margin-left: 0; }
+#trial-menu li { list-style-type: none; }
 
 #main {
 	min-width: 400px;

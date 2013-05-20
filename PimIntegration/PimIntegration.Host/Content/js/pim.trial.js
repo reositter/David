@@ -30,7 +30,7 @@
 		});
 	}
 
-	$('#devtool-options').on('click', 'li > a', loadForm);
+	$('#trial-menu').on('click', 'li > a', loadForm);
 	
 	$('#form-wrapper').on('click', '#btnGetProductByDateDummy', function (e) {
 		e.preventDefault();
