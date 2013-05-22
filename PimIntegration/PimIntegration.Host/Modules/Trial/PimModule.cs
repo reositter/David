@@ -54,7 +54,7 @@ namespace PimIntegration.Host.Modules.Trial
 				});
 			};
 
-			Get["/trial/pim/form/dequeueproductqueryresponse"] = _ =>
+			Get["/form/dequeueproductqueryresponse"] = _ =>
 			{
 				dynamic model = new {
 					Title = "Dequeue Message",
