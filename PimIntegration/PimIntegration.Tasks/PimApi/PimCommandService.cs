@@ -45,7 +45,7 @@ namespace PimIntegration.Tasks.PimApi
 			msg.MessageId = messageId;
 			msg.EnqueuedAt = DateTime.Now;
 
-			DequeueMessage(msg, client);
+			DequeueArrayMessage(msg, client);
 
 			_pimMessageResultRepository.SaveMessageResult(_mapper.MapMessageResultToPimMessageResult(msg));
 		}
@@ -69,7 +69,7 @@ namespace PimIntegration.Tasks.PimApi
 			msg.MessageId = messageId;
 			msg.EnqueuedAt = DateTime.Now;
 
-			DequeueMessage(msg, client);
+			DequeueArrayMessage(msg, client);
 
 			_pimMessageResultRepository.SaveMessageResult(_mapper.MapMessageResultToPimMessageResult(msg));
 		}
@@ -94,10 +94,50 @@ namespace PimIntegration.Tasks.PimApi
 			msg.MessageId = messageId;
 			msg.EnqueuedAt = DateTime.Now;
 
+			DequeueArrayMessage(msg, client);
+		}
+
+		public void PublishPriceUpdate(string marketKey, ArticleForPriceAndStockUpdate articleWithPriceUpdates)
+		{
+			if (articleWithPriceUpdates == null)
+				return;
+
+			var client = new QueueOf_ProductUpdateRequest_ProductUpdateResponseClient();
+			var msg = new MessageResult(PrimaryAction.UpdateProductBySku, SecondaryAction.PriceAndStock);
+			var productUpdates = new ProductUpdateRequestItem
+			{
+				SKU = articleWithPriceUpdates.PimSku,
+				MarketName = marketKey,
+				Price = articleWithPriceUpdates.Price
+
+			};
+
+			var messageId = client.EnqueueMessage(msg.PrimaryAction, msg.SecondaryAction, productUpdates);
+
+			msg.MessageId = messageId;
+			msg.EnqueuedAt = DateTime.Now;
+
 			DequeueMessage(msg, client);
 		}
 
-		private void DequeueMessage(MessageResult msg, QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient client)
+		private void DequeueMessage(MessageResult msg, QueueOf_ProductUpdateRequest_ProductUpdateResponseClient client)
+		{
+			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
+			{
+				Thread.Sleep(_settings.MillisecondsBetweenRetries);
+				var result = client.DequeueMessage(msg.MessageId);
+
+				if (result != null)
+				{
+					msg.DequeuedAt = DateTime.Now;
+					break;
+				}
+
+				msg.NumberOfFailedAttemptsToDequeue++;
+			}
+		}
+
+		private void DequeueArrayMessage(MessageResult msg, QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient client)
 		{
 			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
 			{

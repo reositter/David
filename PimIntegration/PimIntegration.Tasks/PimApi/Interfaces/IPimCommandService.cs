@@ -9,5 +9,6 @@ namespace PimIntegration.Tasks.PimApi.Interfaces
 		void ReportVismaProductNumbers(string marketKey, int vendorId, IEnumerable<CreatedArticle> newArticles);
 		void PublishStockBalanceUpdates(string marketKey, IEnumerable<ArticleForStockBalanceUpdate> articlesWithStockUpdates);
 		void PublishPriceUpdates(string marketKey, IEnumerable<ArticleForPriceAndStockUpdate> articlesWithPriceUpdates);
+		void PublishPriceUpdate(string marketKey, ArticleForPriceAndStockUpdate articleWithPriceUpdates);
 	}
 }
