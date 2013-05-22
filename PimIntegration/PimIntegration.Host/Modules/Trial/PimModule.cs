@@ -53,6 +53,27 @@ namespace PimIntegration.Host.Modules.Trial
 					Product = product
 				});
 			};
+
+			Get["/trial/pim/form/dequeueproductqueryresponse"] = _ =>
+			{
+				dynamic model = new {
+					Title = "Dequeue Message",
+					ActionUrl = "trial/pim/productqueryresponse/",
+					Method = "GET"
+				};
+				
+				return View["partial/DequeueResponse.cshtml", model];
+			};
+			Get["/productqueryresponse/{messageid}"] = parameters =>
+			{
+				var pimQueryService = ObjectFactory.Container.GetInstance<IPimQueryService>();
+				var products = pimQueryService.DequeueProductQueryResponse(parameters.messageid);
+
+				return Response.AsJson(new
+				{
+					Products = products
+				});
+			};
 		}
 	}
 }

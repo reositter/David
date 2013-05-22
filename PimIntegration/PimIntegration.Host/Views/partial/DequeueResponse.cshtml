@@ -1,0 +1,8 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+
+<h2>@Model.Title</h2>
+<form class="form-inline">
+	<label class="control-label" for="txtMessageId">Message ID</label>
+	<input type="text" id="txtMessageId" class="now" />
+	<button id="btnDequeueMessage" class="btn btn-success" data-url="@Model.ActionUrl" data-method="@Model.Method">@Model.Method</button>
+</form>

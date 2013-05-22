@@ -98,6 +98,9 @@
     <None Include="Views\dashboard.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Views\partial\DequeueResponse.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Views\trial.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

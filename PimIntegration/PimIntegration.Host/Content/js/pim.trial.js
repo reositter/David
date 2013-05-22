@@ -59,6 +59,23 @@
 			error: displayError
 		});
 	});
+	
+	$('#form-wrapper').on('click', '#btnDequeueMessage', function (e) {
+		e.preventDefault();
+		displayInProgress();
+
+		var $btn = $(this);
+
+		$.ajax({
+			type: $btn.data('method'),
+			url: $btn.data('url') + $('#txtMessageId').val(),
+			data: {
+				Timestamp: $('#txtTimestamp').val()
+			},
+			success: displayJsonResponse,
+			error: displayError
+		});
+	});
 
 	$('#form-wrapper').on('click', '#btnGetProductBySku', function (e) {
 		e.preventDefault();

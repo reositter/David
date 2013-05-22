@@ -79,6 +79,13 @@ namespace PimIntegration.Tasks.PimApi
 			return products;
 		}
 
+		public ProductQueryResponseItem[] DequeueProductQueryResponse(int messageId)
+		{
+			var client = new QueueOf_ProductQueryRequest_ProductQueryResponseClient();
+
+			return client.DequeueMessage(messageId);
+		}
+
 		public ProductQueryResponseItem GetProductBySku(string sku)
 		{
 			var client = new QueueOf_ProductQueryRequest_ProductQueryResponseClient();
