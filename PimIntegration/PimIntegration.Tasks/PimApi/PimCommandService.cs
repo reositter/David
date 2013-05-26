@@ -15,16 +15,16 @@ namespace PimIntegration.Tasks.PimApi
 	public class PimCommandService : IPimCommandService 
 	{
 		private readonly ITaskSettings _settings;
-		private readonly IPimMessageResultRepository _pimMessageResultRepository;
+		private readonly IPimRequestLogRepository _pimRequestLogRepository;
 		private readonly IMapper _mapper;
 
 		public PimCommandService(
 			ITaskSettings settings, 
-			IPimMessageResultRepository pimMessageResultRepository, 
+			IPimRequestLogRepository pimRequestLogRepository, 
 			IMapper mapper)
 		{
 			_settings = settings;
-			_pimMessageResultRepository = pimMessageResultRepository;
+			_pimRequestLogRepository = pimRequestLogRepository;
 			_mapper = mapper;
 		}
 
@@ -47,7 +47,7 @@ namespace PimIntegration.Tasks.PimApi
 
 			DequeueArrayMessage(msg, client);
 
-			_pimMessageResultRepository.SaveMessageResult(_mapper.MapMessageResultToPimMessageResult(msg));
+			_pimRequestLogRepository.LogEnqueuedRequest(_mapper.MapMessageResultToPimRequestLogItem(msg));
 		}
 
 		public void PublishStockBalanceUpdates(string marketKey, IEnumerable<ArticleForStockBalanceUpdate> stockBalanceUpdates)
@@ -71,7 +71,7 @@ namespace PimIntegration.Tasks.PimApi
 
 			DequeueArrayMessage(msg, client);
 
-			_pimMessageResultRepository.SaveMessageResult(_mapper.MapMessageResultToPimMessageResult(msg));
+			_pimRequestLogRepository.LogEnqueuedRequest(_mapper.MapMessageResultToPimRequestLogItem(msg));
 		}
 
 		public void PublishPriceUpdates(string marketKey, IEnumerable<ArticleForPriceAndStockUpdate> articlesWithPriceUpdates)

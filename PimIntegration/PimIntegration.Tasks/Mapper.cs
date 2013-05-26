@@ -10,7 +10,7 @@ namespace PimIntegration.Tasks
 	public interface IMapper
 	{
 		IList<ArticleForCreate> MapPimProductsToVismaArticles(IEnumerable<ProductQueryResponseItem> pimProducts);
-		PimMessageResult MapMessageResultToPimMessageResult(MessageResult msg);
+		PimRequestLogItem MapMessageResultToPimRequestLogItem(MessageResult msg);
 	}
 
 	public class Mapper : IMapper
@@ -30,7 +30,7 @@ namespace PimIntegration.Tasks
 			{
 				var article = new ArticleForCreate
 				{
-					// just in case there is no swedish market
+					// set name just in case there is no swedish market
 					Name = pimProduct.MasterModel,
 					PimSku = pimProduct.SKU,
 					PostingTemplateNo = _settings.VismaPostingTemplateNo,
@@ -62,9 +62,9 @@ namespace PimIntegration.Tasks
 			return list;
 		}
 
-		public PimMessageResult MapMessageResultToPimMessageResult(MessageResult msg)
+		public PimRequestLogItem MapMessageResultToPimRequestLogItem(MessageResult msg)
 		{
-			return new PimMessageResult
+			return new PimRequestLogItem
 			{
 				MessageId = msg.MessageId,
 				PrimaryAction = msg.PrimaryAction,

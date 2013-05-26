@@ -4,6 +4,7 @@
 	{
 		public const string UpdateProductBySku = "UpdateProductBySKU";
 		public const string GetProductByDate = "GetProductByDate";
+		public const string GetProductByDateDummy = "GetProductByDateDummy";
 		public const string GetProductBySku = "GetProductBySKU";
 	}
 }

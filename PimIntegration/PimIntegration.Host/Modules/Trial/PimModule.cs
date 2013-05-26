@@ -67,7 +67,7 @@ namespace PimIntegration.Host.Modules.Trial
 			Get["/productqueryresponse/{messageid}"] = parameters =>
 			{
 				var pimQueryService = ObjectFactory.Container.GetInstance<IPimQueryService>();
-				var products = pimQueryService.DequeueProductQueryResponse(parameters.messageid);
+				var products = pimQueryService.DequeueProductQueryResponseWithoutRetries(parameters.messageid);
 
 				return Response.AsJson(new
 				{

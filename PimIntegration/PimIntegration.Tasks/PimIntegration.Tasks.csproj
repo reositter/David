@@ -79,6 +79,8 @@
     <Compile Include="Database\LastCallsRepository.cs" />
     <Compile Include="Mapper.cs" />
     <Compile Include="PimApi\Dto\MessageResult.cs" />
+    <Compile Include="PimApi\Interfaces\IProductQueryEnqueuer.cs" />
+    <Compile Include="PimApi\ProductQueryEnqueuer.cs" />
     <Compile Include="PimApi\PrimaryAction.cs" />
     <Compile Include="PimApi\Interfaces\IPimCommandService.cs" />
     <Compile Include="PimApi\Interfaces\IPimQueryService.cs" />

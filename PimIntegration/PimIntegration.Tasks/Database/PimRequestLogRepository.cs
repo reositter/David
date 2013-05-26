@@ -7,12 +7,12 @@ using PimIntegration.Tasks.Setup;
 
 namespace PimIntegration.Tasks.Database
 {
-	public class PimMessageResultRepository : IPimMessageResultRepository 
+	public class PimRequestLogRepository : IPimRequestLogRepository 
 	{
 		private readonly string _connectionString;
-		private const string TableName = "PimMessageResult";
+		private const string TableName = "PimRequestLog";
 
-		public PimMessageResultRepository(ITaskSettings settings)
+		public PimRequestLogRepository(ITaskSettings settings)
 		{
 			_connectionString = settings.SqliteConnectionString;
 			EnsureTableExists();
@@ -28,11 +28,10 @@ namespace PimIntegration.Tasks.Database
 										+ "MessageId INTEGER NOT NULL, "
 										+ "PrimaryAction TEXT NOT NULL, "
 										+ "SecondaryAction TEXT NOT NULL, "
+										+ "RequestItem TEXT "
 										+ "EnqueuedAt TIMESTAMP NOT NULL, "
 										+ "DequeuedAt TIMESTAMP, "
-										+ "NumberOfFailedAttemptsToDequeue INTEGER NOT NULL, "
-										+ "Status INTEGER, "
-										+ "ErrorDetails TEXT"
+										+ "NumberOfFailedAttemptsToDequeue INTEGER"
 										+");", TableName);
 				using (var cmd = new SQLiteCommand(query, conn))
 				{
@@ -41,9 +40,9 @@ namespace PimIntegration.Tasks.Database
 			}
 		}
 
-		public IEnumerable<PimMessageResult> GetRecentMessages(int maximumNumberOfItems)
+		public IEnumerable<PimRequestLogItem> GetRecentRequests(int maximumNumberOfItems)
 		{
-			var list = new List<PimMessageResult>();
+			var list = new List<PimRequestLogItem>();
 
 			using (var conn = new SQLiteConnection(_connectionString))
 			{
@@ -57,7 +56,7 @@ namespace PimIntegration.Tasks.Database
 					{
 						while (r.Read())
 						{
-							list.Add(new PimMessageResult
+							list.Add(new PimRequestLogItem
 							{
 								MessageId = Convert.ToInt32(r["MessageId"]),
 								PrimaryAction = Convert.ToString(r["PrimaryAction"]),
@@ -76,24 +75,44 @@ namespace PimIntegration.Tasks.Database
 			return list;
 		}
 
-		public void SaveMessageResult(PimMessageResult msg)
+		public void LogEnqueuedRequest(EnqueuedRequest enqueuedRequest)
 		{
 			var query = string.Format(
-				"INSERT INTO {0}(MessageId, PrimaryAction, SecondaryAction, EnqueuedAt, DequeuedAt, NumberOfFailedAttemptsToDequeue, Status, ErrorDetails) "
-				+ "VALUES(@MessageId, @PrimaryAction, @SecondaryAction, @EnqueuedAt, @DequeuedAt, @NumberOfFailedAttemptsToDequeue, @Status, @ErrorDetails);", TableName);
+				"INSERT INTO {0}(MessageId, PrimaryAction, SecondaryAction, EnqueuedAt, RequestItem) " +
+				"VALUES(@MessageId, @PrimaryAction, @SecondaryAction, @EnqueuedAt, @RequestItem);", TableName);
+
 			using (var conn = new SQLiteConnection(_connectionString))
 			{
 				conn.Open();
 				using (var cmd = new SQLiteCommand(query, conn))
 				{
-					cmd.Parameters.AddWithValue("@MessageId", msg.MessageId);
-					cmd.Parameters.AddWithValue("@PrimaryAction", msg.PrimaryAction);
-					cmd.Parameters.AddWithValue("@SecondaryAction", msg.SecondaryAction);
-					cmd.Parameters.AddWithValue("@EnqueuedAt", msg.EnqueuedAt);
-					cmd.Parameters.AddWithValue("@DequeuedAt", msg.DequeuedAt.HasValue ? msg.DequeuedAt.Value : (object)DBNull.Value);
-					cmd.Parameters.AddWithValue("@NumberOfFailedAttemptsToDequeue", msg.NumberOfFailedAttemptsToDequeue);
-					cmd.Parameters.AddWithValue("@Status", msg.Status.HasValue ? msg.Status.Value : (object)DBNull.Value);
-					cmd.Parameters.AddWithValue("@ErrorDetails", msg.ErrorDetails);
+					cmd.Parameters.AddWithValue("@MessageId", enqueuedRequest.MessageId);
+					cmd.Parameters.AddWithValue("@PrimaryAction", enqueuedRequest.PrimaryAction);
+					cmd.Parameters.AddWithValue("@SecondaryAction", enqueuedRequest.SecondaryAction);
+					cmd.Parameters.AddWithValue("@EnqueuedAt", enqueuedRequest.EnqueuedAt);
+					cmd.Parameters.AddWithValue("@RequestItem", enqueuedRequest.RequestItem);
+
+					cmd.ExecuteNonQuery();
+				}
+			}
+		}
+
+		public void UpdateRequest(int messageId, DateTime? dequeuedAt, int numberOfFailedAttemptsToDequeue)
+		{
+			var query = string.Format(
+				"UPDATE {0} " +
+				"SET DequeuedAt = @DequeuedAt, NumberOfFailedAttemptsToDequeue = @NumberOfFailedAttemptsToDequeue " +
+				"WHERE MessageId = @MessageId;",
+				TableName);
+
+			using (var conn = new SQLiteConnection(_connectionString))
+			{
+				conn.Open();
+				using (var cmd = new SQLiteCommand(query, conn))
+				{
+					cmd.Parameters.AddWithValue("@MessageId", messageId);
+					cmd.Parameters.AddWithValue("@DequeuedAt", dequeuedAt.HasValue ? dequeuedAt.Value : (object)DBNull.Value);
+					cmd.Parameters.AddWithValue("@NumberOfFailedAttemptsToDequeue", numberOfFailedAttemptsToDequeue);
 
 					cmd.ExecuteNonQuery();
 				}

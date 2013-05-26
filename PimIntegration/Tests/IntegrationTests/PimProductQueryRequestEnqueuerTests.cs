@@ -8,19 +8,19 @@ using PimIntegration.Tasks.PimApi;
 namespace PimIntegration.Test.IntegrationTests
 {
 	[TestFixture]
-	public class PimQueryServiceTests : TestBase
+	public class PimProductQueryRequestEnqueuerTests : TestBase
 	{
 		[Test]
-		public void Should_be_able_to_make_remote_call_for_new_products()
+		public void Should_be_able_to_make_remote_call()
 		{
 			// Arrange
 			var settings = GetSettingsFromAppConfigForUnitTests();
-			var repo = new Mock<IPimMessageResultRepository>();
+			var repo = new Mock<IPimRequestLogRepository>();
 
 			// Act
-			var task = new PimQueryService(CreateTaskSettings(1000), repo.Object, new Mapper(settings));
+			var enqueuer = new ProductQueryEnqueuer(repo.Object);
 			
-			var products = task.GetNewProductsSince(DateTime.Now.AddDays(-1));
+			var products = enqueuer.EnqueueProductQueryRequest(PrimaryAction.GetProductByDateDummy, SecondaryAction.None, null);
 
 			// Assert
 

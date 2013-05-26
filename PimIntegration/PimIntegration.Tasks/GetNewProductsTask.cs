@@ -8,7 +8,7 @@ namespace PimIntegration.Tasks
 {
 	public interface IGetNewProductsTask
 	{
-		void Execute();
+		void Execute(DateTime? overrideTimeOfLastRequest = null);
 	}
 
 	public class GetNewProductsTask : IGetNewProductsTask
@@ -19,7 +19,6 @@ namespace PimIntegration.Tasks
 		private readonly IPimCommandService _pimCommandService;
 		private readonly IArticleManager _articleManager;
 		private readonly IMapper _mapper;
-		private DateTime _timeOfLastRequest;
 
 		public GetNewProductsTask(
 			ITaskSettings settings,
@@ -35,16 +34,17 @@ namespace PimIntegration.Tasks
 			_pimCommandService = pimCommandService;
 			_articleManager = articleManager;
 			_mapper = mapper;
-			_timeOfLastRequest = _lastCallsRepository.GetTimeOfLastRequestForNewProducts();
 		}
 
-		public void Execute()
+		public void Execute(DateTime? overrideTimeOfLastRequest = null)
 		{
+			var timeOfLastRequest = overrideTimeOfLastRequest ?? _lastCallsRepository.GetTimeOfLastRequestForNewProducts();
+			
 			var	timeOfThisRequest = DateTime.Now;
-			var newProducts = _pimQueryService.GetNewProductsSince(_timeOfLastRequest);
+
+			var newProducts = _pimQueryService.GetNewProductsSince(timeOfLastRequest);
 
 			_lastCallsRepository.UpdateTimeOfLastRequestForNewProducts(timeOfThisRequest);
-			_timeOfLastRequest = timeOfThisRequest;
 
 			if (newProducts == null || newProducts.Length == 0) return;
 

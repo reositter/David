@@ -2,7 +2,7 @@
 
 namespace PimIntegration.Tasks.Database.Dto
 {
-	public class PimMessageResult
+	public class PimRequestLogItem
 	{
 		public int MessageId { get; set; }
 		public string PrimaryAction { get; set; }

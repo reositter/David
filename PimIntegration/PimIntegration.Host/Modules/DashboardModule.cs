@@ -7,12 +7,12 @@ namespace PimIntegration.Host.Modules
 	{
 		public DashboardModule()
 		{
-			Get["/recentmessages/{limit}"] = parameters =>
+			Get["/recentrequests/{limit}"] = parameters =>
 			{
-				var repo = ObjectFactory.Container.GetInstance<IPimMessageResultRepository>();
-				var lostMessages = repo.GetRecentMessages(parameters.limit);
+				var repo = ObjectFactory.Container.GetInstance<IPimRequestLogRepository>();
+				var lostMessages = repo.GetRecentRequests(parameters.limit);
 
-				return View["partial/MessageResults.cshtml", lostMessages];
+				return View["partial/RequestLog.cshtml", lostMessages];
 			};
 		}
 	}

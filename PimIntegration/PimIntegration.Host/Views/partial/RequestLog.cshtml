@@ -1,0 +1,29 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<System.Collections.Generic.IList<PimIntegration.Tasks.Database.Dto.PimRequestLogItem>>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Message Id</th>
+			<th>Primary Action</th>
+			<th>Secondary Action</th>
+			<th>RequestItem</th>
+			<th>Enqueued</th>
+			<th>Dequeued</th>
+			<th>Status</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var logItem in Model)
+		{
+			<tr>
+				<td>@logItem.MessageId</td>
+				<td>@logItem.PrimaryAction</td>
+				<td>@logItem.SecondaryAction</td>
+				<td>Mjau</td>
+				<td>@logItem.EnqueuedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
+				<td>@(logItem.DequeuedAt.HasValue ? logItem.DequeuedAt.Value.ToString("yyyy-MM-dd HH:mm:ss") : string.Empty)</td>
+				<td>@logItem.Status</td>
+			</tr>
+		}
+	</tbody>
+</table>
