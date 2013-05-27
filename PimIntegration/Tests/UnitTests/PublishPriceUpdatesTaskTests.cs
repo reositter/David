@@ -5,7 +5,6 @@ using NUnit.Framework;
 using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database.Dto;
 using PimIntegration.Tasks.Database.Interfaces;
-using PimIntegration.Tasks.PimApi;
 using PimIntegration.Tasks.PimApi.Interfaces;
 using PimIntegration.Tasks.Setup;
 using PimIntegration.Tasks.VismaGlobal.Dto;
@@ -65,15 +64,17 @@ namespace PimIntegration.Test.UnitTests
 		}
 
 		[Test]
-		public void Should_populate_new_price_once_for_each_market()
+		public void Should_publish_price_updates_for_each_market_when_updates_exists()
 		{
 			// Arrange
 			var article1 = new ArticleForPriceUpdate("181", string.Empty, "DK");
-			var article2 = new ArticleForPriceUpdate("100", string.Empty, "DK");
+			var article2 = new ArticleForPriceUpdate("100", string.Empty, "NO");
+			var article3 = new ArticleForPriceUpdate("100", string.Empty, "SE");
 			var articlesForPriceUpdates = new List<ArticleForPriceUpdate>
 			{
 				article1,
-				article2
+				article2,
+				article3
 			};
 			_priceUpdateQuery.Setup(x => x.GetArticlesForPriceUpdate(_timeOfLastQuery)).Returns(articlesForPriceUpdates);
 
@@ -81,24 +82,9 @@ namespace PimIntegration.Test.UnitTests
 			_task.Execute();
 
 			// Assert
-			_customerAgreementQuery.Verify(x => x.PopulateNewPrice(_settings.Markets[0].VismaCustomerNoForPriceCalculation, articlesForPriceUpdates), Times.Once());
-			_customerAgreementQuery.Verify(x => x.PopulateNewPrice(_settings.Markets[1].VismaCustomerNoForPriceCalculation, articlesForPriceUpdates), Times.Once());
-			_customerAgreementQuery.Verify(x => x.PopulateNewPrice(_settings.Markets[2].VismaCustomerNoForPriceCalculation, articlesForPriceUpdates), Times.Once());
-		}
-
-		[Test]
-		public void Should_publish_price_updates_for_each_market_when_updates_exists()
-		{
-			// Arrange
-			_priceUpdateQuery.Setup(q => q.GetArticlesForPriceUpdate(_timeOfLastQuery)).Returns(new List<ArticleForPriceUpdate>());
-
-			// Act
-			_task.Execute();
-
-			// Assert
-			_pimCommandService.Verify(x => x.PublishPriceUpdates(_settings.Markets[0].MarketKey, It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>()), Times.Once());
-			_pimCommandService.Verify(x => x.PublishPriceUpdates(_settings.Markets[1].MarketKey, It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>()), Times.Once());
-			_pimCommandService.Verify(x => x.PublishPriceUpdates(_settings.Markets[2].MarketKey, It.IsAny<IEnumerable<ArticleForPriceAndStockUpdate>>()), Times.Once());
+			_pimCommandService.Verify(x => x.PublishPriceUpdate(_settings.Markets[0].MarketKey, It.IsAny<ArticleForPriceAndStockUpdate>()), Times.AtLeastOnce());
+			_pimCommandService.Verify(x => x.PublishPriceUpdate(_settings.Markets[1].MarketKey, It.IsAny<ArticleForPriceAndStockUpdate>()), Times.AtLeastOnce());
+			_pimCommandService.Verify(x => x.PublishPriceUpdate(_settings.Markets[2].MarketKey, It.IsAny<ArticleForPriceAndStockUpdate>()), Times.AtLeastOnce());
 		}
 
 		[Test]

@@ -1,7 +1,5 @@
-﻿using System;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
-using PimIntegration.Tasks;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PimApi;
 

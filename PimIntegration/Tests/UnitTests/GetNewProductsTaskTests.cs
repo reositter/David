@@ -45,19 +45,6 @@ namespace PimIntegration.Test.UnitTests
 		}
 
 		[Test]
-		public void Should_get_time_of_last_request_from_db_when_ctor_is_called()
-		{
-			// Arrange
-			var repo = new Mock<ILastCallsRepository>();
-
-			// Act
-			_task = new GetNewProductsTask(_settings, repo.Object, _pimQueryService.Object, _pimCommandService.Object, _articleManager.Object, new Mapper(_settings));
-
-			// Assert
-			repo.Verify(x => x.GetTimeOfLastRequestForNewProducts());
-		}
-
-		[Test]
 		public void Should_query_for_new_products()
 		{
 			// Arrange

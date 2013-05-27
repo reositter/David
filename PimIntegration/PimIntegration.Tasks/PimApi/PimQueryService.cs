@@ -22,13 +22,13 @@ namespace PimIntegration.Tasks.PimApi
 			var queryItem = new ProductQueryRequestItem { CreatedOn = lastRequest };
 			var messageId = _productQueryEnqueuer.EnqueueProductQueryRequest(PrimaryAction.GetProductByDate, SecondaryAction.None, queryItem);
 
-			return _productQueryDequeuer.DequeueProductQueryRequest(messageId);
+			return _productQueryDequeuer.DequeueProductQueryResponse(messageId);
 		}
 
 		public ProductQueryResponseItem[] GetNewProductsSinceDummy()
 		{
 			var messageId = _productQueryEnqueuer.EnqueueProductQueryRequest(PrimaryAction.GetProductByDateDummy, SecondaryAction.None, null);
-			return _productQueryDequeuer.DequeueProductQueryRequest(messageId);
+			return _productQueryDequeuer.DequeueProductQueryResponse(messageId);
 		}
 
 		public ProductQueryResponseItem[] DequeueProductQueryResponseWithoutRetries(int messageId)
@@ -40,7 +40,7 @@ namespace PimIntegration.Tasks.PimApi
 		{
 			var queryItem = new ProductQueryRequestItem { SKU = sku };
 			var messageId = _productQueryEnqueuer.EnqueueProductQueryRequest(PrimaryAction.GetProductBySku, SecondaryAction.MarketAll, queryItem);
-			var responseItems = _productQueryDequeuer.DequeueProductQueryRequest(messageId);
+			var responseItems = _productQueryDequeuer.DequeueProductQueryResponse(messageId);
 
 			return responseItems != null ? responseItems[0] : null;
 		}

@@ -7,26 +7,26 @@ using PimIntegration.Tasks.Setup;
 
 namespace PimIntegration.Tasks.PimApi
 {
-	public class ProductQueryDequeuer : IProductQueryDequeuer 
+	public class ProductUpdateDequeuer : IProductUpdateDequeuer 
 	{
 		private readonly ITaskSettings _settings;
 		private readonly IPimRequestLogRepository _pimRequestLogRepository;
 
-		public ProductQueryDequeuer(ITaskSettings settings, IPimRequestLogRepository pimRequestLogRepository)
+		public ProductUpdateDequeuer(ITaskSettings settings, IPimRequestLogRepository pimRequestLogRepository)
 		{
 			_settings = settings;
 			_pimRequestLogRepository = pimRequestLogRepository;
 		}
 
-		public ProductQueryResponseItem[] DequeueProductQueryResponse(int messageId)
+		public ProductUpdateResponseItem[] DequeueProductUpdateResponse(int messageId)
 		{
-			ProductQueryResponseItem[] products = null;
-			var client = new QueueOf_ProductQueryRequest_ProductQueryResponseClient();
+			ProductUpdateResponseItem[] products = null;
+			var client = new QueueOf_ProductUpdateRequest_ProductUpdateResponseClient();
 
 			DateTime? dequeuedAt = null;
 			var numberOfFailedAttempts = 0;
 
-			Log.ForCurrent.DebugFormat("Dequeueing ProductQueryRequest. MessageId: {0}", messageId);
+			Log.ForCurrent.DebugFormat("Dequeueing ProductUpdateResponse. MessageId: {0}", messageId);
 			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
 			{
 				Thread.Sleep(_settings.MillisecondsBetweenRetries);
@@ -35,7 +35,7 @@ namespace PimIntegration.Tasks.PimApi
 				if (products != null)
 				{
 					dequeuedAt = DateTime.Now;
-					break;					
+					break;
 				}
 
 				numberOfFailedAttempts++;
@@ -46,15 +46,15 @@ namespace PimIntegration.Tasks.PimApi
 			return products;
 		}
 
-		public ProductQueryResponseItem[] DequeueProductQueryResponseArray(int messageId)
+		public ProductUpdateResponseItem[] DequeueProductUpdateResponseArray(int messageId)
 		{
-			ProductQueryResponseItem[] products = null;
-			var client = new QueueOf_ProductQueryRequestArray_ProductQueryResponseClient();
+			ProductUpdateResponseItem[] products = null;
+			var client = new QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient();
 
 			DateTime? dequeuedAt = null;
 			var numberOfFailedAttempts = 0;
 
-			Log.ForCurrent.DebugFormat("Dequeueing ProductQueryRequestArray. MessageId: {0}", messageId);
+			Log.ForCurrent.DebugFormat("Dequeueing ProductUpdateResponseArray. MessageId: {0}", messageId);
 			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
 			{
 				Thread.Sleep(_settings.MillisecondsBetweenRetries);

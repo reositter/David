@@ -23,7 +23,6 @@ namespace PimIntegration.Host.Modules.Trial
 				return View["partial/Since.cshtml", model];
 			};
 
-
 			Post["/getnewproducts"] = parameters =>
 			{
 				var timestamp = Convert.ToDateTime(Request.Form.Timestamp.ToString());

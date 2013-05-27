@@ -34,6 +34,9 @@
     <Reference Include="log4net">
       <HintPath>..\ExternalComponents\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\ExternalComponents\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="RG_SRVLib.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=93fd3ccf6df11053">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -64,10 +67,11 @@
   <ItemGroup>
     <Compile Include="Database\Dto\ArticleForPriceUpdate.cs" />
     <Compile Include="Database\Dto\ArticleForStockBalanceUpdate.cs" />
-    <Compile Include="Database\Dto\PimMessageResult.cs" />
-    <Compile Include="Database\Interfaces\IPimMessageResultRepository.cs" />
+    <Compile Include="Database\Dto\EnqueuedRequest.cs" />
+    <Compile Include="Database\Dto\PimRequestLogItem.cs" />
+    <Compile Include="Database\Interfaces\IPimRequestLogRepository.cs" />
     <Compile Include="Database\Interfaces\IPriceUpdateQuery.cs" />
-    <Compile Include="Database\PimMessageResultRepository.cs" />
+    <Compile Include="Database\PimRequestLogRepository.cs" />
     <Compile Include="Database\PriceUpdateQuery.cs" />
     <Compile Include="Database\Interfaces\ILastCallsRepository.cs" />
     <Compile Include="Database\StockBalanceQuery.cs" />
@@ -79,7 +83,13 @@
     <Compile Include="Database\LastCallsRepository.cs" />
     <Compile Include="Mapper.cs" />
     <Compile Include="PimApi\Dto\MessageResult.cs" />
+    <Compile Include="PimApi\Interfaces\IProductQueryDequeuer.cs" />
     <Compile Include="PimApi\Interfaces\IProductQueryEnqueuer.cs" />
+    <Compile Include="PimApi\Interfaces\IProductUpdateDequeuer.cs" />
+    <Compile Include="PimApi\Interfaces\IProductUpdateEnqueuer.cs" />
+    <Compile Include="PimApi\ProductUpdateDequeuer.cs" />
+    <Compile Include="PimApi\ProductUpdateEnqueuer.cs" />
+    <Compile Include="PimApi\ProductQueryDequeuer.cs" />
     <Compile Include="PimApi\ProductQueryEnqueuer.cs" />
     <Compile Include="PimApi\PrimaryAction.cs" />
     <Compile Include="PimApi\Interfaces\IPimCommandService.cs" />

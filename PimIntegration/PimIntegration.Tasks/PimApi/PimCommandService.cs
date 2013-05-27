@@ -1,37 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using PimIntegration.Tasks.Database.Dto;
-using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PIMServiceEndpoint;
-using PimIntegration.Tasks.PimApi.Dto;
 using PimIntegration.Tasks.PimApi.Interfaces;
-using PimIntegration.Tasks.Setup;
 using PimIntegration.Tasks.VismaGlobal.Dto;
 
 namespace PimIntegration.Tasks.PimApi
 {
 	public class PimCommandService : IPimCommandService 
 	{
-		private readonly ITaskSettings _settings;
-		private readonly IPimRequestLogRepository _pimRequestLogRepository;
-		private readonly IMapper _mapper;
+		private readonly IProductUpdateEnqueuer _productUpdateEnqueuer;
+		private readonly IProductUpdateDequeuer _productUpdateDequeuer;
 
 		public PimCommandService(
-			ITaskSettings settings, 
-			IPimRequestLogRepository pimRequestLogRepository, 
-			IMapper mapper)
+			IProductUpdateEnqueuer productUpdateEnqueuer, 
+			IProductUpdateDequeuer productUpdateDequeuer)
 		{
-			_settings = settings;
-			_pimRequestLogRepository = pimRequestLogRepository;
-			_mapper = mapper;
+			_productUpdateEnqueuer = productUpdateEnqueuer;
+			_productUpdateDequeuer = productUpdateDequeuer;
 		}
 
 		public void ReportVismaProductNumbers(string marketKey, int vendorId, IEnumerable<CreatedArticle> newProducts)
 		{
-			var client = new QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient();
-			var msg = new MessageResult(PrimaryAction.UpdateProductBySku, SecondaryAction.IndentificationDetails);
 			var productUpdates = newProducts.Select(newProduct => new ProductUpdateRequestItem
 			{
 				SKU = newProduct.PimSku,
@@ -40,23 +31,15 @@ namespace PimIntegration.Tasks.PimApi
 				ProductCodeVendor = newProduct.ArticleNo
 			}).ToArray();
 
-			var messageId = client.EnqueueMessage(msg.PrimaryAction, msg.SecondaryAction, productUpdates);
-			
-			msg.MessageId = messageId;
-			msg.EnqueuedAt = DateTime.Now;
-
-			DequeueArrayMessage(msg, client);
-
-			_pimRequestLogRepository.LogEnqueuedRequest(_mapper.MapMessageResultToPimRequestLogItem(msg));
+			var messageId = _productUpdateEnqueuer.EnqueueProductUpdateRequestArray(PrimaryAction.UpdateProductBySku, SecondaryAction.IdentificationDetails, productUpdates);
+			_productUpdateDequeuer.DequeueProductUpdateResponseArray(messageId);
 		}
 
 		public void PublishStockBalanceUpdates(string marketKey, IEnumerable<ArticleForStockBalanceUpdate> stockBalanceUpdates)
 		{
-			if (stockBalanceUpdates.Count() == 0) 
+			if (!stockBalanceUpdates.Any()) 
 				return;
 
-			var client = new QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient();
-			var msg = new MessageResult(PrimaryAction.UpdateProductBySku, SecondaryAction.PriceAndStock);
 			var productUpdates = stockBalanceUpdates.Select(article => new ProductUpdateRequestItem
 			{
 				SKU = article.PimSku,
@@ -64,23 +47,15 @@ namespace PimIntegration.Tasks.PimApi
 				Stock = Convert.ToInt32(article.StockBalance)
 			}).ToArray();
 
-			var messageId = client.EnqueueMessage(msg.PrimaryAction, msg.SecondaryAction, productUpdates);
-
-			msg.MessageId = messageId;
-			msg.EnqueuedAt = DateTime.Now;
-
-			DequeueArrayMessage(msg, client);
-
-			_pimRequestLogRepository.LogEnqueuedRequest(_mapper.MapMessageResultToPimRequestLogItem(msg));
+			var messageId = _productUpdateEnqueuer.EnqueueProductUpdateRequestArray(PrimaryAction.UpdateProductBySku, SecondaryAction.PriceAndStock, productUpdates);
+			_productUpdateDequeuer.DequeueProductUpdateResponseArray(messageId);
 		}
 
 		public void PublishPriceUpdates(string marketKey, IEnumerable<ArticleForPriceAndStockUpdate> articlesWithPriceUpdates)
 		{
-			if (articlesWithPriceUpdates.Count() == 0)
+			if (!articlesWithPriceUpdates.Any())
 				return;
 
-			var client = new QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient();
-			var msg = new MessageResult(PrimaryAction.UpdateProductBySku, SecondaryAction.PriceAndStock);
 			var productUpdates = articlesWithPriceUpdates.Select(article => new ProductUpdateRequestItem
 			{
 				SKU = article.PimSku,
@@ -89,12 +64,8 @@ namespace PimIntegration.Tasks.PimApi
 
 			}).ToArray();
 
-			var messageId = client.EnqueueMessage(msg.PrimaryAction, msg.SecondaryAction, productUpdates);
-
-			msg.MessageId = messageId;
-			msg.EnqueuedAt = DateTime.Now;
-
-			DequeueArrayMessage(msg, client);
+			var messageId = _productUpdateEnqueuer.EnqueueProductUpdateRequestArray(PrimaryAction.UpdateProductBySku, SecondaryAction.PriceAndStock, productUpdates);
+			_productUpdateDequeuer.DequeueProductUpdateResponseArray(messageId);
 		}
 
 		public void PublishPriceUpdate(string marketKey, ArticleForPriceAndStockUpdate articleWithPriceUpdates)
@@ -102,8 +73,6 @@ namespace PimIntegration.Tasks.PimApi
 			if (articleWithPriceUpdates == null)
 				return;
 
-			var client = new QueueOf_ProductUpdateRequest_ProductUpdateResponseClient();
-			var msg = new MessageResult(PrimaryAction.UpdateProductBySku, SecondaryAction.PriceAndStock);
 			var productUpdates = new ProductUpdateRequestItem
 			{
 				SKU = articleWithPriceUpdates.PimSku,
@@ -112,46 +81,8 @@ namespace PimIntegration.Tasks.PimApi
 
 			};
 
-			var messageId = client.EnqueueMessage(msg.PrimaryAction, msg.SecondaryAction, productUpdates);
-
-			msg.MessageId = messageId;
-			msg.EnqueuedAt = DateTime.Now;
-
-			DequeueMessage(msg, client);
-		}
-
-		private void DequeueMessage(MessageResult msg, QueueOf_ProductUpdateRequest_ProductUpdateResponseClient client)
-		{
-			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
-			{
-				Thread.Sleep(_settings.MillisecondsBetweenRetries);
-				var result = client.DequeueMessage(msg.MessageId);
-
-				if (result != null)
-				{
-					msg.DequeuedAt = DateTime.Now;
-					break;
-				}
-
-				msg.NumberOfFailedAttemptsToDequeue++;
-			}
-		}
-
-		private void DequeueArrayMessage(MessageResult msg, QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient client)
-		{
-			for (var i = 0; i < _settings.MaximumNumberOfRetries; i++)
-			{
-				Thread.Sleep(_settings.MillisecondsBetweenRetries);
-				var result = client.DequeueMessage(msg.MessageId);
-
-				if (result != null)
-				{
-					msg.DequeuedAt = DateTime.Now;
-					break;
-				}
-
-				msg.NumberOfFailedAttemptsToDequeue++;
-			}
+			var messageId = _productUpdateEnqueuer.EnqueueProductUpdateRequest(PrimaryAction.UpdateProductBySku, SecondaryAction.PriceAndStock, productUpdates);
+			_productUpdateDequeuer.DequeueProductUpdateResponse(messageId);
 		}
 	}
 }
