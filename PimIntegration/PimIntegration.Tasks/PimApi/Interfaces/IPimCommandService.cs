@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using PimIntegration.Tasks.Database.Dto;
+using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.VismaGlobal.Dto;
 
 namespace PimIntegration.Tasks.PimApi.Interfaces
@@ -10,5 +11,7 @@ namespace PimIntegration.Tasks.PimApi.Interfaces
 		void PublishStockBalanceUpdates(string marketKey, IEnumerable<ArticleForStockBalanceUpdate> articlesWithStockUpdates);
 		void PublishPriceUpdates(string marketKey, IEnumerable<ArticleForPriceAndStockUpdate> articlesWithPriceUpdates);
 		void PublishPriceUpdate(string marketKey, ArticleForPriceAndStockUpdate articleWithPriceUpdates);
+		ProductUpdateResponseItem[] DequeueProductUpdateResponseWithoutRetries(int messageId);
+		ProductUpdateResponseItem[] DequeueProductUpdateArrayResponseWithoutRetries(int messageId);
 	}
 }

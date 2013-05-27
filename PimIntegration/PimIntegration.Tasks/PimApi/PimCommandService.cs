@@ -84,5 +84,15 @@ namespace PimIntegration.Tasks.PimApi
 			var messageId = _productUpdateEnqueuer.EnqueueProductUpdateRequest(PrimaryAction.UpdateProductBySku, SecondaryAction.PriceAndStock, productUpdates);
 			_productUpdateDequeuer.DequeueProductUpdateResponse(messageId);
 		}
+
+		public ProductUpdateResponseItem[] DequeueProductUpdateResponseWithoutRetries(int messageId)
+		{
+			return new QueueOf_ProductUpdateRequest_ProductUpdateResponseClient().DequeueMessage(messageId);
+		}
+
+		public ProductUpdateResponseItem[] DequeueProductUpdateArrayResponseWithoutRetries(int messageId)
+		{
+			return new QueueOf_ProductUpdateRequestArray_ProductUpdateResponseClient().DequeueMessage(messageId);
+		}
 	}
 }
