@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 using NUnit.Framework;
+using Newtonsoft.Json;
 using PimIntegration.Tasks.Database;
 using PimIntegration.Tasks.Database.Dto;
 using PimIntegration.Tasks.Database.Interfaces;
+using PimIntegration.Tasks.PIMServiceEndpoint;
 using PimIntegration.Tasks.Setup;
 
 namespace PimIntegration.Test.IntegrationTests
@@ -32,6 +34,7 @@ namespace PimIntegration.Test.IntegrationTests
 				MessageId = _enqueuedRequestMessageId,
 				PrimaryAction = "TestPrimary",
 				SecondaryAction = "TestSecondary",
+				RequestItem = JsonConvert.SerializeObject(new ProductQueryRequestItem{ CreatedOn = DateTime.Now }),
 				EnqueuedAt = DateTime.Now
 			};
 

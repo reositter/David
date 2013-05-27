@@ -28,7 +28,7 @@ namespace PimIntegration.Tasks.Database
 										+ "MessageId INTEGER NOT NULL, "
 										+ "PrimaryAction TEXT NOT NULL, "
 										+ "SecondaryAction TEXT NOT NULL, "
-										+ "RequestItem TEXT "
+										+ "RequestItem TEXT, "
 										+ "EnqueuedAt TIMESTAMP NOT NULL, "
 										+ "DequeuedAt TIMESTAMP, "
 										+ "NumberOfFailedAttemptsToDequeue INTEGER"
@@ -58,14 +58,13 @@ namespace PimIntegration.Tasks.Database
 						{
 							list.Add(new PimRequestLogItem
 							{
+								Id = Convert.ToInt32(r["Id"]),
 								MessageId = Convert.ToInt32(r["MessageId"]),
 								PrimaryAction = Convert.ToString(r["PrimaryAction"]),
 								SecondaryAction = Convert.ToString(r["SecondaryAction"]),
 								EnqueuedAt = Convert.ToDateTime(r["EnqueuedAt"]),
 								DequeuedAt = r.IsDBNull(r.GetOrdinal("DequeuedAt")) ? default(DateTime?) : Convert.ToDateTime(r["DequeuedAt"]),
-								NumberOfFailedAttemptsToDequeue = Convert.ToInt32(r["NumberOfFailedAttemptsToDequeue"]),
-								Status = r.IsDBNull(r.GetOrdinal("Status")) ? default(int?) : Convert.ToInt32(r["Status"]),
-								ErrorDetails = r.IsDBNull(r.GetOrdinal("ErrorDetails")) ? string.Empty : Convert.ToString(r["ErrorDetails"])
+								NumberOfFailedAttemptsToDequeue = r.IsDBNull(r.GetOrdinal("NumberOfFailedAttemptsToDequeue")) ? default(int?) : Convert.ToInt32(r["NumberOfFailedAttemptsToDequeue"])
 							});
 						}
 					}
@@ -75,11 +74,30 @@ namespace PimIntegration.Tasks.Database
 			return list;
 		}
 
+		public string GetRequestItem(int requestLogId)
+		{
+			using (var conn = new SQLiteConnection(_connectionString))
+			{
+				conn.Open();
+				using (var cmd = new SQLiteCommand(string.Format("SELECT RequestItem FROM {0} WHERE Id = @Id", TableName), conn))
+				{
+					cmd.Parameters.AddWithValue("@Id", requestLogId);
+					using (var r = cmd.ExecuteReader())
+					{
+						if (r.Read())
+							return Convert.ToString(r["RequestItem"]);
+					}
+				}
+			}
+
+			return string.Empty;
+		}
+
 		public void LogEnqueuedRequest(EnqueuedRequest enqueuedRequest)
 		{
 			var query = string.Format(
-				"INSERT INTO {0}(MessageId, PrimaryAction, SecondaryAction, EnqueuedAt, RequestItem) " +
-				"VALUES(@MessageId, @PrimaryAction, @SecondaryAction, @EnqueuedAt, @RequestItem);", TableName);
+				"INSERT INTO {0}(MessageId, PrimaryAction, SecondaryAction, RequestItem, EnqueuedAt) " +
+				"VALUES(@MessageId, @PrimaryAction, @SecondaryAction, @RequestItem, @EnqueuedAt);", TableName);
 
 			using (var conn = new SQLiteConnection(_connectionString))
 			{
@@ -89,8 +107,8 @@ namespace PimIntegration.Tasks.Database
 					cmd.Parameters.AddWithValue("@MessageId", enqueuedRequest.MessageId);
 					cmd.Parameters.AddWithValue("@PrimaryAction", enqueuedRequest.PrimaryAction);
 					cmd.Parameters.AddWithValue("@SecondaryAction", enqueuedRequest.SecondaryAction);
-					cmd.Parameters.AddWithValue("@EnqueuedAt", enqueuedRequest.EnqueuedAt);
 					cmd.Parameters.AddWithValue("@RequestItem", enqueuedRequest.RequestItem);
+					cmd.Parameters.AddWithValue("@EnqueuedAt", enqueuedRequest.EnqueuedAt);
 
 					cmd.ExecuteNonQuery();
 				}

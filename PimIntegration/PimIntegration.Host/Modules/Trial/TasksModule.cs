@@ -17,10 +17,23 @@ namespace PimIntegration.Host.Modules.Trial
 				dynamic model = new
 				{
 					Title = "GetNewProducts",
-					ActionUrl = "/trial/task/getnewproducts",
+					ActionUrl = "/trial/task/getnewproductsx",
 					Method = "POST"
 				};
 				return View["partial/Since.cshtml", model];
+			};
+
+			Post["/getnewproductsx"] = parameters =>
+			{
+				var timestamp = Convert.ToDateTime(Request.Form.Timestamp.ToString());
+
+				var task = ObjectFactory.Container.GetInstance<IGetNewProductsTask>();
+				var result = task.Execute(timestamp);
+
+				return Response.AsJson(new
+				{
+					Result = result
+				});
 			};
 
 			Post["/getnewproducts"] = parameters =>

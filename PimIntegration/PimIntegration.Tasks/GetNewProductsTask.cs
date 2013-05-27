@@ -8,7 +8,7 @@ namespace PimIntegration.Tasks
 {
 	public interface IGetNewProductsTask
 	{
-		void Execute(DateTime? overrideTimeOfLastRequest = null);
+		object Execute(DateTime? overrideTimeOfLastRequest = null);
 	}
 
 	public class GetNewProductsTask : IGetNewProductsTask
@@ -36,7 +36,7 @@ namespace PimIntegration.Tasks
 			_mapper = mapper;
 		}
 
-		public void Execute(DateTime? overrideTimeOfLastRequest = null)
+		public object Execute(DateTime? overrideTimeOfLastRequest = null)
 		{
 			var timeOfLastRequest = overrideTimeOfLastRequest ?? _lastCallsRepository.GetTimeOfLastRequestForNewProducts();
 			
@@ -46,16 +46,23 @@ namespace PimIntegration.Tasks
 
 			_lastCallsRepository.UpdateTimeOfLastRequestForNewProducts(timeOfThisRequest);
 
-			if (newProducts == null || newProducts.Length == 0) return;
+			if (newProducts == null || newProducts.Length == 0) return null;
 
 			var createdArticles = _articleManager.CreateArticles(_mapper.MapPimProductsToVismaArticles(newProducts));
 
-			if (createdArticles.Count == 0) return;
+			if (createdArticles.Count == 0) return null;
 
 			foreach (var market in _settings.Markets)
 			{
 				_pimCommandService.ReportVismaProductNumbers(market.MarketKey, market.VendorId, createdArticles);
 			}
+
+			return new
+			{
+				TimeOfLastRequest = timeOfLastRequest,
+				NewProductsFromPim = newProducts,
+				CreatedArticles = createdArticles
+			};
 		}
 	}
 }

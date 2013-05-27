@@ -9,7 +9,6 @@
 			<th>RequestItem</th>
 			<th>Enqueued</th>
 			<th>Dequeued</th>
-			<th>Status</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -19,10 +18,9 @@
 				<td>@logItem.MessageId</td>
 				<td>@logItem.PrimaryAction</td>
 				<td>@logItem.SecondaryAction</td>
-				<td>Mjau</td>
+				<td><a href='/requestlog/@logItem.Id/requestitem' class='lnkRequestItem'>RequestItem</a></td>
 				<td>@logItem.EnqueuedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
 				<td>@(logItem.DequeuedAt.HasValue ? logItem.DequeuedAt.Value.ToString("yyyy-MM-dd HH:mm:ss") : string.Empty)</td>
-				<td>@logItem.Status</td>
 			</tr>
 		}
 	</tbody>

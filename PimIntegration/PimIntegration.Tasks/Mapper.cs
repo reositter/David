@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using PimIntegration.Tasks.Database.Dto;
 using PimIntegration.Tasks.PIMServiceEndpoint;
-using PimIntegration.Tasks.PimApi.Dto;
 using PimIntegration.Tasks.Setup;
 using PimIntegration.Tasks.VismaGlobal.Dto;
 
@@ -10,7 +8,6 @@ namespace PimIntegration.Tasks
 	public interface IMapper
 	{
 		IList<ArticleForCreate> MapPimProductsToVismaArticles(IEnumerable<ProductQueryResponseItem> pimProducts);
-		PimRequestLogItem MapMessageResultToPimRequestLogItem(MessageResult msg);
 	}
 
 	public class Mapper : IMapper
@@ -60,21 +57,6 @@ namespace PimIntegration.Tasks
 			}
 
 			return list;
-		}
-
-		public PimRequestLogItem MapMessageResultToPimRequestLogItem(MessageResult msg)
-		{
-			return new PimRequestLogItem
-			{
-				MessageId = msg.MessageId,
-				PrimaryAction = msg.PrimaryAction,
-				SecondaryAction = msg.SecondaryAction,
-				EnqueuedAt = msg.EnqueuedAt,
-				DequeuedAt = msg.DequeuedAt,
-				NumberOfFailedAttemptsToDequeue = msg.NumberOfFailedAttemptsToDequeue,
-				Status = msg.Status,
-				ErrorDetails = msg.ErrorDetails
-			};
 		}
 	}
 }

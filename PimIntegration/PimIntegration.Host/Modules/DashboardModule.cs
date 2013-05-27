@@ -1,4 +1,5 @@
-﻿using PimIntegration.Tasks.Database.Interfaces;
+﻿using Nancy;
+using PimIntegration.Tasks.Database.Interfaces;
 using StructureMap;
 
 namespace PimIntegration.Host.Modules
@@ -10,9 +11,17 @@ namespace PimIntegration.Host.Modules
 			Get["/recentrequests/{limit}"] = parameters =>
 			{
 				var repo = ObjectFactory.Container.GetInstance<IPimRequestLogRepository>();
-				var lostMessages = repo.GetRecentRequests(parameters.limit);
+				var recentRequests = repo.GetRecentRequests(parameters.limit);
 
-				return View["partial/RequestLog.cshtml", lostMessages];
+				return View["partial/RequestLog.cshtml", recentRequests];
+			};
+
+			Get["/requestlog/{id}/requestitem"] = parameters =>
+			{
+				var repo = ObjectFactory.Container.GetInstance<IPimRequestLogRepository>();
+				var item = repo.GetRequestItem(parameters.id);
+
+				return FormatterExtensions.AsJson(Response, item);
 			};
 		}
 	}

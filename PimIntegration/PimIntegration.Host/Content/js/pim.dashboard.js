@@ -3,7 +3,18 @@ $(document).ready(function() {
 		type: 'GET', url: '/recentrequests/30',
 		data: {},
 		success: function(table) {
-			$('#messagesWrapper').html(table);
+			$('#logWrapper').html(table);
 		}
+	});
+
+	$('#logWrapper').on('click', '.lnkRequestItem', function (e) {
+		e.preventDefault();
+		$.ajax({
+			type: 'GET',
+			url: $(this).attr('href'),
+			success: function(json) {
+				console.dir(json);
+			}
+		});
 	});
 });
