@@ -7,7 +7,7 @@ namespace PimIntegration.Tasks
 {
 	public interface IPublishStockBalanceUpdatesTask
 	{
-		void Execute();
+		object Execute(DateTime? timeOfLastQueryForStockBalanceUpdatesOverride = null);
 	}
 
 	public class PublishStockBalanceUpdatesTask : IPublishStockBalanceUpdatesTask
@@ -16,7 +16,6 @@ namespace PimIntegration.Tasks
 		private readonly ILastCallsRepository _lastCallsRepository;
 		private readonly IStockBalanceQuery _stockBalanceQuery;
 		private readonly IPimCommandService _pimCommandService;
-		private DateTime _timeOfLastQueryForStockBalanceUpdates;
 
 		public PublishStockBalanceUpdatesTask(
 			ITaskSettings settings,
@@ -28,13 +27,13 @@ namespace PimIntegration.Tasks
 			_lastCallsRepository = lastCallsRepository;
 			_stockBalanceQuery = stockBalanceQuery;
 			_pimCommandService = pimCommandService;
-			_timeOfLastQueryForStockBalanceUpdates = _lastCallsRepository.GetTimeOfLastQueryForStockBalanceUpdates();
 		}
 
-		public void Execute()
+		public object Execute(DateTime? timeOfLastQueryForStockBalanceUpdatesOverride = null)
 		{
+			var timeOfLastQueryForStockBalanceUpdates = timeOfLastQueryForStockBalanceUpdatesOverride ?? _lastCallsRepository.GetTimeOfLastQueryForStockBalanceUpdates();
 			var timeOfThisQuery = DateTime.Now;
-			var stockBalanceUpdates = _stockBalanceQuery.GetStockBalanceUpdatesSince(_timeOfLastQueryForStockBalanceUpdates);
+			var stockBalanceUpdates = _stockBalanceQuery.GetStockBalanceUpdatesSince(timeOfLastQueryForStockBalanceUpdates);
 
 			foreach (var market in _settings.Markets)
 			{
@@ -42,7 +41,12 @@ namespace PimIntegration.Tasks
 			}
 			
 			_lastCallsRepository.UpdateTimeOfLastQueryForStockBalanceUpdates(timeOfThisQuery);
-			_timeOfLastQueryForStockBalanceUpdates = timeOfThisQuery;
+
+			return new
+			{
+				TimeOfLastQueryForStockBalanceUpdates = timeOfLastQueryForStockBalanceUpdates,
+				StockBalanceUpdates = stockBalanceUpdates
+			};
 		}
 	}
 }

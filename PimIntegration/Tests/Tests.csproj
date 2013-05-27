@@ -62,7 +62,7 @@
     <Compile Include="IntegrationTests\DbQueriesTests.cs" />
     <Compile Include="IntegrationTests\LastCallsRepositoryTests.cs" />
     <Compile Include="IntegrationTests\PimRequestLogRepositoryTests.cs" />
-    <Compile Include="IntegrationTests\PimProductQueryRequestEnqueuerTests.cs" />
+    <Compile Include="IntegrationTests\PimQueryServiceTests.cs" />
     <Compile Include="IntegrationTests\VismaGlobalTests.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="UnitTests\ArticleManagerTests.cs" />

@@ -44,5 +44,11 @@ namespace PimIntegration.Tasks.PimApi
 
 			return responseItems != null ? responseItems[0] : null;
 		}
+
+		public ProductQueryResponseItem[] GetProductBySkuDummy()
+		{
+			var messageId = _productQueryEnqueuer.EnqueueProductQueryRequest(PrimaryAction.GetProductBySku + "Dummy", SecondaryAction.None, null);
+			return _productQueryDequeuer.DequeueProductQueryResponse(messageId);
+		}
 	}
 }
