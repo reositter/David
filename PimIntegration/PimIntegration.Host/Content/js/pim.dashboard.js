@@ -12,8 +12,8 @@ $(document).ready(function() {
 		$.ajax({
 			type: 'GET',
 			url: $(this).attr('href'),
-			success: function(json) {
-				console.dir(json);
+			success: function (json) {
+				console.dir(eval(json));
 			}
 		});
 	});
