@@ -27,9 +27,8 @@ namespace PimIntegration.Tasks
 			{
 				var article = new ArticleForCreate
 				{
-					// set name just in case there is no swedish market
-					Name = pimProduct.MasterModel,
 					PimSku = pimProduct.SKU,
+					Name = pimProduct.FullModel,
 					PostingTemplateNo = _settings.VismaPostingTemplateNo,
 					PriceCalcMethodsNo = _settings.VismaPriceCalcMethodsNo,
 					StockProfileNo = _settings.VismaStockProfileNo
@@ -40,15 +39,13 @@ namespace PimIntegration.Tasks
 					switch (market.Market)
 					{
 						case "4Sound.dk":
-							article.ShortDescriptionDen = market.Description;
+							article.ShortDescriptionDen = market.ShortDescription;
 							break;
 						case "4Sound.no":
-							article.ShortDescriptionNor = market.Description;
+							article.ShortDescriptionNor = market.ShortDescription;
 							break;
 						case "4Sound.se":
-							// override name
-							article.Name = market.DisplayName;
-							article.ShortDescriptionSwe = market.Description;
+							article.ShortDescriptionSwe = market.ShortDescription;
 							break;
 					}
 				}

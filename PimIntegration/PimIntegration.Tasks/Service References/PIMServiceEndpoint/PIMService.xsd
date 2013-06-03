@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://pim.4sound.dk/wcf/entities/" elementFormDefault="qualified" targetNamespace="http://pim.4sound.dk/wcf/entities/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://10.28.8.12:8050/?xsd=xsd3" namespace="http://pim.4sound.dk/wcf/" />
+  <xs:import schemaLocation="http://10.28.8.12/PimService/PIMService.svc?xsd=xsd3" namespace="http://pim.4sound.dk/wcf/" />
   <xs:element name="ProductQueryRequest">
     <xs:complexType>
       <xs:sequence>

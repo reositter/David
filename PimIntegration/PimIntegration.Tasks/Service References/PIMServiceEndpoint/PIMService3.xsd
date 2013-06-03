@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ServiceWebContract.Products" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ServiceWebContract.Products" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://10.28.8.12:8050/?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/web4Sound.Contracts.Products" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/web4Sound.Contracts.Products" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:complexType name="ProductQueryRequestItem">
     <xs:sequence>
       <xs:element minOccurs="0" name="SKU" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="VendorId" type="xs:int" />
       <xs:element minOccurs="0" name="ProductCodeVendor" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EAN" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="CategoryId" type="xs:int" />
       <xs:element minOccurs="0" name="ProductGroupId" type="xs:int" />
-      <xs:element minOccurs="0" name="ProductSubgroupId" type="xs:int" />
+      <xs:element minOccurs="0" name="ProductSubgroupName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BrandId" type="xs:int" />
       <xs:element minOccurs="0" name="SeriesId" type="xs:int" />
       <xs:element minOccurs="0" name="Model" nillable="true" type="xs:string" />
@@ -33,22 +31,20 @@
   <xs:complexType name="ProductQueryResponseItem">
     <xs:sequence>
       <xs:element minOccurs="0" name="SKU" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ProductGroup" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ProductGroupId" type="xs:int" />
-      <xs:element minOccurs="0" name="ProductSubgroup" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ProductSubgroupId" type="xs:int" />
-      <xs:element minOccurs="0" name="Brand" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="BrandId" type="xs:int" />
+      <xs:element minOccurs="0" name="ContainerSKU" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductGroupCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductGroupName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductSubgroupName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BrandCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BrandName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Series" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SeriesId" type="xs:int" />
-      <xs:element minOccurs="0" name="Model" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MasterModel" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Url" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContainerModel" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VariantModel" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FullModel" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EAN" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SpecialType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Markets" nillable="true" type="tns:ArrayOfProductQueryResponseMarketItem" />
       <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="UpdatedOn" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ProductQueryResponseItem" nillable="true" type="tns:ProductQueryResponseItem" />
@@ -62,28 +58,31 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="Market" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
-      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CategoryIds" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element minOccurs="0" name="ShortDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LongDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CategoryNames" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ERPGroupId" type="xs:int" />
+      <xs:element minOccurs="0" name="ERPCategoryId" type="xs:int" />
+      <xs:element minOccurs="0" name="Active" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsNew" type="xs:boolean" />
+      <xs:element minOccurs="0" name="AllowOrdering" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DisplayWeb" type="xs:boolean" />
       <xs:element minOccurs="0" name="VendorId" type="xs:int" />
       <xs:element minOccurs="0" name="ProductCodeVendor" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ERPId" type="xs:int" />
+      <xs:element minOccurs="0" name="UpdatedOnVendorImport" type="xs:dateTime" />
       <xs:element minOccurs="0" name="VendorStock" type="xs:int" />
       <xs:element minOccurs="0" name="VendorStockLevel" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="VendorPrice" type="xs:decimal" />
-      <xs:element minOccurs="0" name="RecommendedPrice" type="xs:decimal" />
+      <xs:element minOccurs="0" name="VendorRecPrice" type="xs:decimal" />
       <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DiscountPrice" type="xs:decimal" />
       <xs:element minOccurs="0" name="VAT" type="xs:decimal" />
       <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Stock" type="xs:int" />
       <xs:element minOccurs="0" name="StockLevel" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ShopStock" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="EAN4Sound" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ERPId" type="xs:int" />
-      <xs:element minOccurs="0" name="ERPGroupId" type="xs:int" />
-      <xs:element minOccurs="0" name="ERPCategoryId" type="xs:int" />
-      <xs:element minOccurs="0" name="ScheduledUpdate" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="IsNew" type="xs:boolean" />
-      <xs:element minOccurs="0" name="AllowOrdering" type="xs:boolean" />
-      <xs:element minOccurs="0" name="DisplayWeb" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SpecialType" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ProductQueryResponseMarketItem" nillable="true" type="tns:ProductQueryResponseMarketItem" />

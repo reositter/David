@@ -18,16 +18,15 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://10.28.8.12:8050/?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://10.28.8.12/PimService/PIMService.svc?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="03ead001-7bc0-422a-8fa3-e37dae27b51b" SourceId="1" SourceUrl="http://10.28.8.12:8050/?xsd=xsd2" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="52d84709-9357-4841-81bb-1bc6d8e7f5c4" SourceId="1" SourceUrl="http://10.28.8.12:8050/?xsd=xsd4" />
-    <MetadataFile FileName="PIMServiceWeb.wsdl" MetadataType="Wsdl" ID="a6845e7b-e07e-40b2-9ae6-7259c0f3a7b3" SourceId="1" SourceUrl="http://10.28.8.12:8050/?wsdl" />
-    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="a91bc4a6-d57e-47cb-9b8e-c86aff069223" SourceId="1" SourceUrl="http://10.28.8.12:8050/?xsd=xsd1" />
-    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="d01ef342-866e-490a-b89a-bdef3eaa51dd" SourceId="1" SourceUrl="http://10.28.8.12:8050/?xsd=xsd3" />
-    <MetadataFile FileName="item.wsdl" MetadataType="Wsdl" ID="75ae8c17-e764-45ec-ae68-f78526f737fb" SourceId="1" SourceUrl="http://10.28.8.12:8050/?wsdl=wsdl0" />
-    <MetadataFile FileName="item4.xsd" MetadataType="Schema" ID="c9f76bda-a73c-44de-98dd-a4240f34515e" SourceId="1" SourceUrl="http://10.28.8.12:8050/?xsd=xsd0" />
+    <MetadataFile FileName="PIMService.xsd" MetadataType="Schema" ID="9f416a5c-962e-477d-8cf7-8a1632af6718" SourceId="1" SourceUrl="http://10.28.8.12/PimService/PIMService.svc?xsd=xsd0" />
+    <MetadataFile FileName="PIMService.wsdl" MetadataType="Wsdl" ID="4c51f59c-5e2e-4cfc-8489-3d623173c270" SourceId="1" SourceUrl="http://10.28.8.12/PimService/PIMService.svc?wsdl" />
+    <MetadataFile FileName="PIMService1.xsd" MetadataType="Schema" ID="f235b7fc-76a3-4f36-8393-d3fa7e39517a" SourceId="1" SourceUrl="http://10.28.8.12/PimService/PIMService.svc?xsd=xsd3" />
+    <MetadataFile FileName="PIMService2.xsd" MetadataType="Schema" ID="ce7ce2cb-db3f-4568-8fac-8044fbdef189" SourceId="1" SourceUrl="http://10.28.8.12/PimService/PIMService.svc?xsd=xsd1" />
+    <MetadataFile FileName="PIMService3.xsd" MetadataType="Schema" ID="6c0a46b0-9144-435d-bcb7-44d504496bac" SourceId="1" SourceUrl="http://10.28.8.12/PimService/PIMService.svc?xsd=xsd2" />
+    <MetadataFile FileName="PIMService1.wsdl" MetadataType="Wsdl" ID="51697f67-6118-4e1a-8457-87d075c378b8" SourceId="1" SourceUrl="http://10.28.8.12/PimService/PIMService.svc?wsdl=wsdl0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

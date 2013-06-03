@@ -129,29 +129,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="Service References\PIMServiceEndpoint\item.wsdl" />
-    <None Include="Service References\PIMServiceEndpoint\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PIMServiceEndpoint\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PIMServiceEndpoint\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PIMServiceEndpoint\item3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PIMServiceEndpoint\item4.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\PIMServiceEndpoint\PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponseItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\PIMServiceEndpoint\PimIntegration.Tasks.PIMServiceEndpoint.ProductUpdateResponseItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\PIMServiceEndpoint\PIMServiceWeb.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\PIMServiceEndpoint\" />
@@ -163,6 +146,20 @@
     <None Include="Service References\PIMServiceEndpoint\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\PIMServiceEndpoint\PIMService.wsdl" />
+    <None Include="Service References\PIMServiceEndpoint\PIMService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PIMServiceEndpoint\PIMService1.wsdl" />
+    <None Include="Service References\PIMServiceEndpoint\PIMService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PIMServiceEndpoint\PIMService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PIMServiceEndpoint\PIMService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\PIMServiceEndpoint\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

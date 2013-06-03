@@ -100,9 +100,9 @@ namespace PimIntegration.Test.UnitTests
 				new ProductQueryResponseItem { 
 					SKU = "PIM00001", 
 					Markets = new [] { 
-						new ProductQueryResponseMarketItem { Market = "4Sound.dk", Description = "Dejlig" },
-						new ProductQueryResponseMarketItem { Market = "4Sound.no", Description = "Den e go" },
-						new ProductQueryResponseMarketItem { Market = "4Sound.se", Description = "Bra", DisplayName = "Flying V"}
+						new ProductQueryResponseMarketItem { Market = "4Sound.dk", ShortDescription = "Dejlig" },
+						new ProductQueryResponseMarketItem { Market = "4Sound.no", ShortDescription = "Den e go" },
+						new ProductQueryResponseMarketItem { Market = "4Sound.se", ShortDescription = "Bra", DisplayName = "Flying V"}
 					}
 				},
 				new ProductQueryResponseItem {SKU = "PIM00002", Markets = new ProductQueryResponseMarketItem[0]},

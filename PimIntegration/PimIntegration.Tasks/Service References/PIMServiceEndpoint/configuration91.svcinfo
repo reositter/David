@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="xDv25FGnUvyLbuywuGvVAfQCM84=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="cKQX7+RVJO0/Z6VrnqTeKibLq9Q=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IQueueOf_ProductQueryRequest_ProductQueryResponse">
       <properties>
@@ -439,10 +439,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IQueueOf_ProductQueryRequest_ProductQueryResponse" contract="PIMServiceEndpoint.IQueueOf_ProductQueryRequest_ProductQueryResponse" bindingType="basicHttpBinding" address="http://10.28.8.12:8050/ProductQueryService" bindingConfiguration="BasicHttpBinding_IQueueOf_ProductQueryRequest_ProductQueryResponse">
+    <endpoint name="BasicHttpBinding_IQueueOf_ProductQueryRequest_ProductQueryResponse" contract="PIMServiceEndpoint.IQueueOf_ProductQueryRequest_ProductQueryResponse" bindingType="basicHttpBinding" address="http://10.28.8.12/PimService/PIMService.svc" bindingConfiguration="BasicHttpBinding_IQueueOf_ProductQueryRequest_ProductQueryResponse">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://10.28.8.12:8050/ProductQueryService</serializedValue>
+          <serializedValue>http://10.28.8.12/PimService/PIMService.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -524,10 +524,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="BasicHttpBinding_IQueueOf_ProductUpdateRequest_ProductUpdateResponse" contract="PIMServiceEndpoint.IQueueOf_ProductUpdateRequest_ProductUpdateResponse" bindingType="basicHttpBinding" address="http://10.28.8.12:8050/ProductUpdateService" bindingConfiguration="BasicHttpBinding_IQueueOf_ProductUpdateRequest_ProductUpdateResponse">
+    <endpoint name="BasicHttpBinding_IQueueOf_ProductUpdateRequest_ProductUpdateResponse" contract="PIMServiceEndpoint.IQueueOf_ProductUpdateRequest_ProductUpdateResponse" bindingType="basicHttpBinding" address="http://10.28.8.12/PimService/PIMService.svc" bindingConfiguration="BasicHttpBinding_IQueueOf_ProductUpdateRequest_ProductUpdateResponse">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://10.28.8.12:8050/ProductUpdateService</serializedValue>
+          <serializedValue>http://10.28.8.12/PimService/PIMService.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -609,10 +609,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="BasicHttpBinding_IQueueOf_ProductQueryRequestArray_ProductQueryResponse" contract="PIMServiceEndpoint.IQueueOf_ProductQueryRequestArray_ProductQueryResponse" bindingType="basicHttpBinding" address="http://10.28.8.12:8050/ProductQueryArrayService" bindingConfiguration="BasicHttpBinding_IQueueOf_ProductQueryRequestArray_ProductQueryResponse">
+    <endpoint name="BasicHttpBinding_IQueueOf_ProductQueryRequestArray_ProductQueryResponse" contract="PIMServiceEndpoint.IQueueOf_ProductQueryRequestArray_ProductQueryResponse" bindingType="basicHttpBinding" address="http://10.28.8.12/PimService/PIMService.svc" bindingConfiguration="BasicHttpBinding_IQueueOf_ProductQueryRequestArray_ProductQueryResponse">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://10.28.8.12:8050/ProductQueryArrayService</serializedValue>
+          <serializedValue>http://10.28.8.12/PimService/PIMService.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -694,10 +694,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="BasicHttpBinding_IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse" contract="PIMServiceEndpoint.IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse" bindingType="basicHttpBinding" address="http://10.28.8.12:8050/ProductUpdateArrayService" bindingConfiguration="BasicHttpBinding_IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse">
+    <endpoint name="BasicHttpBinding_IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse" contract="PIMServiceEndpoint.IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse" bindingType="basicHttpBinding" address="http://10.28.8.12/PimService/PIMService.svc" bindingConfiguration="BasicHttpBinding_IQueueOf_ProductUpdateRequestArray_ProductUpdateResponse">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://10.28.8.12:8050/ProductUpdateArrayService</serializedValue>
+          <serializedValue>http://10.28.8.12/PimService/PIMService.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

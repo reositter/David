@@ -15,7 +15,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ProductQueryRequestItem", Namespace="http://schemas.datacontract.org/2004/07/ServiceWebContract.Products")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ProductQueryRequestItem", Namespace="http://schemas.datacontract.org/2004/07/web4Sound.Contracts.Products")]
     [System.SerializableAttribute()]
     public partial class ProductQueryRequestItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -35,13 +35,10 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
         private string EANField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int CategoryIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int ProductGroupIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ProductSubgroupIdField;
+        private string ProductSubgroupNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int BrandIdField;
@@ -139,19 +136,6 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-        public int CategoryId {
-            get {
-                return this.CategoryIdField;
-            }
-            set {
-                if ((this.CategoryIdField.Equals(value) != true)) {
-                    this.CategoryIdField = value;
-                    this.RaisePropertyChanged("CategoryId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
         public int ProductGroupId {
             get {
                 return this.ProductGroupIdField;
@@ -164,20 +148,20 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
-        public int ProductSubgroupId {
+        [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+        public string ProductSubgroupName {
             get {
-                return this.ProductSubgroupIdField;
+                return this.ProductSubgroupNameField;
             }
             set {
-                if ((this.ProductSubgroupIdField.Equals(value) != true)) {
-                    this.ProductSubgroupIdField = value;
-                    this.RaisePropertyChanged("ProductSubgroupId");
+                if ((object.ReferenceEquals(this.ProductSubgroupNameField, value) != true)) {
+                    this.ProductSubgroupNameField = value;
+                    this.RaisePropertyChanged("ProductSubgroupName");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
         public int BrandId {
             get {
                 return this.BrandIdField;
@@ -190,7 +174,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
         public int SeriesId {
             get {
                 return this.SeriesIdField;
@@ -203,7 +187,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
         public string Model {
             get {
                 return this.ModelField;
@@ -216,7 +200,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
         public string MasterModel {
             get {
                 return this.MasterModelField;
@@ -229,7 +213,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
         public bool Active {
             get {
                 return this.ActiveField;
@@ -242,7 +226,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
         public string MarketName {
             get {
                 return this.MarketNameField;
@@ -255,7 +239,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=13)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
         public bool IsNew {
             get {
                 return this.IsNewField;
@@ -268,7 +252,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=14)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=13)]
         public bool AllowOrdering {
             get {
                 return this.AllowOrderingField;
@@ -281,7 +265,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=15)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=14)]
         public bool DisplayWeb {
             get {
                 return this.DisplayWebField;
@@ -294,7 +278,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=16)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=15)]
         public System.DateTime CreatedOn {
             get {
                 return this.CreatedOnField;
@@ -307,7 +291,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=17)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=16)]
         public System.DateTime UpdatedOn {
             get {
                 return this.UpdatedOnField;
@@ -332,7 +316,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ProductQueryResponseItem", Namespace="http://schemas.datacontract.org/2004/07/ServiceWebContract.Products")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ProductQueryResponseItem", Namespace="http://schemas.datacontract.org/2004/07/web4Sound.Contracts.Products")]
     [System.SerializableAttribute()]
     public partial class ProductQueryResponseItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -343,43 +327,37 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
         private string SKUField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ProductGroupField;
+        private string ContainerSKUField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ProductGroupIdField;
+        private string ProductGroupCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ProductSubgroupField;
+        private string ProductGroupNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ProductSubgroupIdField;
+        private string ProductSubgroupNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string BrandField;
+        private string BrandCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int BrandIdField;
+        private string BrandNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SeriesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int SeriesIdField;
+        private string ContainerModelField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ModelField;
+        private string VariantModelField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MasterModelField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UrlField;
+        private string FullModelField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string EANField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SpecialTypeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponseMarketItem[] MarketsField;
@@ -388,7 +366,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
         private System.DateTime CreatedOnField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime UpdatedOnField;
+        private System.DateTime ModifiedOnField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -414,79 +392,79 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
-        public string ProductGroup {
+        public string ContainerSKU {
             get {
-                return this.ProductGroupField;
+                return this.ContainerSKUField;
             }
             set {
-                if ((object.ReferenceEquals(this.ProductGroupField, value) != true)) {
-                    this.ProductGroupField = value;
-                    this.RaisePropertyChanged("ProductGroup");
+                if ((object.ReferenceEquals(this.ContainerSKUField, value) != true)) {
+                    this.ContainerSKUField = value;
+                    this.RaisePropertyChanged("ContainerSKU");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-        public int ProductGroupId {
+        public string ProductGroupCode {
             get {
-                return this.ProductGroupIdField;
+                return this.ProductGroupCodeField;
             }
             set {
-                if ((this.ProductGroupIdField.Equals(value) != true)) {
-                    this.ProductGroupIdField = value;
-                    this.RaisePropertyChanged("ProductGroupId");
+                if ((object.ReferenceEquals(this.ProductGroupCodeField, value) != true)) {
+                    this.ProductGroupCodeField = value;
+                    this.RaisePropertyChanged("ProductGroupCode");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
-        public string ProductSubgroup {
+        public string ProductGroupName {
             get {
-                return this.ProductSubgroupField;
+                return this.ProductGroupNameField;
             }
             set {
-                if ((object.ReferenceEquals(this.ProductSubgroupField, value) != true)) {
-                    this.ProductSubgroupField = value;
-                    this.RaisePropertyChanged("ProductSubgroup");
+                if ((object.ReferenceEquals(this.ProductGroupNameField, value) != true)) {
+                    this.ProductGroupNameField = value;
+                    this.RaisePropertyChanged("ProductGroupName");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-        public int ProductSubgroupId {
+        public string ProductSubgroupName {
             get {
-                return this.ProductSubgroupIdField;
+                return this.ProductSubgroupNameField;
             }
             set {
-                if ((this.ProductSubgroupIdField.Equals(value) != true)) {
-                    this.ProductSubgroupIdField = value;
-                    this.RaisePropertyChanged("ProductSubgroupId");
+                if ((object.ReferenceEquals(this.ProductSubgroupNameField, value) != true)) {
+                    this.ProductSubgroupNameField = value;
+                    this.RaisePropertyChanged("ProductSubgroupName");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
-        public string Brand {
+        public string BrandCode {
             get {
-                return this.BrandField;
+                return this.BrandCodeField;
             }
             set {
-                if ((object.ReferenceEquals(this.BrandField, value) != true)) {
-                    this.BrandField = value;
-                    this.RaisePropertyChanged("Brand");
+                if ((object.ReferenceEquals(this.BrandCodeField, value) != true)) {
+                    this.BrandCodeField = value;
+                    this.RaisePropertyChanged("BrandCode");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
-        public int BrandId {
+        public string BrandName {
             get {
-                return this.BrandIdField;
+                return this.BrandNameField;
             }
             set {
-                if ((this.BrandIdField.Equals(value) != true)) {
-                    this.BrandIdField = value;
-                    this.RaisePropertyChanged("BrandId");
+                if ((object.ReferenceEquals(this.BrandNameField, value) != true)) {
+                    this.BrandNameField = value;
+                    this.RaisePropertyChanged("BrandName");
                 }
             }
         }
@@ -505,58 +483,45 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
-        public int SeriesId {
+        public string ContainerModel {
             get {
-                return this.SeriesIdField;
+                return this.ContainerModelField;
             }
             set {
-                if ((this.SeriesIdField.Equals(value) != true)) {
-                    this.SeriesIdField = value;
-                    this.RaisePropertyChanged("SeriesId");
+                if ((object.ReferenceEquals(this.ContainerModelField, value) != true)) {
+                    this.ContainerModelField = value;
+                    this.RaisePropertyChanged("ContainerModel");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
-        public string Model {
+        public string VariantModel {
             get {
-                return this.ModelField;
+                return this.VariantModelField;
             }
             set {
-                if ((object.ReferenceEquals(this.ModelField, value) != true)) {
-                    this.ModelField = value;
-                    this.RaisePropertyChanged("Model");
+                if ((object.ReferenceEquals(this.VariantModelField, value) != true)) {
+                    this.VariantModelField = value;
+                    this.RaisePropertyChanged("VariantModel");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
-        public string MasterModel {
+        public string FullModel {
             get {
-                return this.MasterModelField;
+                return this.FullModelField;
             }
             set {
-                if ((object.ReferenceEquals(this.MasterModelField, value) != true)) {
-                    this.MasterModelField = value;
-                    this.RaisePropertyChanged("MasterModel");
+                if ((object.ReferenceEquals(this.FullModelField, value) != true)) {
+                    this.FullModelField = value;
+                    this.RaisePropertyChanged("FullModel");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
-        public string Url {
-            get {
-                return this.UrlField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UrlField, value) != true)) {
-                    this.UrlField = value;
-                    this.RaisePropertyChanged("Url");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
         public string EAN {
             get {
                 return this.EANField;
@@ -569,20 +534,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=13)]
-        public string SpecialType {
-            get {
-                return this.SpecialTypeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SpecialTypeField, value) != true)) {
-                    this.SpecialTypeField = value;
-                    this.RaisePropertyChanged("SpecialType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=14)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
         public PimIntegration.Tasks.PIMServiceEndpoint.ProductQueryResponseMarketItem[] Markets {
             get {
                 return this.MarketsField;
@@ -595,7 +547,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=15)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=13)]
         public System.DateTime CreatedOn {
             get {
                 return this.CreatedOnField;
@@ -608,15 +560,15 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=16)]
-        public System.DateTime UpdatedOn {
+        [System.Runtime.Serialization.DataMemberAttribute(Order=14)]
+        public System.DateTime ModifiedOn {
             get {
-                return this.UpdatedOnField;
+                return this.ModifiedOnField;
             }
             set {
-                if ((this.UpdatedOnField.Equals(value) != true)) {
-                    this.UpdatedOnField = value;
-                    this.RaisePropertyChanged("UpdatedOn");
+                if ((this.ModifiedOnField.Equals(value) != true)) {
+                    this.ModifiedOnField = value;
+                    this.RaisePropertyChanged("ModifiedOn");
                 }
             }
         }
@@ -633,7 +585,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ProductQueryResponseMarketItem", Namespace="http://schemas.datacontract.org/2004/07/ServiceWebContract.Products")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ProductQueryResponseMarketItem", Namespace="http://schemas.datacontract.org/2004/07/web4Sound.Contracts.Products")]
     [System.SerializableAttribute()]
     public partial class ProductQueryResponseMarketItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -647,16 +599,43 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
         private string DisplayNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DescriptionField;
+        private string ShortDescriptionField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string[] CategoryIdsField;
+        private string LongDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CategoryNamesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ERPGroupIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ERPCategoryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ActiveField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsNewField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool AllowOrderingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool DisplayWebField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int VendorIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ProductCodeVendorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ERPIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime UpdatedOnVendorImportField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int VendorStockField;
@@ -668,10 +647,13 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
         private decimal VendorPriceField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal RecommendedPriceField;
+        private decimal VendorRecPriceField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private decimal PriceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal DiscountPriceField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private decimal VATField;
@@ -689,28 +671,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
         private string ShopStockField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EAN4SoundField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ERPIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ERPGroupIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ERPCategoryIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime ScheduledUpdateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsNewField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool AllowOrderingField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool DisplayWebField;
+        private int SpecialTypeField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -749,214 +710,45 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-        public string Description {
+        public string ShortDescription {
             get {
-                return this.DescriptionField;
+                return this.ShortDescriptionField;
             }
             set {
-                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
-                    this.DescriptionField = value;
-                    this.RaisePropertyChanged("Description");
+                if ((object.ReferenceEquals(this.ShortDescriptionField, value) != true)) {
+                    this.ShortDescriptionField = value;
+                    this.RaisePropertyChanged("ShortDescription");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
-        public string[] CategoryIds {
+        public string LongDescription {
             get {
-                return this.CategoryIdsField;
+                return this.LongDescriptionField;
             }
             set {
-                if ((object.ReferenceEquals(this.CategoryIdsField, value) != true)) {
-                    this.CategoryIdsField = value;
-                    this.RaisePropertyChanged("CategoryIds");
+                if ((object.ReferenceEquals(this.LongDescriptionField, value) != true)) {
+                    this.LongDescriptionField = value;
+                    this.RaisePropertyChanged("LongDescription");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-        public int VendorId {
+        public string CategoryNames {
             get {
-                return this.VendorIdField;
+                return this.CategoryNamesField;
             }
             set {
-                if ((this.VendorIdField.Equals(value) != true)) {
-                    this.VendorIdField = value;
-                    this.RaisePropertyChanged("VendorId");
+                if ((object.ReferenceEquals(this.CategoryNamesField, value) != true)) {
+                    this.CategoryNamesField = value;
+                    this.RaisePropertyChanged("CategoryNames");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
-        public string ProductCodeVendor {
-            get {
-                return this.ProductCodeVendorField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ProductCodeVendorField, value) != true)) {
-                    this.ProductCodeVendorField = value;
-                    this.RaisePropertyChanged("ProductCodeVendor");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
-        public int VendorStock {
-            get {
-                return this.VendorStockField;
-            }
-            set {
-                if ((this.VendorStockField.Equals(value) != true)) {
-                    this.VendorStockField = value;
-                    this.RaisePropertyChanged("VendorStock");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
-        public string VendorStockLevel {
-            get {
-                return this.VendorStockLevelField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.VendorStockLevelField, value) != true)) {
-                    this.VendorStockLevelField = value;
-                    this.RaisePropertyChanged("VendorStockLevel");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
-        public decimal VendorPrice {
-            get {
-                return this.VendorPriceField;
-            }
-            set {
-                if ((this.VendorPriceField.Equals(value) != true)) {
-                    this.VendorPriceField = value;
-                    this.RaisePropertyChanged("VendorPrice");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
-        public decimal RecommendedPrice {
-            get {
-                return this.RecommendedPriceField;
-            }
-            set {
-                if ((this.RecommendedPriceField.Equals(value) != true)) {
-                    this.RecommendedPriceField = value;
-                    this.RaisePropertyChanged("RecommendedPrice");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
-        public decimal Price {
-            get {
-                return this.PriceField;
-            }
-            set {
-                if ((this.PriceField.Equals(value) != true)) {
-                    this.PriceField = value;
-                    this.RaisePropertyChanged("Price");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
-        public decimal VAT {
-            get {
-                return this.VATField;
-            }
-            set {
-                if ((this.VATField.Equals(value) != true)) {
-                    this.VATField = value;
-                    this.RaisePropertyChanged("VAT");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
-        public string Currency {
-            get {
-                return this.CurrencyField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CurrencyField, value) != true)) {
-                    this.CurrencyField = value;
-                    this.RaisePropertyChanged("Currency");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=13)]
-        public int Stock {
-            get {
-                return this.StockField;
-            }
-            set {
-                if ((this.StockField.Equals(value) != true)) {
-                    this.StockField = value;
-                    this.RaisePropertyChanged("Stock");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=14)]
-        public string StockLevel {
-            get {
-                return this.StockLevelField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.StockLevelField, value) != true)) {
-                    this.StockLevelField = value;
-                    this.RaisePropertyChanged("StockLevel");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=15)]
-        public string ShopStock {
-            get {
-                return this.ShopStockField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShopStockField, value) != true)) {
-                    this.ShopStockField = value;
-                    this.RaisePropertyChanged("ShopStock");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=16)]
-        public string EAN4Sound {
-            get {
-                return this.EAN4SoundField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EAN4SoundField, value) != true)) {
-                    this.EAN4SoundField = value;
-                    this.RaisePropertyChanged("EAN4Sound");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=17)]
-        public int ERPId {
-            get {
-                return this.ERPIdField;
-            }
-            set {
-                if ((this.ERPIdField.Equals(value) != true)) {
-                    this.ERPIdField = value;
-                    this.RaisePropertyChanged("ERPId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=18)]
         public int ERPGroupId {
             get {
                 return this.ERPGroupIdField;
@@ -969,7 +761,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=19)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
         public int ERPCategoryId {
             get {
                 return this.ERPCategoryIdField;
@@ -982,20 +774,20 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=20)]
-        public System.DateTime ScheduledUpdate {
+        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+        public bool Active {
             get {
-                return this.ScheduledUpdateField;
+                return this.ActiveField;
             }
             set {
-                if ((this.ScheduledUpdateField.Equals(value) != true)) {
-                    this.ScheduledUpdateField = value;
-                    this.RaisePropertyChanged("ScheduledUpdate");
+                if ((this.ActiveField.Equals(value) != true)) {
+                    this.ActiveField = value;
+                    this.RaisePropertyChanged("Active");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=21)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
         public bool IsNew {
             get {
                 return this.IsNewField;
@@ -1008,7 +800,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=22)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
         public bool AllowOrdering {
             get {
                 return this.AllowOrderingField;
@@ -1021,7 +813,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=23)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
         public bool DisplayWeb {
             get {
                 return this.DisplayWebField;
@@ -1030,6 +822,214 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
                 if ((this.DisplayWebField.Equals(value) != true)) {
                     this.DisplayWebField = value;
                     this.RaisePropertyChanged("DisplayWeb");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+        public int VendorId {
+            get {
+                return this.VendorIdField;
+            }
+            set {
+                if ((this.VendorIdField.Equals(value) != true)) {
+                    this.VendorIdField = value;
+                    this.RaisePropertyChanged("VendorId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+        public string ProductCodeVendor {
+            get {
+                return this.ProductCodeVendorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProductCodeVendorField, value) != true)) {
+                    this.ProductCodeVendorField = value;
+                    this.RaisePropertyChanged("ProductCodeVendor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=13)]
+        public int ERPId {
+            get {
+                return this.ERPIdField;
+            }
+            set {
+                if ((this.ERPIdField.Equals(value) != true)) {
+                    this.ERPIdField = value;
+                    this.RaisePropertyChanged("ERPId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=14)]
+        public System.DateTime UpdatedOnVendorImport {
+            get {
+                return this.UpdatedOnVendorImportField;
+            }
+            set {
+                if ((this.UpdatedOnVendorImportField.Equals(value) != true)) {
+                    this.UpdatedOnVendorImportField = value;
+                    this.RaisePropertyChanged("UpdatedOnVendorImport");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=15)]
+        public int VendorStock {
+            get {
+                return this.VendorStockField;
+            }
+            set {
+                if ((this.VendorStockField.Equals(value) != true)) {
+                    this.VendorStockField = value;
+                    this.RaisePropertyChanged("VendorStock");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=16)]
+        public string VendorStockLevel {
+            get {
+                return this.VendorStockLevelField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VendorStockLevelField, value) != true)) {
+                    this.VendorStockLevelField = value;
+                    this.RaisePropertyChanged("VendorStockLevel");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=17)]
+        public decimal VendorPrice {
+            get {
+                return this.VendorPriceField;
+            }
+            set {
+                if ((this.VendorPriceField.Equals(value) != true)) {
+                    this.VendorPriceField = value;
+                    this.RaisePropertyChanged("VendorPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=18)]
+        public decimal VendorRecPrice {
+            get {
+                return this.VendorRecPriceField;
+            }
+            set {
+                if ((this.VendorRecPriceField.Equals(value) != true)) {
+                    this.VendorRecPriceField = value;
+                    this.RaisePropertyChanged("VendorRecPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=19)]
+        public decimal Price {
+            get {
+                return this.PriceField;
+            }
+            set {
+                if ((this.PriceField.Equals(value) != true)) {
+                    this.PriceField = value;
+                    this.RaisePropertyChanged("Price");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=20)]
+        public decimal DiscountPrice {
+            get {
+                return this.DiscountPriceField;
+            }
+            set {
+                if ((this.DiscountPriceField.Equals(value) != true)) {
+                    this.DiscountPriceField = value;
+                    this.RaisePropertyChanged("DiscountPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=21)]
+        public decimal VAT {
+            get {
+                return this.VATField;
+            }
+            set {
+                if ((this.VATField.Equals(value) != true)) {
+                    this.VATField = value;
+                    this.RaisePropertyChanged("VAT");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=22)]
+        public string Currency {
+            get {
+                return this.CurrencyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrencyField, value) != true)) {
+                    this.CurrencyField = value;
+                    this.RaisePropertyChanged("Currency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=23)]
+        public int Stock {
+            get {
+                return this.StockField;
+            }
+            set {
+                if ((this.StockField.Equals(value) != true)) {
+                    this.StockField = value;
+                    this.RaisePropertyChanged("Stock");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=24)]
+        public string StockLevel {
+            get {
+                return this.StockLevelField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StockLevelField, value) != true)) {
+                    this.StockLevelField = value;
+                    this.RaisePropertyChanged("StockLevel");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=25)]
+        public string ShopStock {
+            get {
+                return this.ShopStockField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShopStockField, value) != true)) {
+                    this.ShopStockField = value;
+                    this.RaisePropertyChanged("ShopStock");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=26)]
+        public int SpecialType {
+            get {
+                return this.SpecialTypeField;
+            }
+            set {
+                if ((this.SpecialTypeField.Equals(value) != true)) {
+                    this.SpecialTypeField = value;
+                    this.RaisePropertyChanged("SpecialType");
                 }
             }
         }
@@ -1046,7 +1046,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ProductUpdateRequestItem", Namespace="http://schemas.datacontract.org/2004/07/ServiceWebContract.Products")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ProductUpdateRequestItem", Namespace="http://schemas.datacontract.org/2004/07/web4Sound.Contracts.Products")]
     [System.SerializableAttribute()]
     public partial class ProductUpdateRequestItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -1427,7 +1427,7 @@ namespace PimIntegration.Tasks.PIMServiceEndpoint {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ProductUpdateResponseItem", Namespace="http://schemas.datacontract.org/2004/07/ServiceWebContract.Products")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ProductUpdateResponseItem", Namespace="http://schemas.datacontract.org/2004/07/web4Sound.Contracts.Products")]
     [System.SerializableAttribute()]
     public partial class ProductUpdateResponseItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
