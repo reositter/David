@@ -45,9 +45,10 @@ namespace Arego.OrderTransfer.Process
 					salesOrderComp.bcUpdateDouble((int)CustomerOrderLine_Properties.COL_DiscountII, (double)line.DiscountInPercent2);
 
 				#region Validera raden.
-				if (artCode > 0 && artCode != 258)
+				if (artCode > 0 && artCode != 258 && artCode != 30202)
 				{
-					//258 får man vid registrering av artikelstrukturer.
+					// 258 får man vid registrering av artikelstrukturer.
+					// 30202 = Utgår. Ur hjälptexten: 'Du får registrera order på en artikel med status "Utgår" så länge som den disponibla behållningen är större än 0'
 					lineIsValid = false;
 					LogFileWriter.WriteLine(string.Format("ArticleNo '{0}' caused exception({1}): {2}", line.ArticleNo, artCode, salesOrderComp.bcGetMessageText(artCode)));
 				}
