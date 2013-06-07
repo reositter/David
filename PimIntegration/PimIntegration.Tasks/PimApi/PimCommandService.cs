@@ -21,7 +21,7 @@ namespace PimIntegration.Tasks.PimApi
 			_productUpdateDequeuer = productUpdateDequeuer;
 		}
 
-		public void ReportVismaProductNumbers(string marketKey, int vendorId, IEnumerable<CreatedArticle> newProducts)
+		public void ReportVismaArticleNumbers(string marketKey, int vendorId, IEnumerable<CreatedArticle> newProducts)
 		{
 			var productUpdates = newProducts.Select(newProduct => new ProductUpdateRequestItem
 			{

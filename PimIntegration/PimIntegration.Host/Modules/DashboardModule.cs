@@ -21,10 +21,7 @@ namespace PimIntegration.Host.Modules
 				var repo = ObjectFactory.Container.GetInstance<IPimRequestLogRepository>();
 				var item = repo.GetRequestItemAsJson(parameters.id);
 
-				var response = (Response) item;
-				response.ContentType = "application/json";
-
-				return response;
+				return Response.AsText((string)item).WithContentType("application/json");
 			};
 
 			Get["/requestlog/{id}/responseitem"] = parameters =>
@@ -32,10 +29,7 @@ namespace PimIntegration.Host.Modules
 				var repo = ObjectFactory.Container.GetInstance<IPimRequestLogRepository>();
 				var item = repo.GetResponseItemAsJson(parameters.id);
 
-				var response = (Response)item;
-				response.ContentType = "application/json";
-
-				return response;
+				return Response.AsText((string)item).WithContentType("application/json");
 			};
 		}
 	}

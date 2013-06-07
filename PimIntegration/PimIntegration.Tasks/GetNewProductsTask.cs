@@ -52,7 +52,7 @@ namespace PimIntegration.Tasks
 
 			foreach (var market in _settings.Markets)
 			{
-				_pimCommandService.ReportVismaProductNumbers(market.MarketKey, market.VendorId, createdArticles);
+				_pimCommandService.ReportVismaArticleNumbers(market.MarketKey, market.VendorId, createdArticles);
 			}
 
 			return new

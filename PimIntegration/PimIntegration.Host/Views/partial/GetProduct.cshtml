@@ -1,0 +1,12 @@
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+
+<h2>GetProduct</h2>
+<p>
+	Gets product from PIM, creates an article in Visma Global (<b>@Model.VismaClientName</b>) 
+	and reports the article number back to PIM.
+</p>
+<form class="form-inline">
+	<label class="control-label" for="txtSku">SKU</label>
+	<input type="text" id="txtSku" />
+	<button id="btnGetProduct" class="btn btn-success">POST</button>
+</form>

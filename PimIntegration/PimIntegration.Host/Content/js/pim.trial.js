@@ -87,4 +87,17 @@
 			error: displayError
 		});
 	});
+	
+	$('#form-wrapper').on('click', '#btnGetProduct', function (e) {
+		e.preventDefault();
+		displayInProgress();
+		$.ajax({
+			type: 'POST', url: '/trial/manual/getproduct/',
+			data: {
+				Sku: $('#txtSku').val()
+			},
+			success: displayJsonResponse,
+			error: displayError
+		});
+	});
 });

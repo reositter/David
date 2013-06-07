@@ -9,6 +9,6 @@ namespace PimIntegration.Tasks.PimApi.Interfaces
 		ProductQueryResponseItem[] GetNewProductsSinceDummy();
 		ProductQueryResponseItem[] DequeueProductQueryResponseWithoutRetries(int messageId);
 		ProductQueryResponseItem[] DequeueProductQueryArrayResponseWithoutRetries(int messageId);
-		ProductQueryResponseItem GetProductBySku(string sku);
+		ProductQueryResponseItem[] GetProductBySku(string sku);
 	}
 }

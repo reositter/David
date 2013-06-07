@@ -76,6 +76,7 @@
     <Compile Include="Modules\DashboardModule.cs" />
     <Compile Include="Modules\MainMenuModule.cs" />
     <Compile Include="Modules\Trial\PimModule.cs" />
+    <Compile Include="Modules\Trial\GetProductModule.cs" />
     <Compile Include="Modules\Trial\TasksModule.cs" />
     <Compile Include="Modules\Trial\VismaGlobalModule.cs" />
     <Compile Include="NancyBootstrapper.cs" />
@@ -99,6 +100,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Views\partial\DequeueResponse.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\partial\GetProduct.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Views\trial.cshtml">
@@ -203,7 +207,7 @@
   <PropertyGroup>
     <PreBuildEvent>"$(ProjectDir)bin\Debug\PimIntegration.Host.exe" stop</PreBuildEvent>
   </PropertyGroup>
-	<!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

@@ -122,9 +122,9 @@ namespace PimIntegration.Test.UnitTests
 			_task.Execute();
 
 			// Assert
-			_pimCommandService.Verify(service => service.ReportVismaProductNumbers(_settings.Markets[0].MarketKey, _settings.Markets[0].VendorId, It.IsAny<List<CreatedArticle>>()), Times.Once());
-			_pimCommandService.Verify(service => service.ReportVismaProductNumbers(_settings.Markets[1].MarketKey, _settings.Markets[1].VendorId, It.IsAny<List<CreatedArticle>>()), Times.Once());
-			_pimCommandService.Verify(service => service.ReportVismaProductNumbers(_settings.Markets[2].MarketKey, _settings.Markets[2].VendorId, It.IsAny<List<CreatedArticle>>()), Times.Once());
+			_pimCommandService.Verify(service => service.ReportVismaArticleNumbers(_settings.Markets[0].MarketKey, _settings.Markets[0].VendorId, It.IsAny<List<CreatedArticle>>()), Times.Once());
+			_pimCommandService.Verify(service => service.ReportVismaArticleNumbers(_settings.Markets[1].MarketKey, _settings.Markets[1].VendorId, It.IsAny<List<CreatedArticle>>()), Times.Once());
+			_pimCommandService.Verify(service => service.ReportVismaArticleNumbers(_settings.Markets[2].MarketKey, _settings.Markets[2].VendorId, It.IsAny<List<CreatedArticle>>()), Times.Once());
 		}
 
 		[Test]

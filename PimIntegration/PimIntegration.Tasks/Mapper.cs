@@ -34,20 +34,23 @@ namespace PimIntegration.Tasks
 					StockProfileNo = _settings.VismaStockProfileNo
 				};
 
-				foreach (var market in pimProduct.Markets)
+				if (pimProduct.Markets != null)
 				{
-					switch (market.Market)
+					foreach (var market in pimProduct.Markets)
 					{
-						case "4Sound.dk":
-							article.ShortDescriptionDen = market.ShortDescription;
-							break;
-						case "4Sound.no":
-							article.ShortDescriptionNor = market.ShortDescription;
-							break;
-						case "4Sound.se":
-							article.ShortDescriptionSwe = market.ShortDescription;
-							break;
-					}
+						switch (market.Market)
+						{
+							case "4Sound.dk":
+								article.ShortDescriptionDen = market.ShortDescription;
+								break;
+							case "4Sound.no":
+								article.ShortDescriptionNor = market.ShortDescription;
+								break;
+							case "4Sound.se":
+								article.ShortDescriptionSwe = market.ShortDescription;
+								break;
+						}
+					}	
 				}
 
 				list.Add(article);
