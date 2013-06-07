@@ -41,7 +41,7 @@ namespace PimIntegration.Tasks.PimApi
 				numberOfFailedAttempts++;
 			}
 
-			_pimRequestLogRepository.UpdateRequest(messageId, dequeuedAt, numberOfFailedAttempts);
+			_pimRequestLogRepository.UpdateRequestWithResponseData(messageId, dequeuedAt, numberOfFailedAttempts, products);
 
 			return products;
 		}
@@ -69,7 +69,7 @@ namespace PimIntegration.Tasks.PimApi
 				numberOfFailedAttempts++;
 			}
 
-			_pimRequestLogRepository.UpdateRequest(messageId, dequeuedAt, numberOfFailedAttempts);
+			_pimRequestLogRepository.UpdateRequestWithResponseData(messageId, dequeuedAt, numberOfFailedAttempts, products);
 
 			return products;
 		}

@@ -4,7 +4,7 @@ using StructureMap;
 
 namespace PimIntegration.Host.Modules
 {
-	public class DashboardModule : Nancy.NancyModule
+	public class DashboardModule : NancyModule
 	{
 		public DashboardModule()
 		{
@@ -19,9 +19,23 @@ namespace PimIntegration.Host.Modules
 			Get["/requestlog/{id}/requestitem"] = parameters =>
 			{
 				var repo = ObjectFactory.Container.GetInstance<IPimRequestLogRepository>();
-				var item = repo.GetRequestItem(parameters.id);
+				var item = repo.GetRequestItemAsJson(parameters.id);
 
-				return FormatterExtensions.AsJson(Response, item);
+				var response = (Response) item;
+				response.ContentType = "application/json";
+
+				return response;
+			};
+
+			Get["/requestlog/{id}/responseitem"] = parameters =>
+			{
+				var repo = ObjectFactory.Container.GetInstance<IPimRequestLogRepository>();
+				var item = repo.GetResponseItemAsJson(parameters.id);
+
+				var response = (Response)item;
+				response.ContentType = "application/json";
+
+				return response;
 			};
 		}
 	}

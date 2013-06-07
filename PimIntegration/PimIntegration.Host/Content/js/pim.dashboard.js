@@ -7,13 +7,18 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#logWrapper').on('click', '.lnkRequestItem', function (e) {
+	$('#logWrapper').on('click', '.lnkRequestItem, .lnkResponseItem', function (e) {
 		e.preventDefault();
 		$.ajax({
 			type: 'GET',
 			url: $(this).attr('href'),
-			success: function (json) {
+			success: function(json) {
 				console.dir(eval(json));
+			},
+			error: function(jXhr, textStatus, errorThrown) {
+				console.dir(jXhr);
+				console.log(textStatus);
+				console.log(errorThrown);
 			}
 		});
 	});

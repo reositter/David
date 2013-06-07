@@ -1,5 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
 using PimIntegration.Tasks.Database.Dto;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.PIMServiceEndpoint;
@@ -44,7 +43,7 @@ namespace PimIntegration.Tasks.PimApi
 				EnqueuedAt = DateTime.Now,
 				PrimaryAction = primaryAction,
 				SecondaryAction = secondaryAction,
-				RequestItem = JsonConvert.SerializeObject(queryItem)
+				RequestItem = queryItem
 			});
 		}
 	}

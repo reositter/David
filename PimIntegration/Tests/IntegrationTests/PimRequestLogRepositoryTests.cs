@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using NUnit.Framework;
-using Newtonsoft.Json;
 using PimIntegration.Tasks.Database;
 using PimIntegration.Tasks.Database.Dto;
 using PimIntegration.Tasks.Database.Interfaces;
@@ -34,7 +33,7 @@ namespace PimIntegration.Test.IntegrationTests
 				MessageId = _enqueuedRequestMessageId,
 				PrimaryAction = "TestPrimary",
 				SecondaryAction = "TestSecondary",
-				RequestItem = JsonConvert.SerializeObject(new ProductQueryRequestItem{ CreatedOn = DateTime.Now }),
+				RequestItem = new ProductQueryRequestItem{ CreatedOn = DateTime.Now },
 				EnqueuedAt = DateTime.Now
 			};
 
@@ -52,11 +51,23 @@ namespace PimIntegration.Test.IntegrationTests
 			// Arrange
 
 			// Act
-			_repository.UpdateRequest(_enqueuedRequestMessageId, DateTime.Now, 3);
+			_repository.UpdateRequestWithResponseData(_enqueuedRequestMessageId, DateTime.Now, 3, null);
 
 			// Assert
 			var lastMessages = _repository.GetRecentRequests(2);
 			Assert.That(lastMessages.Any(msg => msg.MessageId == _enqueuedRequestMessageId && msg.NumberOfFailedAttemptsToDequeue == 3), Is.True);
+		}
+
+		[Test]
+		public void Should_retrieve_response_item()
+		{
+			// Arrange
+
+			// Act
+			var responseItemAsJson = _repository.GetResponseItemAsJson(1);
+
+			// Assert
+			Assert.That(responseItemAsJson, Is.Not.Null);
 		}
 	}
 }

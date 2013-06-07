@@ -3,11 +3,12 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th>Message Id</th>
+			<th>Msg Id</th>
 			<th>Primary Action</th>
 			<th>Secondary Action</th>
 			<th>RequestItem</th>
 			<th>Enqueued</th>
+			<th>ResponseItem</th>
 			<th>Dequeued</th>
 		</tr>
 	</thead>
@@ -20,6 +21,9 @@
 				<td>@logItem.SecondaryAction</td>
 				<td><a href='/requestlog/@logItem.Id/requestitem' class='lnkRequestItem'>RequestItem</a></td>
 				<td>@logItem.EnqueuedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
+				<td>
+					<a href='/requestlog/@logItem.Id/responseitem' class='lnkResponseItem'>ResponseItem</a>
+				</td>
 				<td>@(logItem.DequeuedAt.HasValue ? logItem.DequeuedAt.Value.ToString("yyyy-MM-dd HH:mm:ss") : string.Empty)</td>
 			</tr>
 		}

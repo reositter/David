@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using Newtonsoft.Json;
 using PimIntegration.Tasks.Database.Dto;
 using PimIntegration.Tasks.Database.Interfaces;
 using PimIntegration.Tasks.Setup;
@@ -30,6 +31,7 @@ namespace PimIntegration.Tasks.Database
 										+ "SecondaryAction TEXT NOT NULL, "
 										+ "RequestItem TEXT, "
 										+ "EnqueuedAt TIMESTAMP NOT NULL, "
+										+ "ResponseItem TEXT, "
 										+ "DequeuedAt TIMESTAMP, "
 										+ "NumberOfFailedAttemptsToDequeue INTEGER"
 										+");", TableName);
@@ -74,7 +76,7 @@ namespace PimIntegration.Tasks.Database
 			return list;
 		}
 
-		public string GetRequestItem(int requestLogId)
+		public string GetRequestItemAsJson(int requestLogId)
 		{
 			using (var conn = new SQLiteConnection(_connectionString))
 			{
@@ -90,7 +92,26 @@ namespace PimIntegration.Tasks.Database
 				}
 			}
 
-			return string.Empty;
+			return null;
+		}
+
+		public string GetResponseItemAsJson(int requestLogId)
+		{
+			using (var conn = new SQLiteConnection(_connectionString))
+			{
+				conn.Open();
+				using (var cmd = new SQLiteCommand(string.Format("SELECT ResponseItem FROM {0} WHERE Id = @Id", TableName), conn))
+				{
+					cmd.Parameters.AddWithValue("@Id", requestLogId);
+					using (var r = cmd.ExecuteReader())
+					{
+						if (r.Read())
+							return Convert.ToString(r["ResponseItem"]);
+					}
+				}
+			}
+
+			return null;
 		}
 
 		public void LogEnqueuedRequest(EnqueuedRequest enqueuedRequest)
@@ -107,7 +128,7 @@ namespace PimIntegration.Tasks.Database
 					cmd.Parameters.AddWithValue("@MessageId", enqueuedRequest.MessageId);
 					cmd.Parameters.AddWithValue("@PrimaryAction", enqueuedRequest.PrimaryAction);
 					cmd.Parameters.AddWithValue("@SecondaryAction", enqueuedRequest.SecondaryAction);
-					cmd.Parameters.AddWithValue("@RequestItem", enqueuedRequest.RequestItem);
+					cmd.Parameters.AddWithValue("@RequestItem", JsonConvert.SerializeObject(enqueuedRequest.RequestItem));
 					cmd.Parameters.AddWithValue("@EnqueuedAt", enqueuedRequest.EnqueuedAt);
 
 					cmd.ExecuteNonQuery();
@@ -115,11 +136,12 @@ namespace PimIntegration.Tasks.Database
 			}
 		}
 
-		public void UpdateRequest(int messageId, DateTime? dequeuedAt, int numberOfFailedAttemptsToDequeue)
+		public void UpdateRequestWithResponseData(int messageId, DateTime? dequeuedAt, int numberOfFailedAttemptsToDequeue, object responseItem)
 		{
+			// TODO: Possible update of multiple rows since MessageId is used in the WHERE clause. Ideal would be to use the Id column instead.
 			var query = string.Format(
 				"UPDATE {0} " +
-				"SET DequeuedAt = @DequeuedAt, NumberOfFailedAttemptsToDequeue = @NumberOfFailedAttemptsToDequeue " +
+				"SET DequeuedAt = @DequeuedAt, NumberOfFailedAttemptsToDequeue = @NumberOfFailedAttemptsToDequeue, ResponseItem = @ResponseItem " +
 				"WHERE MessageId = @MessageId;",
 				TableName);
 
@@ -131,6 +153,7 @@ namespace PimIntegration.Tasks.Database
 					cmd.Parameters.AddWithValue("@MessageId", messageId);
 					cmd.Parameters.AddWithValue("@DequeuedAt", dequeuedAt.HasValue ? dequeuedAt.Value : (object)DBNull.Value);
 					cmd.Parameters.AddWithValue("@NumberOfFailedAttemptsToDequeue", numberOfFailedAttemptsToDequeue);
+					cmd.Parameters.AddWithValue("@ResponseItem", JsonConvert.SerializeObject(responseItem));
 
 					cmd.ExecuteNonQuery();
 				}

@@ -78,7 +78,6 @@ namespace PimIntegration.Tasks.PimApi
 				SKU = articleWithPriceUpdates.PimSku,
 				MarketName = marketKey,
 				Price = articleWithPriceUpdates.Price
-
 			};
 
 			var messageId = _productUpdateEnqueuer.EnqueueProductUpdateRequest(PrimaryAction.UpdateProductBySku, SecondaryAction.PriceAndStock, productUpdates);

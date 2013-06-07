@@ -7,8 +7,9 @@ namespace PimIntegration.Tasks.Database.Interfaces
 	public interface IPimRequestLogRepository
 	{
 		IEnumerable<PimRequestLogItem> GetRecentRequests(int maximumNumberOfItems);
-		string GetRequestItem(int requestLogId);
+		string GetRequestItemAsJson(int requestLogId);
+		string GetResponseItemAsJson(int requestLogId);
 		void LogEnqueuedRequest(EnqueuedRequest pimRequestLogItem);
-		void UpdateRequest(int messageId, DateTime? dequeuedAt, int numberOfFailedAttemptsToDequeue);
+		void UpdateRequestWithResponseData(int messageId, DateTime? dequeuedAt, int numberOfFailedAttemptsToDequeue, object responseItem);
 	}
 }
