@@ -18,6 +18,7 @@ namespace Arego.OrderTransfer.Forms
 	    private readonly int _postingTemplate;
 	    private readonly int _priceCalcMethodsNo;
 	    private readonly int _stockProfileNo;
+		private readonly double _postagePercentage;
 
 	    private int _attemptsToCreateArticle;
 	    private int _failedAttemptsToCreateArticle;
@@ -37,6 +38,7 @@ namespace Arego.OrderTransfer.Forms
 		    _postingTemplate = Convert.ToInt32(ConfigurationManager.AppSettings["PostingTemplateNo"].Trim());
 		    _priceCalcMethodsNo = Convert.ToInt32(ConfigurationManager.AppSettings["PriceCalcMethodsNo"].Trim());
 		    _stockProfileNo = Convert.ToInt32(ConfigurationManager.AppSettings["StockProfileNo"].Trim());
+			_postagePercentage = Convert.ToDouble(ConfigurationManager.AppSettings["PosatagePercentage"].Replace(',', '.'));
 
 		    txtSourceClientName.Text = _sourceClientName;
 		    txtDestinationClientName.Text = _destinationClientName;
@@ -163,8 +165,8 @@ namespace Arego.OrderTransfer.Forms
 			Cursor = Cursors.WaitCursor;
 			btnCreateCustomerOrders.Enabled = false;
 
-			var salesOrderManager = new SalesOrderManager(VgConnections.DestinationConnection);
 			var customerQuery = new CustomerQuery(VgConnections.DestinationConnection);
+			var salesOrderManager = new SalesOrderManager(VgConnections.DestinationConnection, customerQuery, _postagePercentage);
 			var invoiceManager = new InvoiceManager(VgConnections.SourceConnection);
 
 			var failedCustomerOrders = 0;

@@ -9,8 +9,8 @@ namespace Arego.OrderTransfer.Process.Dto
         public int CustomerNo { get; set; }
         public string CustomerName { get; set; }
 		public string CustomerContactNameForInvoice { get; set; }
-        public IList<TransferItemLine> Lines { get; set; }
-		public string OrderNoInDestinationClient { get; set; }
+	    public IList<TransferItemLine> Lines { get; set; }
+	    public string OrderNoInDestinationClient { get; set; }
 
 	    public TransferItem()
         {

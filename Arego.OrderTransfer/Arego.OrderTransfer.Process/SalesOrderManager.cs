@@ -1,4 +1,5 @@
-﻿using Arego.OrderTransfer.Process.Dto;
+﻿using System;
+using Arego.OrderTransfer.Process.Dto;
 using RG_SRVLib.Interop;
 
 namespace Arego.OrderTransfer.Process
@@ -6,10 +7,14 @@ namespace Arego.OrderTransfer.Process
     public class SalesOrderManager
     {
         private readonly GlobalServerComponent _vgConnection;
+	    private CustomerQuery _customerQuery;
+	    private readonly double _postagePercentage;
 
-        public SalesOrderManager(GlobalServerComponent vgConnection)
+        public SalesOrderManager(GlobalServerComponent vgConnection, CustomerQuery customerQuery, double postagePercentage)
         {
-            _vgConnection = vgConnection;
+	        _vgConnection = vgConnection;
+	        _customerQuery = customerQuery;
+	        _postagePercentage = postagePercentage;
         }
 
 	    public string CreateSalesOrderFromInvoice(TransferItem transferItem)
@@ -88,6 +93,13 @@ namespace Arego.OrderTransfer.Process
 			#region Kontrollera att alla orderrader skapats.
 			if (allLinesCreated)
 			{
+				if (_customerQuery.CustomerShouldPayPostage(transferItem.CustomerNo))
+				{
+					var orderValue = salesOrderComp.bcGetDouble((int) CustomerOrder_Properties.COR_TotalAmount);
+					var postage = Math.Round(orderValue * (_postagePercentage / 100));
+					salesOrderComp.bcUpdateDouble((int)CustomerOrder_Properties.COR_Postage, postage);
+				}
+
 				errCode = salesOrderComp.bcSaveAndFinish();
 
 				if (errCode > 0)

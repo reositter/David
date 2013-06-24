@@ -22,5 +22,13 @@ namespace Arego.OrderTransfer.Process
 
 			return _customerComponent.bcGetNoOfRecords() > 0;
 		}
+
+		public bool CustomerShouldPayPostage(int customerNo)
+		{
+			_customerComponent.bcSetFilterRequeryStr(string.Format("{0} = {1}", _colCustomerNo, customerNo));
+			_customerComponent.bcFetchFirst(0);
+
+			return _customerComponent.bcGetInt((int) Customer_Properties.CUS_FixedAddnDedNo) == 1;
+		}
 	}
 }

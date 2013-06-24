@@ -7,7 +7,7 @@ namespace Arego.OrderTransfer.Process
 {
     public class InvoiceQuery
     {
-        private readonly GlobalServerComponent _vgConnection;
+        private readonly GlobalServerComponent _vgConnection; 
         private BusinessComponentNavigate _invoiceComp;
         private BusinessComponentNavigate _lineComp;
         private string _colClpInvoiceNo;
@@ -60,7 +60,7 @@ namespace Arego.OrderTransfer.Process
             return list;
         }
 
-        private IList<TransferItemLine> GetInvoiceLines(int invoiceNo)
+	    private IList<TransferItemLine> GetInvoiceLines(int invoiceNo)
         {
             var list = new List<TransferItemLine>();
 
