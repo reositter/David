@@ -96,6 +96,9 @@ namespace Arego.OrderTransfer.Process
 				{
 					var orderValue = (decimal)salesOrderComp.bcGetDouble((int) CustomerOrder_Properties.COR_TotalAmount);
 					orderValue = orderValue - CalculateValueOfLinesThatShouldBeExcluded(transferItem);
+ 
+					// Due to rounding (errors) order value can actually be less than zero if all lines ar excluded.
+					orderValue = Math.Max(orderValue, 0);
 
 					var postage = Math.Round((double)orderValue * (_postageCalculationParameters.PostagePercentage / 100));
 					salesOrderComp.bcUpdateDouble((int)CustomerOrder_Properties.COR_Postage, postage);
