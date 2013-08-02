@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{09034C50-2434-4430-A7E9-851D24DD04DB}</ProjectGuid>
+    <ProjectGuid>{1E56F129-EFF3-433F-AE97-6B3222858EAA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Arego.OrderTransfer.Process</RootNamespace>
-    <AssemblyName>Arego.OrderTransfer.Process</AssemblyName>
+    <RootNamespace>Arego.OrderTransfer.Tests</RootNamespace>
+    <AssemblyName>Arego.OrderTransfer.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,10 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="RG_SRVLib.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=93fd3ccf6df11053">
-      <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\..\..\..\..\..\Program Files\Visma\Global\RG_SRVLib.Interop.dll</HintPath>
+    <Reference Include="nunit.framework">
+      <HintPath>..\Dependencies\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,18 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArticleManager.cs" />
-    <Compile Include="Dto\AppSettings.cs" />
-    <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="CustomerQuery.cs" />
-    <Compile Include="InvoiceManager.cs" />
-    <Compile Include="SalesOrderManager.cs" />
-    <Compile Include="VgConnections.cs" />
-    <Compile Include="Dto\TransferItemLine.cs" />
-    <Compile Include="Dto\TransferItem.cs" />
-    <Compile Include="LogFileWriter.cs" />
-    <Compile Include="InvoiceQuery.cs" />
+    <Compile Include="ExtensionMethodsTests.cs" />
+    <Compile Include="PostageCalculationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Arego.OrderTransfer.Process\Arego.OrderTransfer.Process.csproj">
+      <Project>{09034c50-2434-4430-a7e9-851d24dd04db}</Project>
+      <Name>Arego.OrderTransfer.Process</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

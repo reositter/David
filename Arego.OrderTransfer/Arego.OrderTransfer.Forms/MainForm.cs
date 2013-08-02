@@ -10,35 +10,26 @@ namespace Arego.OrderTransfer.Forms
 {
     public partial class MainForm : Form
     {
-        private readonly string _sourceClientName;
-        private readonly string _destinationClientName;
-	    private readonly string _bapiKey;
-        private readonly int _chainNo;
-	    private readonly int _loanReturnNo;
-	    private readonly int _postingTemplate;
-	    private readonly int _priceCalcMethodsNo;
-	    private readonly int _stockProfileNo;
-		private readonly double _postagePercentage;
+        private string _sourceClientName;
+        private string _destinationClientName;
+	    private string _bapiKey;
+        private int _chainNo;
+	    private int _loanReturnNo;
+	    private int _postingTemplate;
+	    private int _priceCalcMethodsNo;
+	    private int _stockProfileNo;
+	    private PostageCalculationParameters _postageCalculationParameters;
 
 	    private int _attemptsToCreateArticle;
 	    private int _failedAttemptsToCreateArticle;
 
-	    private IList<TransferItem> _transferItems; 
+	    private IList<TransferItem> _transferItems;
 
 	    public MainForm()
         {
             InitializeComponent();
 
-            _sourceClientName = ConfigurationManager.AppSettings["SourceClientName"].Trim();
-            _destinationClientName = ConfigurationManager.AppSettings["DestinationClientName"].Trim();
-		    _bapiKey = ConfigurationManager.AppSettings["BapiKey"];
-		    _chainNo = Convert.ToInt32(ConfigurationManager.AppSettings["ChainNo"].Trim());
-		    _loanReturnNo = Convert.ToInt32(ConfigurationManager.AppSettings["LoanReturnNo"].Trim());
-
-		    _postingTemplate = Convert.ToInt32(ConfigurationManager.AppSettings["PostingTemplateNo"].Trim());
-		    _priceCalcMethodsNo = Convert.ToInt32(ConfigurationManager.AppSettings["PriceCalcMethodsNo"].Trim());
-		    _stockProfileNo = Convert.ToInt32(ConfigurationManager.AppSettings["StockProfileNo"].Trim());
-			_postagePercentage = Convert.ToDouble(ConfigurationManager.AppSettings["PosatagePercentage"].Replace(',', '.'));
+            InitializeAppSettings();
 
 		    txtSourceClientName.Text = _sourceClientName;
 		    txtDestinationClientName.Text = _destinationClientName;
@@ -47,6 +38,24 @@ namespace Arego.OrderTransfer.Forms
 
 			ConnectToClients();
         }
+
+	    private void InitializeAppSettings()
+	    {
+		    _sourceClientName = ConfigurationManager.AppSettings["SourceClientName"].Trim();
+		    _destinationClientName = ConfigurationManager.AppSettings["DestinationClientName"].Trim();
+		    _bapiKey = ConfigurationManager.AppSettings["BapiKey"];
+		    _chainNo = Convert.ToInt32(ConfigurationManager.AppSettings["ChainNo"].Trim());
+		    _loanReturnNo = Convert.ToInt32(ConfigurationManager.AppSettings["LoanReturnNo"].Trim());
+
+		    _postingTemplate = Convert.ToInt32(ConfigurationManager.AppSettings["PostingTemplateNo"].Trim());
+		    _priceCalcMethodsNo = Convert.ToInt32(ConfigurationManager.AppSettings["PriceCalcMethodsNo"].Trim());
+		    _stockProfileNo = Convert.ToInt32(ConfigurationManager.AppSettings["StockProfileNo"].Trim());
+
+		    _postageCalculationParameters = new PostageCalculationParameters();
+			_postageCalculationParameters.PostagePercentage = Convert.ToDouble(ConfigurationManager.AppSettings["PosatagePercentage"].Replace(',', '.'));
+		    _postageCalculationParameters.ExcludeLinesWithStockProfileNo = Convert.ToInt32(ConfigurationManager.AppSettings["ExcludeLinesWithStockProfileNo"]);
+		    _postageCalculationParameters.ExcludeLinesWithWareHouseNo = ConfigurationManager.AppSettings["ExcludeLinesWithWareHouseNo"].ToListOfIntegers();
+	    }
 
 	    private void ConnectToClients()
 	    {
@@ -166,7 +175,7 @@ namespace Arego.OrderTransfer.Forms
 			btnCreateCustomerOrders.Enabled = false;
 
 			var customerQuery = new CustomerQuery(VgConnections.DestinationConnection);
-			var salesOrderManager = new SalesOrderManager(VgConnections.DestinationConnection, customerQuery, _postagePercentage);
+			var salesOrderManager = new SalesOrderManager(VgConnections.DestinationConnection, customerQuery, _postageCalculationParameters);
 			var invoiceManager = new InvoiceManager(VgConnections.SourceConnection);
 
 			var failedCustomerOrders = 0;

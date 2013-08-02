@@ -7,14 +7,14 @@ namespace Arego.OrderTransfer.Process
     public class SalesOrderManager
     {
         private readonly GlobalServerComponent _vgConnection;
-	    private CustomerQuery _customerQuery;
-	    private readonly double _postagePercentage;
+	    private readonly CustomerQuery _customerQuery;
+	    private readonly PostageCalculationParameters _postageCalculationParameters;
 
-        public SalesOrderManager(GlobalServerComponent vgConnection, CustomerQuery customerQuery, double postagePercentage)
+        public SalesOrderManager(GlobalServerComponent vgConnection, CustomerQuery customerQuery, PostageCalculationParameters postageCalculationParameters)
         {
 	        _vgConnection = vgConnection;
 	        _customerQuery = customerQuery;
-	        _postagePercentage = postagePercentage;
+			_postageCalculationParameters = postageCalculationParameters;
         }
 
 	    public string CreateSalesOrderFromInvoice(TransferItem transferItem)
@@ -62,9 +62,8 @@ namespace Arego.OrderTransfer.Process
 					lineIsValid = false;
 					LogFileWriter.WriteLine(string.Format("NetPrice '{0}' caused exception({1}): {2}", line.Price, priceCode, salesOrderComp.bcGetMessageText(priceCode)));
 				}
-				else if (qtyCode > 0 && qtyCode != 11944)
+				else if (qtyCode > 0 && qtyCode != 11944) // 11944 får man vid registrering av artikelstrukturer.
 				{
-					//11944 får man vid registrering av artikelstrukturer.
 					lineIsValid = false;
 					LogFileWriter.WriteLine(string.Format("Quantity '{0}' caused exception({1}): {2}", line.Quantity, qtyCode, salesOrderComp.bcGetMessageText(qtyCode)));
 				}
@@ -95,8 +94,10 @@ namespace Arego.OrderTransfer.Process
 			{
 				if (_customerQuery.CustomerShouldPayPostage(transferItem.CustomerNo))
 				{
-					var orderValue = salesOrderComp.bcGetDouble((int) CustomerOrder_Properties.COR_TotalAmount);
-					var postage = Math.Round(orderValue * (_postagePercentage / 100));
+					var orderValue = (decimal)salesOrderComp.bcGetDouble((int) CustomerOrder_Properties.COR_TotalAmount);
+					orderValue = orderValue - CalculateValueOfLinesThatShouldBeExcluded(transferItem);
+
+					var postage = Math.Round((double)orderValue * (_postageCalculationParameters.PostagePercentage / 100));
 					salesOrderComp.bcUpdateDouble((int)CustomerOrder_Properties.COR_Postage, postage);
 				}
 
@@ -115,6 +116,26 @@ namespace Arego.OrderTransfer.Process
 			#endregion
 
 		    return transferItem.OrderNoInDestinationClient;
+	    }
+
+	    private decimal CalculateValueOfLinesThatShouldBeExcluded(TransferItem transferItem)
+	    {
+		    var value = 0m;
+
+		    foreach (var line in transferItem.Lines)
+		    {
+			    if (OrderlineShouldBeExcludedWhenCalculatingPostage(line))
+				    value += line.GetTotalValue();
+		    }
+		    return value;
+	    }
+
+	    private bool OrderlineShouldBeExcludedWhenCalculatingPostage(TransferItemLine line)
+	    {
+		    if (line.StockProfileNo == _postageCalculationParameters.ExcludeLinesWithStockProfileNo)
+			    return true;
+
+		    return _postageCalculationParameters.ExcludeLinesWithWareHouseNo.Contains(line.WareHouseNo);
 	    }
     }
 }

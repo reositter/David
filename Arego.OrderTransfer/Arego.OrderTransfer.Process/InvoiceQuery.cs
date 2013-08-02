@@ -76,7 +76,9 @@ namespace Arego.OrderTransfer.Process
 						Price = (decimal)_lineComp.bcGetDouble((int) CustomerOrderLineCopy_Properties.CLP_ExchangeSalesPrice),
 						DiscountInPercent1 = (decimal)_lineComp.bcGetDouble((int) CustomerOrderLineCopy_Properties.CLP_DiscountI),
 						DiscountInPercent2 = (decimal)_lineComp.bcGetDouble((int) CustomerOrderLineCopy_Properties.CLP_DiscountII),
-						Quantity = (decimal)_lineComp.bcGetDouble((int)CustomerOrderLineCopy_Properties.CLP_Invoiced)
+						Quantity = (decimal)_lineComp.bcGetDouble((int)CustomerOrderLineCopy_Properties.CLP_Invoiced),
+						StockProfileNo = _lineComp.bcGetInt((int)CustomerOrderLineCopy_Properties.CLP_StockProfileNo),
+						WareHouseNo = _lineComp.bcGetInt((int)CustomerOrderLineCopy_Properties.CLP_WareHouseNo)
 			        };
 
 				if (line.Quantity != 0)

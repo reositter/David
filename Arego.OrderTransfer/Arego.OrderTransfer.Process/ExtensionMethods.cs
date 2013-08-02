@@ -1,4 +1,5 @@
-﻿using RG_SRVLib.Interop;
+﻿using System.Collections.Generic;
+using RG_SRVLib.Interop;
 
 namespace Arego.OrderTransfer.Process
 {
@@ -21,5 +22,20 @@ namespace Arego.OrderTransfer.Process
 
 			return comp;
 		}
+
+	    public static IList<int> ToListOfIntegers(this string str)
+	    {
+		    var list = new List<int>();
+		    var tokens = str.Split(new[] {','});
+
+		    foreach (var token in tokens)
+		    {
+			    int value;
+			    if(int.TryParse(token.Trim(), out value))
+					list.Add(value);
+		    }
+
+		    return list;
+	    }
     }
 }
