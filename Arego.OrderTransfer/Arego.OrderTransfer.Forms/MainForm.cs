@@ -52,7 +52,7 @@ namespace Arego.OrderTransfer.Forms
 		    _stockProfileNo = Convert.ToInt32(ConfigurationManager.AppSettings["StockProfileNo"].Trim());
 
 		    _postageCalculationParameters = new PostageCalculationParameters();
-			_postageCalculationParameters.PostagePercentage = Convert.ToDouble(ConfigurationManager.AppSettings["PosatagePercentage"].Replace(',', '.'));
+			_postageCalculationParameters.PostagePercentage = Convert.ToDouble(ConfigurationManager.AppSettings["PosatagePercentage"]);
 		    _postageCalculationParameters.ExcludeLinesWithStockProfileNo = Convert.ToInt32(ConfigurationManager.AppSettings["ExcludeLinesWithStockProfileNo"]);
 		    _postageCalculationParameters.ExcludeLinesWithWareHouseNo = ConfigurationManager.AppSettings["ExcludeLinesWithWareHouseNo"].ToListOfIntegers();
 	    }
