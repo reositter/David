@@ -9,8 +9,11 @@ namespace Arego.OrderTransfer.Process
         private readonly GlobalServerComponent _vgConnection;
 	    private readonly CustomerQuery _customerQuery;
 	    private readonly PostageCalculationParameters _postageCalculationParameters;
+	    private string _colOrderNo;
+	    private string _colArticleNo;
+	    private string _colName;
 
-        public SalesOrderManager(GlobalServerComponent vgConnection, CustomerQuery customerQuery, PostageCalculationParameters postageCalculationParameters)
+	    public SalesOrderManager(GlobalServerComponent vgConnection, CustomerQuery customerQuery, PostageCalculationParameters postageCalculationParameters)
         {
 	        _vgConnection = vgConnection;
 	        _customerQuery = customerQuery;
@@ -20,6 +23,11 @@ namespace Arego.OrderTransfer.Process
 	    public string CreateSalesOrderFromInvoice(TransferItem transferItem)
 	    {
 			var salesOrderComp = _vgConnection.GetSalesOrderServerComponent();
+
+			_colOrderNo = salesOrderComp.bcGetTableObjectName((int)CustomerOrderLine_Properties.COL_OrderNo);
+			_colArticleNo = salesOrderComp.bcGetTableObjectName((int)CustomerOrderLine_Properties.COL_ArticleNo);
+			_colName = salesOrderComp.bcGetTableObjectName((int)CustomerOrderLine_Properties.COL_Name);
+
 			salesOrderComp.bcSetDefaultValuesActive(1);
 
 		    salesOrderComp.bcInitNewOrder(string.Empty);
@@ -95,9 +103,10 @@ namespace Arego.OrderTransfer.Process
 				if (_customerQuery.CustomerShouldPayPostage(transferItem.CustomerNo))
 				{
 					var orderValue = (decimal)salesOrderComp.bcGetDouble((int) CustomerOrder_Properties.COR_TotalAmount);
-					orderValue = orderValue - CalculateValueOfLinesThatShouldBeExcluded(transferItem);
+					var valueOfExcludedOrderlines = CalculateValueOfLinesThatShouldBeExcluded(transferItem);
+					orderValue = orderValue - valueOfExcludedOrderlines;
  
-					// Due to rounding (errors) order value can actually be less than zero if all lines ar excluded.
+					// Due to rounding order value can actually be less than zero if all lines ar excluded.
 					orderValue = Math.Max(orderValue, 0);
 
 					var postage = Math.Round((double)orderValue * (_postageCalculationParameters.PostagePercentage / 100));
@@ -108,6 +117,8 @@ namespace Arego.OrderTransfer.Process
 
 				if (errCode > 0)
 					LogFileWriter.WriteLine("bcSaveAndFinish failed with message: " + salesOrderComp.bcGetMessageText(errCode));
+
+				DeleteEmptyOrderlines(salesOrderComp, transferItem.OrderNoInDestinationClient);
 			}
 			else
 			{
@@ -119,6 +130,15 @@ namespace Arego.OrderTransfer.Process
 			#endregion
 
 		    return transferItem.OrderNoInDestinationClient;
+	    }
+
+	    private void DeleteEmptyOrderlines(SalesOrderServerComponent salesOrderComp, string orderNo)
+	    {
+			//Ta bort tomma orderrader (skapas när man loopar efter huvudkomponenten i strukturer).
+			var where = _colOrderNo + " = '" + orderNo + "' AND "
+				+ _colArticleNo + " IS NULL AND " + _colName + " IS NULL";
+
+			salesOrderComp.bcDeleteOrderLine(where);
 	    }
 
 	    private decimal CalculateValueOfLinesThatShouldBeExcluded(TransferItem transferItem)
