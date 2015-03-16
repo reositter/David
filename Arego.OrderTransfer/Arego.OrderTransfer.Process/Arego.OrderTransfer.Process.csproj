@@ -33,7 +33,7 @@
     <Reference Include="RG_SRVLib.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=93fd3ccf6df11053">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\..\..\..\..\..\Program Files\Visma\Global\RG_SRVLib.Interop.dll</HintPath>
+      <HintPath>..\..\..\..\..\Windows\assembly\GAC\RG_SRVLib.Interop\1.0.0.0__93fd3ccf6df11053\RG_SRVLib.Interop.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
